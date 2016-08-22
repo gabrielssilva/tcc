@@ -1,0 +1,104 @@
+\part{REFERENCIAL TEÓRICO}
+
+\chapter{REDES DESCENTRALIZADAS}
+
+% Tipos de redes de comunicação...
+
+\chapter{SISTEMAS FEDERADOS}
+
+% Definição de federação, contextualização do problema a que se propõe
+% (portais de quarta geração...)...
+
+\section{PLATAFORMAS E PROTOCOLOS DE FEDERAÇÃO}
+
+% apresentar a federação no contexto de software livre. Federação entre 
+% instâncias diferentes, descentralização e agregação de conteúdo...
+
+% Comentar a respeito dos vários sistemas livres federados.
+% Diaspora*, Friendica, Hubzilla, GnuSocial...
+
+% Descrever os protocolos existentes. Tratar do que abordam, 
+
+\subsection{Salmon}
+
+\subsection{Webfinger}
+
+\subsection{OStatus}
+
+\subsection{Diaspora}
+
+O projeto Diaspora surgiu com a intenção de implementar o conceito de redes sociais
+descentralizadas em resposta aos problemas de liberdade e privacidade encontrados
+em plataformas sociais privadas. Sua primeira versão foi lançada em Setembro de 2010
+como fruto de uma campanha de financiamento coletivo, passando a ser completamente
+governado pela comunidade a partir de Agosto de 2012.
+
+A proposta dos desenvolvedores é evitar a centralização de conteúdo, portanto a 
+falta de controle sobre as informações, construindo uma rede de instâncias pessoais
+da plataforma, ou \textit{pods}. Cada servidor Diaspora reúne as informações dos 
+seus usuários, mas em cooperação com outros servidores, possibilita a interação
+e compartilhamento de informações entre usuários de diferentes \textit{pods}.
+
+Além da própria plataforma, desenvolvida em Ruby on Rails, uma biblioteca que
+implementa o protocolo de federação do Diaspora também está disponível no formato
+de uma \textit{gem} Ruby. Todas as soluções são distribuídas sob a licença AGPL 
+versão 3. 
+
+O protocolo de federação do Diaspora foi definido para convergir com o OStatus
+assim que o último passe a suportar o conceito de privacidade limitada. A
+implementação leva em consideração a troca de mensagens em formato XML, respeitando
+alguns conceitos básicos como a existência de usuários remotos e atualização remota
+e retransmissão.
+
+\subsubsection{Usuários Remotos}
+
+Um conceito fundamental para a implementação de redes federadas é considerar a
+existência de usuários remotos. A maioria das aplicações só possui o conceito de
+usuários locais, que estão diretamente autenticados no serviço e possuem todas as
+informações na base de dados local. No entanto, ao possibilitar a interação com
+usuários de outras redes, usuários externos ao sistema precisam ser explicitamente
+considerados na implementação das funcionalidades.
+
+O Diaspora conceitualiza seus usuários em locais e externos. Enquanto usuários
+locais respeitam a definição tradicional, os usuários externos interagem com a
+aplicação através dos mecanismos de federação. É importante prever a existência de
+usuários externos na modelagem de sistemas. Por este motivo, implementar federação
+em aplicações já consolidadas pode exigir um certo esforço de refatoração. % ref?
+
+\subsubsection{Capacidade de Retransmissão}
+
+A retransmissão é essencial em sistemas federados, visto que interações em uma rede
+eventualmente devem afetar \textit{pods} relacionados. A restrição implementada
+pelo Diaspora indica que todas as notificações neste contexto sejam entregues tanto
+aos usuários locais quanto aos usuários remotos. Adicionalmente, a notificação de
+usuários locais não deve depender da resposta dos demais \textit{pods}.
+
+Em configurações de integração mais complexas, a capacidade de retransmissão passa a
+ser um requisito essencial para a troca de mensagens. Conside uma situação
+hipotética em que \textit{pods} \textbf{A} e \textbf{B} são federados com o
+\textit{pod} \textbf{C}, mas não entre si. Qualquer modificação em um conteúdo de 
+\textbf{C} compartilhado com \textbf{A} e \textbf{B} deve afetar os três 
+\texit{pods}. No entanto, se a modificação partir de \textbf{A}, há uma dificuldade
+em notificar \textbf{B}, visto que o \textit{pod} em questão só reconhece a 
+existência de \textbf{C}. A solução defendida pela implementação do Diaspora é que
+\textbf{C} retransmita a notificação para todos os \textit{pods} com os quais o
+conteúdo seja compartilhado. Isso garante que todos os sistemas federados envolvidos
+em uma interação sejam notificados, contribuindo com consistência das informações.
+
+\subsubsection{Troca de Mensagens}
+
+O Diaspora define um conjunto de mensagens que delimitam as possíveis interações 
+entre \textit{pods}.
+
+\begin{itemize}
+  \item{Compartilhamento de informações}
+  \item{Publicações de conteúdo}
+  \item{Comentários e reações a publicações}
+  \item{Mensagens privadas}
+\end{itemize}
+
+A troca de mensagens segue a definição do protocolo Diaspora, que utiliza um
+subconjunto do protocolo Salmon. De modo geral, restringe como a mensagem deve ser
+construída e enviada para o \textit{endpoint} Salmon do \textit{pod} de destino. 
+
+\subsection{Demais Iniciativas}
