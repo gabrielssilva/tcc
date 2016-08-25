@@ -1,15 +1,46 @@
-\part{REFERENCIAL TEÓRICO}
+\part{SISTEMAS FEDERADOS}
 
-\chapter{REDES DESCENTRALIZADAS}
+\chapter{ARQUITETURAS DE REDES DE COMUNICAÇÃO}
 
 % Tipos de redes de comunicação...
 
-\chapter{SISTEMAS FEDERADOS}
+Redes de comunicação podem assumir diferentes arquiteturas, de acordo com a 
+estruturação de seus nós. De acordo com (ref to Baran) redes podem assumir
+configurações centralizadas, distribuídas, e descentralizadas. 
+
+[--- imagem das três categorias de rede segundo Baran ---]
+
+Outros autores propõem definições diferentes para redes distribuídas e
+descentralizadas. (ref to Outro) usa o termo descentralização para compor os
+conceitos de nós [--- descrever os conceitos aqui ---]. 
+
+% Apresentar mais conceitos arquiteturais de redes.
+
+\section{REDES DE COMUNICAÇÃO DESCENTRALIZADAS}
+
+Por mais que existam diferentes definições para a arquitetura descentralizada de
+redes de comunicação, o conceito converge para uma organização de nós que, apesar
+de respeitar a noção de cliente-servidor, também é formada por um conjunto de
+servidores que se comunicam de maneira distribuída. A Internet, por exemplo, surgiu
+como um rede descentralizada onde um conjunto de clientes acessa, através de um
+servidor local, uma rede maior de servidores distribuídos.
+
+Apesar da Internet ser, por natureza, uma rede descentralizada, a popularização de 
+grandes serviços e plataformas integradoras tende à adoção de uma estrutura  cada
+vez mais centralizada. % Encontrar números que comprovam essa afirmação 
+
+% benefícios de redes centralizadas
+% centralização e descentralização da internet
+% tendência para a centralização, apresentar os problemas de privacidade
+% por que descentralizar novamente? (fazer um paralelo com serviços)
+
+\section{A ADOÇÃO DE SISTEMAS FEDERADOS}
 
 % Definição de federação, contextualização do problema a que se propõe
 % (portais de quarta geração...)...
 
-\section{PLATAFORMAS E PROTOCOLOS DE FEDERAÇÃO}
+
+\chapter{PLATAFORMAS E PROTOCOLOS DE FEDERAÇÃO}
 
 % apresentar a federação no contexto de software livre. Federação entre 
 % instâncias diferentes, descentralização e agregação de conteúdo...
@@ -18,20 +49,24 @@
 % Diaspora*, Friendica, Hubzilla, GnuSocial...
 
 % Descrever os protocolos existentes. Tratar do que abordam, 
+% "padrões de interoperabilidade"
+
+\section{OStatus}
 
 \subsection{Salmon}
 
 \subsection{Webfinger}
 
-\subsection{OStatus}
-
-\subsection{Diaspora}
+\section{Diaspora}
 
 O projeto Diaspora surgiu com a intenção de implementar o conceito de redes sociais
 descentralizadas em resposta aos problemas de liberdade e privacidade encontrados
 em plataformas sociais privadas. Sua primeira versão foi lançada em Setembro de 2010
 como fruto de uma campanha de financiamento coletivo, passando a ser completamente
 governado pela comunidade a partir de Agosto de 2012.
+
+% Descrever melhor o que é o Diaspora
+% Baseado em OStatus?
 
 A proposta dos desenvolvedores é evitar a centralização de conteúdo, portanto a 
 falta de controle sobre as informações, construindo uma rede de instâncias pessoais
@@ -50,7 +85,7 @@ implementação leva em consideração a troca de mensagens em formato XML, resp
 alguns conceitos básicos como a existência de usuários remotos e atualização remota
 e retransmissão.
 
-\subsubsection{Usuários Remotos}
+\subsection{Usuários Remotos}
 
 Um conceito fundamental para a implementação de redes federadas é considerar a
 existência de usuários remotos. A maioria das aplicações só possui o conceito de
