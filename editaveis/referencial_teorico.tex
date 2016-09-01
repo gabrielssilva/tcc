@@ -53,9 +53,115 @@ vez mais centralizada. % Encontrar números que comprovam essa afirmação
 
 \section{OStatus}
 
+O OStatus é uma especificação baseada em um conjunto de protocolos construída com a
+intenção de oferecer uma estrutura completa para a padronização e interação entre 
+redes sociais distintas. Foi inicialmente proposto por Evan Prodromou e implementado
+no StatusNet, que posteriormente deu origem ao projeto Gnu social.
+
+Apesar de Atom e RSS constituírem padrões corriqueiros para a implementação de feeds
+na internet, tratam-se de especificações que não são capazes de permitir interações
+em tempo real. A ideia do OStatus é combinar \textit{feeds} Atom com uma série de
+mecanismos capazes de permitir identidade, confiabilidade na comunicação entre os
+servidores.
+
+O projeto conta com uma das maiores iniciativas de padronização de protocolos de
+federação, tornando-se alvo de um grupo de trabalho da W3C desde 2012. Apesar de não
+ter apresentado maiores avanços nos últimos anos, ainda há interesse da comunidade
+em mantê-lo e utilizá-lo. 
+
+\subsection{PubSubHubbub}
+
+De forma a possibilitar as interações em tempo real previstas pelo  OStatus, é 
+necessário utilizar algum tipo de mecanismo que, em combinação com o Atom, possa
+entregar notificações 
+
+O PubHubSub é um sistema de publicações de publicação e assinatura distribuído.
+Possibilita que servidores se inscrevam em \textit{feeds}, e sejam notificados assim
+que alguma alteração aconteça. A ideia é que uma série de serviços se inscrevem em
+diretórios centrais (ou \textit{hubs}), expressando interesse em receber
+notificações de atualização. Serviços inscritos devem identificar o tópico desejado
+através de URLs, e oferecer um servidor disponível pela internet para que a
+notificação possa ser realizada. Entidades interessadas em publicar algum tipo de
+conteúdo incluem uma referência ao \textit{hub}. É de responsabilidade dos
+produtores de conteúdo notificar o \textit{hub} em novas publicações, que por sua
+vez são responsáveis por divulgar para cada um dos indivíduos inscritos.
+
+Sem entrar em maiores detalhes a respeito da especificação, a comunicação dos
+\textit{hubs} com as entidades que publicam e consomem os conteúdos acontecem sobre
+HTTP, e identificadas por endereços URL. As notificações são baseadas na execução
+de trechos arbitrários de código ativados a partir de \textit{endpoints} URL, 
+seguindo a ideia de \textit{webhooks}.
+
+\subsection{WebFinger}
+
+% referenciar a RFC 7033
+
+O WebFinger é um protocolo de descoberta de identidade que soluciona o problema do
+compartilhamento das informações de usuários entre servidores remotos. A proposta é
+que a partir de um atributo identificador de usuário e do endereço do seu servidor
+de origem, seja possível garantir a existência do usuário e obter suas informações
+públicas.
+
+A especificação do WebFinger propõe que todos os recursos possam ser identificados
+por uma URL, e que todas as solicitações e respostas sejam realizadas através de
+requisições HTTP. Servidores que forneçam informações através do WebFinger devem
+responder aos \textit{endpoints} definidos no protocolo com objetos JSON. Servidores
+que pretendam consumir tais informações precisam conhecer apenas a URL do recurso de
+interesse, o que pode ser encontrado a partir do identificador do usuário e do
+domínio do servidor de origem (em um processo que pode ser classificado como LRDD). 
+
+% referenciar LRDD: https://tools.ietf.org/html/draft-hammer-discovery-06 
+
+No caso específico do OStatus, o WebFinger é utilizado no início de cada interação
+entre usuários. Por exemplo, considerando um cenário em que um usuário pretende se 
+inscrever no \textit{feed} de um usuário remoto, conhecendo seu identificador e o 
+servidor de origem. Antes de solicitar a inscrição através de um servidor PubHubSub
+e notificar o usuário remoto, o usuário local deve primeiro obter as informações
+necessárias (como por exemplo a URL do \textit{feed} público) através de uma
+requisição  WebFinger.
+
+\subsection{Activity Streams}
+
+O Activity Streams é uma especificação que propõe a padronização da representação
+de atividades em redes sociais que tenham interesse em oferecer mecanismos de
+integração. O emprego deste protocolo é justificado pela necessidade em registrar
+as atividades do usuário no interior da rede, bem como pela representação através
+de um formato que possa ser consumido por qualquer serviço interessado e autorizado.
+
+A especificação mais atual do Activity Streams exige uma mensagem em formato JSON, 
+incluindo uma série de propriedades que identificam a ação, o usuário responsável, 
+e a entidade alvo. Considera-se ainda o envio de atividades complexas que contenham
+referências a outras atividades ou entidades do sistema. 
+
+Além da especificação que adota o padrão JSON, outras especificações utilizam o 
+padrão Atom, com restrições semelhantes em relação ao conteúdo e formato das 
+mensagens. O OStatus adota o protocolo especificado em Atom para o envio de entradas
+de Activity Streams.
+
 \subsection{Salmon}
 
-\subsection{Webfinger}
+Combinar soluções como Atom e PubHubSub permitem que conteúdos sejam publicados e
+atualizados em tempo real. No entanto, a partir do ponto em que um conteúdo pode
+ser consumido a partir de um número arbitrário de serviços, deve-se investir
+esforço para garantir que o estado da discussão (como comentários e avaliações
+relacionados a uma publicação) seja o mesmo em toda a rede. Mais especificamente,
+qualquer entidade consumidora que atualize o estado da discussão deve notificar o
+servidor fonte, que de alguma forma deve garantir um estado uniforme para o restante
+da rede.
+
+O Salmon é capaz de garantir a unificação da discussão entre a rede em que um
+conteúdo foi publicado, e todos os serviços consumidores. Trata-se de uma 
+especificação de troca de mensagens que define como as entidades consumidoras devem 
+notificar os servidores fonte a respeito da atualização do estado de discussões, e 
+como deve estes devem reagir a tais eventos.
+
+Servidores interessados em implementar o protocolo devem incluir um 
+\textit{endpoint} Salmon em seus \textit{feeds}, que será lido pelas entidades
+consumidoras, e para o qual as mensagens devem ser enviadas sobre HTTP. Uma mensagem
+Salmon se trata de uma entrada adicional no \textit{feed}, codificada em 
+\textit{base64}, envolta por outra estrutura XML assinada digitalmente. Ao Receber a
+mensagem, o servidor possui a liberdade de proceder conforme suas próprias 
+políticas, desde que retorne uma resposta HTTP válida.
 
 \section{Diaspora}
 
@@ -113,7 +219,7 @@ ser um requisito essencial para a troca de mensagens. Conside uma situação
 hipotética em que \textit{pods} \textbf{A} e \textbf{B} são federados com o
 \textit{pod} \textbf{C}, mas não entre si. Qualquer modificação em um conteúdo de 
 \textbf{C} compartilhado com \textbf{A} e \textbf{B} deve afetar os três 
-\texit{pods}. No entanto, se a modificação partir de \textbf{A}, há uma dificuldade
+\textit{pods}. No entanto, se a modificação partir de \textbf{A}, há uma dificuldade
 em notificar \textbf{B}, visto que o \textit{pod} em questão só reconhece a 
 existência de \textbf{C}. A solução defendida pela implementação do Diaspora é que
 \textbf{C} retransmita a notificação para todos os \textit{pods} com os quais o
