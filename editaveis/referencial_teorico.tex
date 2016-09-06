@@ -163,6 +163,34 @@ Salmon se trata de uma entrada adicional no \textit{feed}, codificada em
 mensagem, o servidor possui a liberdade de proceder conforme suas próprias 
 políticas, desde que retorne uma resposta HTTP válida.
 
+\subsection{Fluxo do OStatus}
+
+Cada protocolo utilizado na especificação do OStatus possui uma responsabilidade
+específica no fluxo de comunicação. A [[[referenciar o diagrama]]] apresenta um
+cenário em que dois usuários de servidores distintos interagem através deste fluxo,
+apontando o papel de cada um dos mecanismos intermediários.
+
+% diagrama do workflow do OStatus
+
+\begin{enumerate}
+  \item{O usuário A descobre o endereço do servidor de origem do usuário B através
+        do WebFinger}
+  \item{O usuário A se inscreve no \textit{feed} público através do PubHubSub
+        através do endereço obtido}
+  \item{O usuário A envia uma nova entrada no formato Activity Streams através
+        de uma mensagem Salmon para o usuário B, notificando-o da ação}
+  \item{O servidor do usuário B atualiza sua lista de seguidores. Eventualmente, o
+        usuário B publica um novo conteúdo, notificando os inscritos através do
+        PubHubSub}
+  \item{O usuário A recebe o \textit{feed} atualizado através do PubHubSub, e decide
+        publicar um novo comentário. Uma nova entrada no \textit{feed} é criada em
+        formato Activity Streams, e novamente enviada ao servidor original através
+        de uma mensagem Salmon}
+  \item{O servidor do usuário B recebe a mensagem, e registra um novo comentário,
+        atualizando seu \textit{feed} e notificando novamente os seus inscritos}
+\end{enumerate}
+
+
 \section{Diaspora}
 
 O projeto Diaspora surgiu com a intenção de implementar o conceito de redes sociais
@@ -215,7 +243,7 @@ aos usuários locais quanto aos usuários remotos. Adicionalmente, a notificaç�
 usuários locais não deve depender da resposta dos demais \textit{pods}.
 
 Em configurações de integração mais complexas, a capacidade de retransmissão passa a
-ser um requisito essencial para a troca de mensagens. Conside uma situação
+ser um requisito essencial para a troca de mensagens. Considere uma situação
 hipotética em que \textit{pods} \textbf{A} e \textbf{B} são federados com o
 \textit{pod} \textbf{C}, mas não entre si. Qualquer modificação em um conteúdo de 
 \textbf{C} compartilhado com \textbf{A} e \textbf{B} deve afetar os três 
@@ -242,4 +270,37 @@ A troca de mensagens segue a definição do protocolo Diaspora, que utiliza um
 subconjunto do protocolo Salmon. De modo geral, restringe como a mensagem deve ser
 construída e enviada para o \textit{endpoint} Salmon do \textit{pod} de destino. 
 
-\subsection{Demais Iniciativas}
+\subsection{Fluxo do Protocolo Diaspora}
+
+O protocolo Diaspora cobre tanto a descoberta de identidades entre os servidores,
+quanto o envio e recebimento de informações. De forma análoga ao OStatus, parte da
+implementação também utiliza outros protocolos, como o WebFinger, o Activity Streams
+e o Salmon. Uma outra especificação implementada é o hCard, que trata da
+representação das informações de um usuário em formato HTML ou XML. % ref hCard
+
+O diagrama da [[[figura]]] representa o fluxo de uma interação entre dois usuários
+de \textit{hubs}} distintos.
+
+% diagrama do workflow do Diaspora
+
+% revisar o fluxo do protocolo
+\begin{enumerate}
+  \item{O usuário A deseja seguir o \textit{feed} do usuário B localizado em outro
+        \textit{hub} do Diaspora. O primeiro passo é descobrir o WebFinger de B
+        através das informações de seu \textit{hub}, e solicitar o seu perfil}
+  \item{O \textit{hub} do usuário B responde com o perfil WebFinger de B, que além
+        de suas informações inclui uma URL do seu \textit{feed} em Activity Streams,
+        e uma chave pública RSA para a troca de mensagens}
+  \item{O usuário A cria uma nova mensagem solicitando o compartilhamento e a envia
+        por meio de Salmon para o usuário B}
+  \item{O usuário B começa a compartilhar suas publicações com A, enviando uma nova
+        mensagem Salmon a cada nova publicação}
+  \item{O usuário A recebe a nova publicação, e decide enviar um novo comentário.
+        uma nova mensagem Activity Streams é construída e enviada por meio de Salmon
+        para o \textit{hub} original}
+  \item{O usuário B recebe o comentário de A, e notifica todos os outros
+        \textit{hubs} inscritos na mesma publicação}
+\end{enumerate}
+
+
+\section{Demais Iniciativas}
