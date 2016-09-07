@@ -1,0 +1,277 @@
+\chapter{PLATAFORMAS E PROTOCOLOS DE FEDERAÇÃO}
+
+Uma das motivações de sistemas federados trata da descentralização de informações, ao
+mesmo tempo em que são oferecidos mecanismos necessários para a integração de
+diversas fontes de conteúdo. Em consequência disto, a federação de sistemas provoca
+impacto sobre a liberdade no controle de informações e privacidade dos usuários.
+
+Enquanto estes argumentos não fazem sentido em uma rede social popular, em que os
+serviços sejam controlados por uma única entidade, são significativos para redes que
+podem ser mantidas por entidades independentes, o que engloba aplicações de
+\textit{software} livre. Considerando que qualquer rede social livre pode contar com
+diversos números de instâncias mantidas por entidades distintas, os benefícios da
+federação são de grande interesse da comunidade.
+
+Apesar do interesse em adicionar suporte à federação em sistemas abertos, não existe
+um padrão reconhecido pela comunidade de desenvolvimento [[[referencia?]]]... Como
+consequência, as aplicações atualmente federadas abordam os desafios intermediários
+do fluxo de integração através de tecnologias já difundidas, como \textit{feeds},
+\textit{APIs}, e mecanismos de troca de mensagens.
+
+A ausência de uma especificação leva os desenvolvedores a adotarem estratégias
+diferentes na implementação da federação, ainda que utilizando os mesmos mecanismos.
+Por outro lado, algumas implementações adquirem certa popularidade, tornando-se
+especificações de referência para outros sistemas, e garantindo um certo nível de
+interoperabilidade.
+
+O OStatus é um exemplo de especificação que, apesar de ter surgido como referência
+para o sistema que foi a se tornar o GNU Social, ganhou popularidade e também foi
+implementado por alguns outras aplicações, como o Friendica. Outro exemplo é o
+protocolo Diaspora, inicialmente implementado por uma rede social de mesmo nome, mas
+que acabou ganhando apelo assim que o sistema se tornou um exemplo popular de rede
+completamente federada, passando a ser implementado por outros sistemas como o
+Hubzilla.
+
+Ao discutir federação no contexto de sistemas livres é interessante analisar as
+especificações populares e cada um dos mecanismos utilizados nas implementações de
+referência. Compreendendo os protocolos existentes é possível indicar o estado das
+iniciativas de sistemas federados, o que leva ao estado e às necessidades de
+interoperabilidade.
+
+\section{OStatus}
+
+O OStatus é uma especificação baseada em um conjunto de protocolos construída com a
+intenção de oferecer uma estrutura completa para a padronização e interação entre
+redes sociais distintas. Foi inicialmente proposto por Evan Prodromou e implementado
+no StatusNet, que posteriormente deu origem ao projeto Gnu social.
+
+Apesar de Atom e RSS constituírem padrões corriqueiros para a implementação de feeds
+na internet, tratam-se de especificações que não são capazes de permitir interações
+em tempo real. A ideia do OStatus é combinar \textit{feeds} Atom com uma série de
+mecanismos capazes de permitir identidade, confiabilidade na comunicação entre os
+servidores.
+
+O projeto conta com uma das maiores iniciativas de padronização de protocolos de
+federação, tornando-se alvo de um grupo de trabalho da W3C desde 2012. Apesar de não
+ter apresentado maiores avanços nos últimos anos, ainda há interesse da comunidade em
+mantê-lo e utilizá-lo. 
+
+\subsection{PubSubHubbub}
+
+De forma a possibilitar as interações em tempo real previstas pelo  OStatus, é
+necessário utilizar algum tipo de mecanismo que, em combinação com o Atom, possa
+entregar notificações 
+
+O PubHubSub é um sistema de publicações de publicação e assinatura distribuído.
+Possibilita que servidores se inscrevam em \textit{feeds}, e sejam notificados assim
+que alguma alteração aconteça. A ideia é que uma série de serviços se inscrevem em
+diretórios centrais (ou \textit{hubs}), expressando interesse em receber notificações
+de atualização. Serviços inscritos devem identificar o tópico desejado através de
+URLs, e oferecer um servidor disponível pela internet para que a notificação possa
+ser realizada. Entidades interessadas em publicar algum tipo de conteúdo incluem uma
+referência ao \textit{hub}. É de responsabilidade dos produtores de conteúdo
+notificar o \textit{hub} em novas publicações, que por sua vez são responsáveis por
+divulgar para cada um dos indivíduos inscritos.
+
+Sem entrar em maiores detalhes a respeito da especificação, a comunicação dos
+\textit{hubs} com as entidades que publicam e consomem os conteúdos acontecem sobre
+HTTP, e identificadas por endereços URL. As notificações são baseadas na execução de
+trechos arbitrários de código ativados a partir de \textit{endpoints} URL, seguindo a
+ideia de \textit{webhooks}.
+
+\subsection{WebFinger}
+
+% referenciar a RFC 7033
+
+O WebFinger é um protocolo de descoberta de identidade que soluciona o problema do
+compartilhamento das informações de usuários entre servidores remotos. A proposta é
+que a partir de um atributo identificador de usuário e do endereço do seu servidor de
+origem, seja possível garantir a existência do usuário e obter suas informações
+públicas.
+
+A especificação do WebFinger propõe que todos os recursos possam ser identificados
+por uma URL, e que todas as solicitações e respostas sejam realizadas através de
+requisições HTTP. Servidores que forneçam informações através do WebFinger devem
+responder aos \textit{endpoints} definidos no protocolo com objetos JSON. Servidores
+que pretendam consumir tais informações precisam conhecer apenas a URL do recurso de
+interesse, o que pode ser encontrado a partir do identificador do usuário e do
+domínio do servidor de origem (em um processo que pode ser classificado como LRDD). 
+
+% referenciar LRDD: https://tools.ietf.org/html/draft-hammer-discovery-06 
+
+No caso específico do OStatus, o WebFinger é utilizado no início de cada interação
+entre usuários. Por exemplo, considerando um cenário em que um usuário pretende se
+inscrever no \textit{feed} de um usuário remoto, conhecendo seu identificador e o
+servidor de origem. Antes de solicitar a inscrição através de um servidor PubHubSub e
+notificar o usuário remoto, o usuário local deve primeiro obter as informações
+necessárias (como por exemplo a URL do \textit{feed} público) através de uma
+requisição  WebFinger.
+
+\subsection{Activity Streams}
+
+O Activity Streams é uma especificação que propõe a padronização da representação de
+atividades em redes sociais que tenham interesse em oferecer mecanismos de
+integração. O emprego deste protocolo é justificado pela necessidade em registrar as
+atividades do usuário no interior da rede, bem como pela representação através de um
+formato que possa ser consumido por qualquer serviço interessado e autorizado.
+
+A especificação mais atual do Activity Streams exige uma mensagem em formato JSON,
+incluindo uma série de propriedades que identificam a ação, o usuário responsável, e
+a entidade alvo. Considera-se ainda o envio de atividades complexas que contenham
+referências a outras atividades ou entidades do sistema. 
+
+Além da especificação que adota o padrão JSON, outras especificações utilizam o
+padrão Atom, com restrições semelhantes em relação ao conteúdo e formato das
+mensagens. O OStatus adota o protocolo especificado em Atom para o envio de entradas
+de Activity Streams.
+
+\subsection{Salmon}
+
+Combinar soluções como Atom e PubHubSub permitem que conteúdos sejam publicados e
+atualizados em tempo real. No entanto, a partir do ponto em que um conteúdo pode ser
+consumido a partir de um número arbitrário de serviços, deve-se investir esforço para
+garantir que o estado da discussão (como comentários e avaliações relacionados a uma
+publicação) seja o mesmo em toda a rede. Mais especificamente, qualquer entidade
+consumidora que atualize o estado da discussão deve notificar o servidor fonte, que
+de alguma forma deve garantir um estado uniforme para o restante da rede.
+
+O Salmon é capaz de garantir a unificação da discussão entre a rede em que um
+conteúdo foi publicado, e todos os serviços consumidores. Trata-se de uma
+especificação de troca de mensagens que define como as entidades consumidoras devem
+notificar os servidores fonte a respeito da atualização do estado de discussões, e
+como deve estes devem reagir a tais eventos.
+
+Servidores interessados em implementar o protocolo devem incluir um \textit{endpoint}
+Salmon em seus \textit{feeds}, que será lido pelas entidades consumidoras, e para o
+qual as mensagens devem ser enviadas sobre HTTP. Uma mensagem Salmon se trata de uma
+entrada adicional no \textit{feed}, codificada em \textit{base64}, envolta por outra
+estrutura XML assinada digitalmente. Ao Receber a mensagem, o servidor possui a
+liberdade de proceder conforme suas próprias políticas, desde que retorne uma
+resposta HTTP válida.
+
+\subsection{Fluxo do OStatus}
+
+Cada protocolo utilizado na especificação do OStatus possui uma responsabilidade
+específica no fluxo de comunicação. A [[[referenciar o diagrama]]] apresenta um
+cenário em que dois usuários de servidores distintos interagem através deste fluxo,
+apontando o papel de cada um dos mecanismos intermediários.
+
+% diagrama do workflow do OStatus
+
+\begin{enumerate} \item{O usuário A descobre o endereço do servidor de origem do
+usuário B através do WebFinger} \item{O usuário A se inscreve no \textit{feed}
+público através do PubHubSub através do endereço obtido} \item{O usuário A envia uma
+nova entrada no formato Activity Streams através de uma mensagem Salmon para o
+usuário B, notificando-o da ação} \item{O servidor do usuário B atualiza sua lista de
+seguidores. Eventualmente, o usuário B publica um novo conteúdo, notificando os
+inscritos através do PubHubSub} \item{O usuário A recebe o \textit{feed} atualizado
+através do PubHubSub, e decide publicar um novo comentário. Uma nova entrada no
+\textit{feed} é criada em formato Activity Streams, e novamente enviada ao servidor
+original através de uma mensagem Salmon} \item{O servidor do usuário B recebe a
+mensagem, e registra um novo comentário, atualizando seu \textit{feed} e notificando
+novamente os seus inscritos} \end{enumerate}
+
+
+\section{Diaspora}
+
+O projeto Diaspora surgiu com a intenção de implementar o conceito de redes sociais
+descentralizadas em resposta aos problemas de liberdade e privacidade encontrados em
+plataformas sociais privadas. Sua primeira versão foi lançada em Setembro de 2010
+como fruto de uma campanha de financiamento coletivo, passando a ser completamente
+governado pela comunidade a partir de Agosto de 2012.
+
+% Descrever melhor o que é o Diaspora
+
+A proposta dos desenvolvedores é evitar a centralização de conteúdo, portanto a falta
+de controle sobre as informações, construindo uma rede de instâncias pessoais da
+plataforma, ou \textit{pods}. Cada servidor Diaspora reúne as informações dos seus
+usuários, mas em cooperação com outros servidores, possibilita a interação e
+compartilhamento de informações entre usuários de diferentes \textit{pods}.
+
+Além da própria plataforma, desenvolvida em Ruby on Rails, uma biblioteca que
+implementa o protocolo de federação do Diaspora também está disponível no formato de
+uma \textit{gem} Ruby. Todas as soluções são distribuídas sob a licença AGPL versão
+3. 
+
+O protocolo de federação do Diaspora foi definido para convergir com o OStatus assim
+que o último passe a suportar o conceito de privacidade limitada. A implementação
+leva em consideração a troca de mensagens em formato XML, respeitando alguns
+conceitos básicos como a existência de usuários remotos e atualização remota e
+retransmissão.
+
+\subsection{Usuários Remotos}
+
+Um conceito fundamental para a implementação de redes federadas é considerar a
+existência de usuários remotos. A maioria das aplicações só possui o conceito de
+usuários locais, que estão diretamente autenticados no serviço e possuem todas as
+informações na base de dados local. No entanto, ao possibilitar a interação com
+usuários de outras redes, usuários externos ao sistema precisam ser explicitamente
+considerados na implementação das funcionalidades.
+
+O Diaspora conceitualiza seus usuários em locais e externos. Enquanto usuários locais
+respeitam a definição tradicional, os usuários externos interagem com a aplicação
+através dos mecanismos de federação. É importante prever a existência de usuários
+externos na modelagem de sistemas. Por este motivo, implementar federação em
+aplicações já consolidadas pode exigir um certo esforço de refatoração. % ref?
+
+\subsection{Capacidade de Retransmissão}
+
+A retransmissão é essencial em sistemas federados, visto que interações em uma rede
+eventualmente devem afetar \textit{pods} relacionados. A restrição implementada pelo
+Diaspora indica que todas as notificações neste contexto sejam entregues tanto aos
+usuários locais quanto aos usuários remotos. Adicionalmente, a notificação de
+usuários locais não deve depender da resposta dos demais \textit{pods}.
+
+Em configurações de integração mais complexas, a capacidade de retransmissão passa a
+ser um requisito essencial para a troca de mensagens. Considere uma situação
+hipotética em que \textit{pods} \textbf{A} e \textbf{B} são federados com o
+\textit{pod} \textbf{C}, mas não entre si. Qualquer modificação em um conteúdo de
+\textbf{C} compartilhado com \textbf{A} e \textbf{B} deve afetar os três
+\textit{pods}. No entanto, se a modificação partir de \textbf{A}, há uma dificuldade
+em notificar \textbf{B}, visto que o \textit{pod} em questão só reconhece a
+existência de \textbf{C}. A solução defendida pela implementação do Diaspora é que
+\textbf{C} retransmita a notificação para todos os \textit{pods} com os quais o
+conteúdo seja compartilhado. Isso garante que todos os sistemas federados envolvidos
+em uma interação sejam notificados, contribuindo com consistência das informações.
+
+\subsection{Troca de Mensagens}
+
+O Diaspora define um conjunto de mensagens que delimitam as possíveis interações
+entre \textit{pods}.
+
+\begin{itemize} \item{Compartilhamento de informações} \item{Publicações de conteúdo}
+\item{Comentários e reações a publicações} \item{Mensagens privadas} \end{itemize}
+
+A troca de mensagens segue a definição do protocolo Diaspora, que utiliza um
+subconjunto do protocolo Salmon. De modo geral, restringe como a mensagem deve ser
+construída e enviada para o \textit{endpoint} Salmon do \textit{pod} de destino. 
+
+\subsection{Fluxo do Protocolo Diaspora}
+
+O protocolo Diaspora cobre tanto a descoberta de identidades entre os servidores,
+quanto o envio e recebimento de informações. De forma análoga ao OStatus, parte da
+implementação também utiliza outros protocolos, como o WebFinger, o Activity Streams
+e o Salmon. Uma outra especificação implementada é o hCard, que trata da
+representação das informações de um usuário em formato HTML ou XML. % ref hCard
+
+O diagrama da [[[figura]]] representa o fluxo de uma interação entre dois usuários de
+\textit{hubs} distintos.
+
+% diagrama do workflow do Diaspora
+
+% revisar o fluxo do protocolo \begin{enumerate} \item{O usuário A deseja seguir o
+\textit{feed} do usuário B localizado em outro \textit{hub} do Diaspora. O primeiro
+passo é descobrir o WebFinger de B através das informações de seu \textit{hub}, e
+solicitar o seu perfil} \item{O \textit{hub} do usuário B responde com o perfil
+WebFinger de B, que além de suas informações inclui uma URL do seu \textit{feed} em
+Activity Streams, e uma chave pública RSA para a troca de mensagens} \item{O usuário
+A cria uma nova mensagem solicitando o compartilhamento e a envia por meio de Salmon
+para o usuário B} \item{O usuário B começa a compartilhar suas publicações com A,
+enviando uma nova mensagem Salmon a cada nova publicação} \item{O usuário A recebe a
+nova publicação, e decide enviar um novo comentário.  uma nova mensagem Activity
+Streams é construída e enviada por meio de Salmon para o \textit{hub} original}
+\item{O usuário B recebe o comentário de A, e notifica todos os outros \textit{hubs}
+inscritos na mesma publicação} \end{enumerate}
+
+
+\section{Demais Iniciativas}
