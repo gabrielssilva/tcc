@@ -1,4 +1,61 @@
-\chapter{PLATAFORMAS E PROTOCOLOS DE FEDERAÇÃO}
+\chapter{PROTOCOLOS DE COMUNICAÇÃO}
+
+A comunicação envolve a troca de uma série de mensagens entre duas entidades. Cada
+uma das partes envolvidas no diálogo supõe uma série de premissas a respeito das
+informações transmitidas e recebidas, como por exemplo a linguagem e o meio de
+transmissão. Caso os envolvidos não concordem em relação a estas premissas, não
+será possível estabelecer a comunicação.
+
+Restrições a respeito do formato, meios de transmissão, e ações a serem tomadas no
+envio e recebimento de mensagens são definidas por meio de protocolos. A partir do
+momento em que duas entidades sigam o mesmo protocolo, pode-se garantir que a
+comunicação será estabelecida. Assim como quaisquer outras entidades, componentes de
+\textit{hardware} e \textit{software} também estão sujeitos a protocolos de
+comunicação \cite{kurose2012}.
+
+No contexto da computação, redes computacionais são construídas com diferentes
+tecnologias de acordo com necessidades e restrições específicas, o que prejudica a
+capacidade de intercomunicação entre dos dispositivos \cite{comer2000}. A Internet,
+por exemplo, é uma coleção de outras redes que eventualmente utilizam diferentes
+tecnologias, como é o caso de redes seriais e transmissão a rádio
+\cite{tanenbaum2010}. Ainda que cada uma destas redes implemente um protocolo
+diferente, a intercomunicação pode ser realizada através de um outro protocolo em
+comum, com um maior nível de abstração a respeito das tecnologias subjacentes.
+% conferir na literatura e adicionar um exemplo 
+
+Também é importante indicar que protocolos definem apenas as regras envolvidas em
+uma troca de mensagens. Desde que as entidades cumpram as restrições, portanto
+adotando a interface proposta, a implementação dos serviços é arbitrária.
+
+Em alguns cenários, a intercomunicação é do interesse de um grande número de
+entidades que devem ser capazes de implementar a interface em seus próprios serviços
+a qualquer momento. Nestes casos, a padronização é um processo fundamental para
+incentivar a conformidade nais redes de comunicação através da popularização de um
+protocolos. Mesmo sem planejamento formal a respeito de uma especificação, um
+protocolo padrão (\textit{de facto}) começa a surgir com a adoção sucessiva pela
+comunidade. Eventualmente uma autoridade reconhecida também vai investir esforço na
+especificação de padrões (\textit{de jure}) \cite{tanenbaum2010}.
+
+\section{SUÍTES DE PROTOCOLOS}
+% utilização de protocolos em cooperação
+% suíte de protocolos
+
+% camadas, design de protocolos
+% processo de definição de um protocolo
+
+\section{PADRONIZAÇÃO DE PROTOCOLOS}
+% HTTP?
+% "padrões não são a única solução..."
+
+\subsection{SMTP}
+% caso específico do SMTP
+
+
+
+\section{PROTOCOLOS DE FEDERAÇÃO}
+
+% ----- revisar seção, sintetizar a descrição dos protocolos 
+% ----- Aproximar as descrições a uma investigação de protocolos, não plataformas
 
 Uma das motivações de sistemas federados trata da descentralização de informações, ao
 mesmo tempo em que são oferecidos mecanismos necessários para a integração de
@@ -13,16 +70,16 @@ diversos números de instâncias mantidas por entidades distintas, os benefício
 federação são de grande interesse da comunidade.
 
 Apesar do interesse em adicionar suporte à federação em sistemas abertos, não existe
-um padrão reconhecido pela comunidade de desenvolvimento [[[referencia?]]]... Como
+um padrão reconhecido pela comunidade de desenvolvimento [[[referencia?]]]. Como
 consequência, as aplicações atualmente federadas abordam os desafios intermediários
 do fluxo de integração através de tecnologias já difundidas, como \textit{feeds},
 \textit{APIs}, e mecanismos de troca de mensagens.
 
-A ausência de uma especificação leva os desenvolvedores a adotarem estratégias
-diferentes na implementação da federação, ainda que utilizando os mesmos mecanismos.
-Por outro lado, algumas implementações adquirem certa popularidade, tornando-se
-especificações de referência para outros sistemas, e garantindo um certo nível de
-interoperabilidade.
+A ausência de uma especificação padronizada leva os desenvolvedores a adotarem
+estratégias diferentes na implementação da federação, ainda que utilizando os mesmos
+mecanismos. Por outro lado, algumas implementações adquirem certa popularidade,
+tornando-se especificações de referência para outros sistemas, e garantindo um certo
+nível de interoperabilidade.
 
 O OStatus é um exemplo de especificação que, apesar de ter surgido como referência
 para o sistema que foi a se tornar o GNU Social, ganhou popularidade e também foi
@@ -38,7 +95,7 @@ referência. Compreendendo os protocolos existentes é possível indicar o estad
 iniciativas de sistemas federados, o que leva ao estado e às necessidades de
 interoperabilidade.
 
-\section{OStatus}
+\subsection{OSTATUS}
 
 O OStatus é uma especificação baseada em um conjunto de protocolos construída com a
 intenção de oferecer uma estrutura completa para a padronização e interação entre
@@ -56,7 +113,7 @@ federação, tornando-se alvo de um grupo de trabalho da W3C desde 2012. Apesar 
 ter apresentado maiores avanços nos últimos anos, ainda há interesse da comunidade em
 mantê-lo e utilizá-lo. 
 
-\subsection{PubSubHubbub}
+\subsubsection{PubSubHubbub}
 
 De forma a possibilitar as interações em tempo real previstas pelo  OStatus, é
 necessário utilizar algum tipo de mecanismo que, em combinação com o Atom, possa
@@ -79,7 +136,7 @@ HTTP, e identificadas por endereços URL. As notificações são baseadas na exe
 trechos arbitrários de código ativados a partir de \textit{endpoints} URL, seguindo a
 ideia de \textit{webhooks}.
 
-\subsection{WebFinger}
+\subsubsection{WebFinger}
 
 % referenciar a RFC 7033
 
@@ -107,7 +164,9 @@ notificar o usuário remoto, o usuário local deve primeiro obter as informaçõ
 necessárias (como por exemplo a URL do \textit{feed} público) através de uma
 requisição  WebFinger.
 
-\subsection{Activity Streams}
+\subsubsection{Activity Streams}
+
+% revisar
 
 O Activity Streams é uma especificação que propõe a padronização da representação de
 atividades em redes sociais que tenham interesse em oferecer mecanismos de
@@ -125,7 +184,7 @@ padrão Atom, com restrições semelhantes em relação ao conteúdo e formato d
 mensagens. O OStatus adota o protocolo especificado em Atom para o envio de entradas
 de Activity Streams.
 
-\subsection{Salmon}
+\subsubsection{Salmon}
 
 Combinar soluções como Atom e PubHubSub permitem que conteúdos sejam publicados e
 atualizados em tempo real. No entanto, a partir do ponto em que um conteúdo pode ser
@@ -149,7 +208,7 @@ estrutura XML assinada digitalmente. Ao Receber a mensagem, o servidor possui a
 liberdade de proceder conforme suas próprias políticas, desde que retorne uma
 resposta HTTP válida.
 
-\subsection{Fluxo do OStatus}
+\subsubsection{Fluxo do OStatus}
 
 Cada protocolo utilizado na especificação do OStatus possui uma responsabilidade
 específica no fluxo de comunicação. A [[[referenciar o diagrama]]] apresenta um
@@ -158,21 +217,26 @@ apontando o papel de cada um dos mecanismos intermediários.
 
 % diagrama do workflow do OStatus
 
-\begin{enumerate} \item{O usuário A descobre o endereço do servidor de origem do
-usuário B através do WebFinger} \item{O usuário A se inscreve no \textit{feed}
-público através do PubHubSub através do endereço obtido} \item{O usuário A envia uma
-nova entrada no formato Activity Streams através de uma mensagem Salmon para o
-usuário B, notificando-o da ação} \item{O servidor do usuário B atualiza sua lista de
-seguidores. Eventualmente, o usuário B publica um novo conteúdo, notificando os
-inscritos através do PubHubSub} \item{O usuário A recebe o \textit{feed} atualizado
-através do PubHubSub, e decide publicar um novo comentário. Uma nova entrada no
-\textit{feed} é criada em formato Activity Streams, e novamente enviada ao servidor
-original através de uma mensagem Salmon} \item{O servidor do usuário B recebe a
-mensagem, e registra um novo comentário, atualizando seu \textit{feed} e notificando
-novamente os seus inscritos} \end{enumerate}
+\begin{enumerate}
+  \item{O usuário A descobre o endereço do servidor de origem do usuário B através
+        do WebFinger}
+  \item{O usuário A se inscreve no \textit{feed} público através do PubHubSub
+        através do endereço obtido}
+  \item{O usuário A envia uma nova entrada no formato Activity Streams através de
+        uma mensagem Salmon para o usuário B, notificando-o da ação}
+  \item{O servidor do usuário B atualiza sua lista de seguidores. Eventualmente, o
+        usuário B publica um novo conteúdo, notificando os inscritos através do
+        PubHubSub}
+  \item{O usuário A recebe o \textit{feed} atualizado através do PubHubSub, e decide
+        publicar um novo comentário. Uma nova entrada no \textit{feed} é criada em
+        formato Activity Streams, e novamente enviada ao servidor original através
+        de uma mensagem Salmon}
+  \item{O servidor do usuário B recebe a mensagem, e registra um novo comentário,
+        atualizando seu \textit{feed} e notificando novamente os seus inscritos}
+\end{enumerate}
 
 
-\section{Diaspora}
+\subsection{DIASPORA}
 
 O projeto Diaspora surgiu com a intenção de implementar o conceito de redes sociais
 descentralizadas em resposta aos problemas de liberdade e privacidade encontrados em
@@ -199,7 +263,7 @@ leva em consideração a troca de mensagens em formato XML, respeitando alguns
 conceitos básicos como a existência de usuários remotos e atualização remota e
 retransmissão.
 
-\subsection{Usuários Remotos}
+\subsubsection{Usuários Remotos}
 
 Um conceito fundamental para a implementação de redes federadas é considerar a
 existência de usuários remotos. A maioria das aplicações só possui o conceito de
@@ -214,7 +278,7 @@ através dos mecanismos de federação. É importante prever a existência de us
 externos na modelagem de sistemas. Por este motivo, implementar federação em
 aplicações já consolidadas pode exigir um certo esforço de refatoração. % ref?
 
-\subsection{Capacidade de Retransmissão}
+\subsubsection{Capacidade de Retransmissão}
 
 A retransmissão é essencial em sistemas federados, visto que interações em uma rede
 eventualmente devem afetar \textit{pods} relacionados. A restrição implementada pelo
@@ -234,19 +298,23 @@ existência de \textbf{C}. A solução defendida pela implementação do Diaspor
 conteúdo seja compartilhado. Isso garante que todos os sistemas federados envolvidos
 em uma interação sejam notificados, contribuindo com consistência das informações.
 
-\subsection{Troca de Mensagens}
+\subsubsection{Troca de Mensagens}
 
 O Diaspora define um conjunto de mensagens que delimitam as possíveis interações
 entre \textit{pods}.
 
-\begin{itemize} \item{Compartilhamento de informações} \item{Publicações de conteúdo}
-\item{Comentários e reações a publicações} \item{Mensagens privadas} \end{itemize}
+\begin{itemize}
+  \item{Compartilhamento de informações}
+  \item{Publicações de conteúdo}
+  \item{Comentários e reações a publicações}
+  \item{Mensagens privadas}
+\end{itemize}
 
 A troca de mensagens segue a definição do protocolo Diaspora, que utiliza um
 subconjunto do protocolo Salmon. De modo geral, restringe como a mensagem deve ser
 construída e enviada para o \textit{endpoint} Salmon do \textit{pod} de destino. 
 
-\subsection{Fluxo do Protocolo Diaspora}
+\subsubsection{Fluxo do Protocolo Diaspora}
 
 O protocolo Diaspora cobre tanto a descoberta de identidades entre os servidores,
 quanto o envio e recebimento de informações. De forma análoga ao OStatus, parte da
@@ -259,19 +327,27 @@ O diagrama da [[[figura]]] representa o fluxo de uma interação entre dois usu�
 
 % diagrama do workflow do Diaspora
 
-% revisar o fluxo do protocolo \begin{enumerate} \item{O usuário A deseja seguir o
-\textit{feed} do usuário B localizado em outro \textit{hub} do Diaspora. O primeiro
-passo é descobrir o WebFinger de B através das informações de seu \textit{hub}, e
-solicitar o seu perfil} \item{O \textit{hub} do usuário B responde com o perfil
-WebFinger de B, que além de suas informações inclui uma URL do seu \textit{feed} em
-Activity Streams, e uma chave pública RSA para a troca de mensagens} \item{O usuário
-A cria uma nova mensagem solicitando o compartilhamento e a envia por meio de Salmon
-para o usuário B} \item{O usuário B começa a compartilhar suas publicações com A,
-enviando uma nova mensagem Salmon a cada nova publicação} \item{O usuário A recebe a
-nova publicação, e decide enviar um novo comentário.  uma nova mensagem Activity
-Streams é construída e enviada por meio de Salmon para o \textit{hub} original}
-\item{O usuário B recebe o comentário de A, e notifica todos os outros \textit{hubs}
-inscritos na mesma publicação} \end{enumerate}
+% revisar o fluxo do protocolo
 
+\begin{enumerate}
+  \item{O usuário A deseja seguir o \textit{feed} do usuário B localizado em outro
+        \textit{hub} do Diaspora. O primeiro passo é descobrir o WebFinger de B
+        através das informações de seu \textit{hub}, e solicitar o seu perfil}
+  \item{O \textit{hub} do usuário B responde com o perfil WebFinger de B, que além
+        de suas informações inclui uma URL do seu \textit{feed} em Activity Streams,
+        e uma chave pública RSA para a troca de mensagens}
+  \item{O usuário A cria uma nova mensagem solicitando o compartilhamento e a envia
+        por meio de Salmon para o usuário B}
+  \item{O usuário B começa a compartilhar suas publicações com A, enviando uma nova
+        mensagem Salmon a cada nova publicação}
+  \item{O usuário A recebe a nova publicação, e decide enviar um novo comentário.
+        Uma nova mensagem Activity Streams é construída e enviada por meio de Salmon
+        para o \textit{hub} original}
+  \item{O usuário B recebe o comentário de A, e notifica todos os outros
+        \textit{hubs} inscritos na mesma publicação}
+\end{enumerate}
 
-\section{Demais Iniciativas}
+\subsection{Demais iniciativas}
+
+% Adoção dos protocolos
+% Discussões, problemas...
