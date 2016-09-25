@@ -4,7 +4,7 @@ A comunicação envolve a troca de uma série de mensagens entre duas entidades.
 uma das partes envolvidas no diálogo supõe uma série de premissas a respeito das
 informações transmitidas e recebidas, como por exemplo a linguagem e o meio de
 transmissão. Caso os envolvidos não concordem em relação a estas premissas, não
-será possível estabelecer a comunicação.
+será possível estabelecer uma comunicação adequada.
 
 Restrições a respeito do formato, meios de transmissão, e ações a serem tomadas no
 envio e recebimento de mensagens são definidas por meio de protocolos. A partir do
@@ -13,19 +13,77 @@ comunicação será estabelecida. Assim como quaisquer outras entidades, compone
 \textit{hardware} e \textit{software} também estão sujeitos a protocolos de
 comunicação \cite{kurose2012}.
 
-No contexto da computação, redes computacionais são construídas com diferentes
-tecnologias de acordo com necessidades e restrições específicas, o que prejudica a
-capacidade de intercomunicação entre dos dispositivos \cite{comer2000}. A Internet,
-por exemplo, é uma coleção de outras redes que eventualmente utilizam diferentes
-tecnologias, como é o caso de redes seriais e transmissão a rádio
-\cite{tanenbaum2010}. Ainda que cada uma destas redes implemente um protocolo
-diferente, a intercomunicação pode ser realizada através de um outro protocolo em
-comum, com um maior nível de abstração a respeito das tecnologias subjacentes.
-% conferir na literatura e adicionar um exemplo 
-
 Também é importante indicar que protocolos definem apenas as regras envolvidas em
 uma troca de mensagens. Desde que as entidades cumpram as restrições, portanto
-adotando a interface proposta, a implementação dos serviços é arbitrária.
+adotando a interface proposta, a implementação dos serviços se torna arbitrária.
+
+\section{SUÍTES DE PROTOCOLOS}
+
+No contexto da computação, redes de comunicação são construídas com diferentes
+tecnologias de acordo com necessidades e restrições específicas, o que prejudica a
+capacidade de intercomunicação entre dispositivos \cite{comer2000}. A Internet, por
+exemplo, é uma coleção de redes menores que eventualmente utilizam tecnologias
+diferentes, como é o caso de redes seriais, linhas telefônicas, e transmissão a
+rádio \cite{tanenbaum2010}. Um desafio diferente é alcançar a intercomunicação em
+um sistema complexo como tal, onde as redes que o compõem utilizam seus próprios
+protocolos, desta vez específicos ao meio de transmissão.
+
+% intercomunicação no nível da rede e no nível da aplicação (Comer pag 54)
+% observações a respeito do design de redes (Comer pag 55)
+
+A estratégia para garantir intercomunicação entre sistemas que respeitem
+especificações distintas foi adotar um modelo de camadas no projeto dos protocolos
+de redes. Com esta metodologia, protocolos são organizados em uma hierarquia de
+camadas de acordo com seus objetivos. Cada camada utiliza os serviços do nível
+anterior e oferece novos serviços a partir de um nível de abstração mais elevado. A
+interface entre as camadas deve ser bem definida, o que significa que componentes de
+\textit{hardware} ou \textit{software} que implementem um padrão não precisam se
+atentar às restrições dos protocolos das camadas adjacentes \cite{kurose2012}.
+
+Um modelo de camadas permite que uma especificação permita a comunicação mesmo entre
+redes que utilizem diferentes meios de transmissão. O IP é um exemplo de protocolo
+que garante a comunicação entre dispositivos sobre diversos meios físicos, como
+rádio, fibra óptica \cite{tanenbaum2010}, ou até mesmo pombos-correio
+\cite{rfc1149}.
+
+O TCP/IP, também conhecido como a suíte de protocolos da Internet, foi definido com
+base em um modelo de camadas para satisfazer as necessidades de interoperabilidade
+do sistema de comunicação que estava sendo construído, as quais não eram satisfeitas
+por nenhum dos padrões que existiam até então. O TCP/IP propõe um conjunto de
+protocolos  que são organizado em uma hierarquia de camadas e trabalham
+cooperativamente para tornar possível a comunicação entre redes distintas
+interconectadas \cite{comer2000}.
+
+[--- imagem camadas de procolo ---]
+
+Em um modelo de camadas, as mensagens são enviadas de camada superior a camada
+superior, o que faz com que sejam transferidas entre as camadas em ordem contrária
+na transmissão e recepção. No modelo TCP/IP, no momento do envio uma mensagem é
+transmitida da camada de aplicação à camada inferior, o que acontece sucessivamente
+até que o pacote alcance o destino por meio de algum meio de transmissão. No
+destinatário, a mensagem é transmitida sucessivamente à camada superior, até
+alcançar a camada de aplicação novamente.
+
+[--- imagem do encapsulamento (kurose) ---]
+
+Cada camada trabalha sobre pacotes, adicionando informações necessárias (cabeçalhos)
+para o seu trabalho no envio, e removendo-os no recebimento. Os pacotes consistem em
+um conjunto de dados transportados (\textit{payload}) e um cabeçalho, utilizado
+apenas no nível da mesma camada. Ao adicionar um cabeçalho ao \textit{payload}
+recebido pela camada superior, ou remover o cabeçalho e transmitir apenas o conteúdo
+para a camada superior, as camadas são capazes de trabalhar cooperativamente, e
+manter um diálogo com o protocolo do nível respectivo das outras entidades
+envolvidas na comunicação.
+
+% Encontrar um exemplo ou usar o OStatus + referência
+Apesar deste processo descrever a interação entre os protocolos organizados em um
+modelo de camadas, uma estratégia semelhante é utilizada em outros conjuntos de
+protocolos. Uma família de protocolos da camada de aplicação, por exemplo, não
+seguem nenhum dos modelos de camadas de redes de comunicação, mas ainda assim
+utilizam os conceitos de hierarquia e encapsulamento de mensagens para garantir
+interoperabilidade e cumprir uma tarefa específica em conjunto.
+
+\section{PADRONIZAÇÃO DE PROTOCOLOS}
 
 Em alguns cenários, a intercomunicação é do interesse de um grande número de
 entidades que devem ser capazes de implementar a interface em seus próprios serviços
@@ -36,14 +94,10 @@ protocolo padrão (\textit{de facto}) começa a surgir com a adoção sucessiva 
 comunidade. Eventualmente uma autoridade reconhecida também vai investir esforço na
 especificação de padrões (\textit{de jure}) \cite{tanenbaum2010}.
 
-\section{SUÍTES DE PROTOCOLOS}
-% utilização de protocolos em cooperação
-% suíte de protocolos
+% kurose página 32
+% Tanenbaum pgs 104 105
+% rfc 1280
 
-% camadas, design de protocolos
-% processo de definição de um protocolo
-
-\section{PADRONIZAÇÃO DE PROTOCOLOS}
 % HTTP?
 % "padrões não são a única solução..."
 
