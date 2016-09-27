@@ -38,7 +38,6 @@ redes de comunicação:
   \item{Usuários desejam intercomunicação universal.}
 \end{enumerate}
 
-% intercomunicação no nível da rede e no nível da aplicação (Comer pag 54)
 A intercomunicação pode ser implementada tanto no nível das aplicações quanto no
 nível da rede. A implementação no nível da aplicação deve prever as especificidades
 das tecnologias de rede envolvidas, o que a torna complexa ou até mesmo impossível
@@ -102,16 +101,29 @@ interoperabilidade e cumprir uma tarefa específica em conjunto.
 
 \section{PADRONIZAÇÃO DE PROTOCOLOS}
 
-Em alguns cenários, a intercomunicação é do interesse de um grande número de
-entidades que devem ser capazes de implementar a interface em seus próprios serviços
-a qualquer momento. Nestes casos, a padronização é um processo fundamental para
-incentivar a conformidade nais redes de comunicação através da popularização de um
-protocolos. Mesmo sem planejamento formal a respeito de uma especificação, um
-protocolo padrão (\textit{de facto}) começa a surgir com a adoção sucessiva pela
-comunidade. Eventualmente uma autoridade reconhecida também vai investir esforço na
-especificação de padrões (\textit{de jure}) \cite{tanenbaum2010}.
+A definição de protocolos é apenas o primeiro passo para alcançar a intercomunicação
+entre sistemas. Se não existir um acordo a respeito das especificações utilizadas
+será mais difícil estabelecer a comunicação entre serviços \cite{kurose2012}. A
+padronização de protocolos garante que um acordo exista, e que as implementações
+sejam realizadas de maneira uniforme.
 
-% kurose página 32
+A partir do momento em que uma série de entidades entra em consenso a respeito da
+mesma especificação de um protocolo, estabelece-se um protocolo \textit{de facto}.
+Em contraste, os padrões \textit{de jure} são estabelecidos a partir de uma entidade
+regulamentadora, como a Organização Internacional para a Padronização, ou a
+\textit{Internet Engineering Task Force} \cite{tanenbaum2010}.
+
+% The emergence of norms
+% diferença de jure x de facto
+
+% adicionar referência
+A existência de padrões estimula o desenvolvimento de serviços que adotem protocolos
+já bem aceitos e estabelecidos, o que reforça a capacidade de interoperabilidade dos
+sistemas. Por outro lado, a ausência de um padrão leva ao desenvolvimento de
+protocolos redundantes, visto que sistemas tendem a propor abordagens de comunicação
+orientadas às próprias restrições.
+ 
+
 % Tanenbaum pgs 104 105
 % rfc 1280
 
