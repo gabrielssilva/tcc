@@ -46,16 +46,16 @@ a partir do \textit{hardware} e prioriza o transporte de pacotes menores entre
 entidades sem a necessidade de programas intermediários. Neste caso, não há
 necessidade em compreender as aplicações em comunicação, que por sua vez podem ser
 implementadas com maior flexibilidade a partir de um nível de abstração mais elevado
-\cite{comer 2000}.
+\cite{comer2000}.
 
-A intercomunicação no nível de rede é baseada na adoção de um modelo de camadas no
-projeto das rede de computadores. Com esta metodologia os protocolos são organizados
-em uma hierarquia de camadas de acordo com seus objetivos. Cada camada utiliza os
-serviços do nível anterior e oferece novos serviços a partir de um nível de
-abstração mais elevado. A interface entre as camadas deve ser bem definida, o que
-significa que componentes de \textit{hardware} ou \textit{software} que implementem
-um padrão não precisam se atentar às restrições dos protocolos das camadas
-subjacentes \cite{kurose2012}.
+A intercomunicação no nível de rede (ou simplesmente internet \cite{comer2000}) é
+baseada na adoção de um modelo de camadas no projeto das rede de computadores. Com
+esta metodologia os protocolos são organizados em uma hierarquia de camadas de
+acordo com seus objetivos. Cada camada utiliza os serviços do nível anterior e
+oferece novas funcionalidades a partir de um nível de abstração mais elevado. A
+interface entre as camadas deve ser bem definida, o que significa que componentes de
+\textit{hardware} ou \textit{software} que implementem um padrão não precisam se
+atentar às restrições dos protocolos das camadas subjacentes \cite{kurose2012}.
 
 Um modelo de camadas leva uma especificação permita a comunicação mesmo entre redes
 que utilizem diferentes meios de transmissão. O IP é um exemplo de protocolo que
@@ -108,27 +108,30 @@ padronização de protocolos garante que um acordo exista, e que as implementaç
 sejam realizadas de maneira uniforme.
 
 A partir do momento em que uma série de entidades entra em consenso a respeito da
-mesma especificação de um protocolo, estabelece-se um protocolo \textit{de facto}.
-Em contraste, os padrões \textit{de jure} são estabelecidos a partir de uma entidade
-regulamentadora, como a Organização Internacional para a Padronização, ou a
-\textit{Internet Engineering Task Force} \cite{tanenbaum2010}.
+especificação de um protocolo, estabelece-se um padrão \textit{de facto}. Quando a
+iniciativa de padronização surge por parte de entidades regulamentadoras, como a
+Organização Internacional para a Padronização (ISO), ou a \textit{Internet
+Engineering Task Force} (IETF), estabelecem-se padrões \textit{de jure}
+\cite{tanenbaum2010}.
 
-% The emergence of norms
-% diferença de jure x de facto
+O conceito de efeito de rede indica que a adoção de um protocolo se torna mais
+valiosa à medida que um maior número de entidades também o utilize
+\cite{liebowitz1998}. Justifica-se portanto o interesse em incentivar a padronização
+de protocolos através de entidades regulamentadoras.
 
-% adicionar referência
-A existência de padrões estimula o desenvolvimento de serviços que adotem protocolos
-já bem aceitos e estabelecidos, o que reforça a capacidade de interoperabilidade dos
-sistemas. Por outro lado, a ausência de um padrão leva ao desenvolvimento de
-protocolos redundantes, visto que sistemas tendem a propor abordagens de comunicação
-orientadas às próprias restrições.
- 
+O processo de definição de novos padrões \textit{de jure} depende da entidade
+regulamentadora relacionada, e ocasionalmente parte de padrões \textit{de facto} já
+utilizados na comunidade. Geralmente um protocolo é proposto, projetado, e revisado
+pela entidade antes de se tornar um padrão, o que pode levar de seis meses a alguns
+anos no caso da ISO \cite{tanenbaum2010}. Entidades também recomendam formalmente
+padrões definidos por outras organizações.
 
-% Tanenbaum pgs 104 105
-% rfc 1280
-
-% HTTP?
-% "padrões não são a única solução..."
+Padrões, propostas e rascunhos devem ser documentados em algum tipo de publicação. A
+IETF adota o formato de \textit{Request for Comments} (RFC), memorandos que
+descrevem os formatos e padrões de um protocolo, e estão sujeitos à consulta da
+comunidade e revisão por pares. Ainda no caso da IETF, novos padrões de internet
+são aceitos apenas mediante prova técnica de conceito, como demonstração de
+interoperabilidade entre duas ou mais implementações distintas \cite{rfc1280}.
 
 \subsection{SMTP}
 % caso específico do SMTP
@@ -136,6 +139,9 @@ orientadas às próprias restrições.
 
 
 \section{PROTOCOLOS DE FEDERAÇÃO}
+
+% efeito de rede
+% apresentar W3C em algum lugar
 
 % ----- revisar seção, sintetizar a descrição dos protocolos 
 % ----- Aproximar as descrições a uma investigação de protocolos, não plataformas
