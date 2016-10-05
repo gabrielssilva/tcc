@@ -70,8 +70,6 @@ protocolos  que são organizado em uma hierarquia de camadas e trabalham
 cooperativamente para tornar possível a comunicação entre redes distintas
 interconectadas \cite{comer2000}.
 
-[--- imagem camadas de procolo ---]
-
 Em um modelo de camadas, as mensagens são enviadas de camada superior a camada
 superior, o que faz com que sejam transferidas entre as camadas em ordem contrária
 na transmissão e recepção. No modelo TCP/IP, no momento do envio uma mensagem é
@@ -80,7 +78,12 @@ até que o pacote alcance o destino por meio de algum meio de transmissão. No
 destinatário, a mensagem é transmitida sucessivamente à camada superior, até
 alcançar a camada de aplicação novamente.
 
-[--- imagem do encapsulamento (kurose) ---]
+\begin{figure}[h]
+	\centering
+		\includegraphics[keepaspectratio=true,scale=0.6]{figuras/encapsulamento.eps}
+	\caption{Encapsulamento de mensagens em um modelo de camadas \cite{kurose2012}}
+	\label{fig:encapsulamento}
+\end{figure}
 
 Cada camada trabalha sobre pacotes, adicionando informações necessárias (cabeçalhos)
 para o seu trabalho no envio, e removendo-os no recebimento. Os pacotes consistem em
@@ -89,7 +92,8 @@ apenas no nível da mesma camada. Ao adicionar um cabeçalho ao \textit{payload}
 recebido pela camada superior, ou remover o cabeçalho e transmitir apenas o conteúdo
 para a camada superior, as camadas são capazes de trabalhar cooperativamente, e
 manter um diálogo com o protocolo do nível respectivo das outras entidades
-envolvidas na comunicação.
+envolvidas na comunicação. A figura \ref{fig:encapsulamento} mostra este processo no
+contexto do TCP/IP.
 
 % Encontrar um exemplo ou usar o OStatus + referência
 Apesar deste processo descrever a interação entre os protocolos organizados em um
@@ -133,24 +137,79 @@ comunidade e revisão por pares. Ainda no caso da IETF, novos padrões de intern
 são aceitos apenas mediante prova técnica de conceito, como demonstração de
 interoperabilidade entre duas ou mais implementações distintas \cite{rfc1280}.
 
-\subsection{SMTP}
-% caso específico do SMTP
+% O que é necessário para que um protocolo se torne um padrão?
+% como identificar se um protocolo é interoperável?
 
+\subsection{Simple Mail Transfer Protocol}
 
+A troca de mensagens na internet é um problema recorrente, envolve as questões de
+interoperabilidade entre redes, e depende da adoção de padrões para a comunicação
+entre serviços. O esforço de especificação acontece desde a década de 70 com o
+\textit{Mail Box Protocol}, e continua desde a definição do \textit{Simple Mail
+Transfer Protocol}.
+
+O SMTP é um protocolo para o transporte e entrega de mensagens de e-mail entre
+processos. A especificação garante que a troca de mensagens aconteça entre clientes
+que se localizam em redes diferentes, o que permite a construção de um serviço que
+funcione de maneira confiável sobre a internet \cite{rfc2821}. Trata-se de um
+protocolo amplamente adotado e formalmente padronizado desde 1982, portanto
+interessante para ser analisado no contexto do estabelecimento de padrões.
+
+Caracterizado como um protocolo orientado a conexões entre clientes e servidores, ou
+transmissores e receptores, o SMTP é guiado por uma série de comandos predefinidos.
+Os servidores também são responsáveis por retransmitir mensagens, caso não sejam os
+destinatários finais \cite{kurose2012}.
+
+A troca de mensagens geralmente acontece em um único salto após o estabelecimento de
+uma conexão orientada entre o remetente e o destinatário. A retransmissão de
+mensagens é uma alternativa que deve ser explicitamente utilizada, por exemplo em
+casos em que um usuário moveu sua caixa de e-mails de um servidor para outro e
+deseja receber as mensagens no seu novo endereço.
+
+\begin{figure}[h]
+	\centering
+		\includegraphics[keepaspectratio=true,scale=0.6]{figuras/smpt_internet.eps}
+	\caption{Uma visão geral de um sistema de e-mails \cite{kurose2012}}
+	\label{fig:smtpInternet}
+\end{figure}
+
+Como pode ser visto na figura \ref{fig:smtpInternet}, o SMTP é um protocolo
+intermediário entre servidores de e-mail que alternam entre os papéis de transmissor
+e receptor. Cada um destes servidores fornece a seus próprios clientes, constituindo
+sistemas menores onde a interação não é necessariamente coberta pela especificação
+do SMTP.
+
+Cada um destes sistemas intermediários não é necessariamente compatível, visto que a
+comunicação entre o servidor e o usuário depende das aplicações envolvidas, e
+eventualmente utiliza outros padrões, como por exemplo POP3 ou IMAP no gerenciamento
+de caixas de e-mail pessoais \cite{tanenbaum2010}. A organização deste esquema é um
+exemplo de como a utilização de um padrão possibilita a comunicação em um sistema
+heterogêneo.
+
+Ainda levando em consideração a organização descentralizada apresentada pela figura
+\ref{fig:smtpInternet}, pode-se indicar a semelhança com o formato de sistemas
+federados. Qualquer novo sistema capaz de implementar a especificação do SMTP
+torna-se parte da federação, onde a heterogeneidade entre os sistemas é
+completamente transparente para os usuários do serviço.
+
+O SMTP foi definido em publicações da IETF, tendo sido proposto com base em
+especificações anteriores. Trata-se de um padrão \textit{de jure} aberto, endossado
+por uma organização e então adotado pelo mercado.
 
 \section{PROTOCOLOS DE FEDERAÇÃO}
 
 % efeito de rede
-% apresentar W3C em algum lugar
 
 % ----- revisar seção, sintetizar a descrição dos protocolos 
 % ----- Aproximar as descrições a uma investigação de protocolos, não plataformas
 
-Uma das motivações de sistemas federados trata da descentralização de informações, ao
-mesmo tempo em que são oferecidos mecanismos necessários para a integração de
+% mover para a introdução
+Uma das motivações de sistemas federados trata da descentralização de informações,
+ao mesmo tempo em que são oferecidos mecanismos necessários para a integração de
 diversas fontes de conteúdo. Em consequência disto, a federação de sistemas provoca
 impacto sobre a liberdade no controle de informações e privacidade dos usuários.
 
+% mover para a introdução
 Enquanto estes argumentos não fazem sentido em uma rede social popular, em que os
 serviços sejam controlados por uma única entidade, são significativos para redes que
 podem ser mantidas por entidades independentes, o que engloba aplicações de
@@ -158,6 +217,7 @@ podem ser mantidas por entidades independentes, o que engloba aplicações de
 diversos números de instâncias mantidas por entidades distintas, os benefícios da
 federação são de grande interesse da comunidade.
 
+% Comentar a respeito da inexistência dos padrões para federação
 Apesar do interesse em adicionar suporte à federação em sistemas abertos, não existe
 um padrão reconhecido pela comunidade de desenvolvimento [[[referencia?]]]. Como
 consequência, as aplicações atualmente federadas abordam os desafios intermediários
@@ -197,10 +257,20 @@ em tempo real. A ideia do OStatus é combinar \textit{feeds} Atom com uma série
 mecanismos capazes de permitir identidade, confiabilidade na comunicação entre os
 servidores.
 
+% listar protocolos que são parte da suíte e responsabilidades
+\begin{itemize}
+  \item{PubSubHubbub: mecanismo de inscrição e submissão}
+  \item{WebFinger: descoberta de identidade}
+  \item{Activity Streams: representação de atividades de usuários em redes sociais}
+  \item{Salmon: descentralização de trocas de mensagens}
+\end{itemize}
+
 O projeto conta com uma das maiores iniciativas de padronização de protocolos de
-federação, tornando-se alvo de um grupo de trabalho da W3C desde 2012. Apesar de não
-ter apresentado maiores avanços nos últimos anos, ainda há interesse da comunidade em
-mantê-lo e utilizá-lo. 
+federação, tornando-se alvo de um grupo de trabalho da W3C, uma das maiores
+organizações de padronização para a \textit{web}, desde 2012. Apesar disto, o grupo
+não apresentou avanços nos últimos anos, e não existe uma discussão ativa a respeito
+do projeto.
+
 
 \subsubsection{PubSubHubbub}
 
@@ -255,7 +325,7 @@ requisição  WebFinger.
 
 \subsubsection{Activity Streams}
 
-% revisar
+% reescrever o objetivo/funcionamento do protocolo 
 
 O Activity Streams é uma especificação que propõe a padronização da representação de
 atividades em redes sociais que tenham interesse em oferecer mecanismos de
@@ -274,6 +344,8 @@ mensagens. O OStatus adota o protocolo especificado em Atom para o envio de entr
 de Activity Streams.
 
 \subsubsection{Salmon}
+
+% reescrever o objetivo/funcionamento do protocolo 
 
 Combinar soluções como Atom e PubHubSub permitem que conteúdos sejam publicados e
 atualizados em tempo real. No entanto, a partir do ponto em que um conteúdo pode ser
