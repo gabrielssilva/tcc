@@ -8,14 +8,16 @@ será possível estabelecer uma comunicação adequada.
 
 Restrições a respeito do formato, meios de transmissão, e ações a serem tomadas no
 envio e recebimento de mensagens são definidas por meio de protocolos. A partir do
-momento em que duas entidades sigam o mesmo protocolo, pode-se garantir que a
-comunicação será estabelecida. Assim como quaisquer outras entidades, componentes de
+momento em que duas entidades seguem o mesmo protocolo, pode-se garantir que a
+comunicação será estabelecida. Assim como qualquer outra entidade, componentes de
 \textit{hardware} e \textit{software} também estão sujeitos a protocolos de
 comunicação \cite{kurose2012}.
 
 Também é importante indicar que protocolos definem apenas as regras envolvidas em
 uma troca de mensagens. Desde que as entidades cumpram as restrições, portanto
-adotando a interface proposta, a implementação dos serviços se torna arbitrária.
+adotando a interface proposta, a estratégia de implementação se torna arbitrária.
+
+
 
 \section{SUÍTES DE PROTOCOLOS}
 
@@ -23,9 +25,9 @@ No contexto da computação, redes de comunicação são construídas com difere
 tecnologias de acordo com necessidades e restrições específicas, o que prejudica a
 capacidade de intercomunicação entre dispositivos \cite{comer2000}. A Internet, por
 exemplo, é uma coleção de redes menores que eventualmente utilizam tecnologias
-diferentes, como é o caso de redes seriais, linhas telefônicas, e transmissão a
-rádio \cite{tanenbaum2010}. Um desafio diferente é alcançar a intercomunicação em
-um sistema complexo como tal, onde as redes que o compõem utilizam seus próprios
+diferentes, como é o caso de linhas telefônicas, e transmissão a rádio
+\cite{tanenbaum2010}. Um desafio diferente é alcançar a intercomunicação em um
+sistema complexo como tal, onde as redes que o compõem utilizam seus próprios
 protocolos, desta vez específicos ao meio de transmissão.
 
 De acordo com \cite{comer2000}, existem duas observações fundamentais ao projeto de
@@ -50,33 +52,25 @@ implementadas com maior flexibilidade a partir de um nível de abstração mais 
 
 A intercomunicação no nível de rede (ou simplesmente internet \cite{comer2000}) é
 baseada na adoção de um modelo de camadas no projeto das rede de computadores. Com
-esta metodologia os protocolos são organizados em uma hierarquia de camadas de
-acordo com seus objetivos. Cada camada utiliza os serviços do nível anterior e
-oferece novas funcionalidades a partir de um nível de abstração mais elevado. A
-interface entre as camadas deve ser bem definida, o que significa que componentes de
-\textit{hardware} ou \textit{software} que implementem um padrão não precisam se
-atentar às restrições dos protocolos das camadas subjacentes \cite{kurose2012}.
+esta metodologia os protocolos são organizados em uma hierarquia vertical, de acordo
+com seus objetivos. Cada camada utiliza os serviços do nível anterior e oferece
+novas funcionalidades a partir de um nível de abstração mais elevado. A interface
+entre as camadas deve ser bem definida, o que significa que componentes que
+implementam um padrão não precisam se atentar às restrições dos protocolos das
+camadas subjacentes \cite{kurose2012}.
 
-Um modelo de camadas leva uma especificação permita a comunicação mesmo entre redes
-que utilizem diferentes meios de transmissão. O IP é um exemplo de protocolo que
-garante a comunicação entre dispositivos sobre diversos meios físicos, como rádio,
-fibra óptica \cite{tanenbaum2010}, ou até mesmo pombos-correio \cite{rfc1149}.
+O TCP/IP, também conhecido como a suíte de protocolos da Internet, surgiu para
+satisfazer as necessidades de interoperabilidade em um sistema de redes heterogêneo,
+as quais não eram satisfeitas por nenhum dos padrões que existiam até então. O
+conjunto de protocolos da Internet trabalha cooperativamente em um modelo de
+camadas, tornando possível a comunicação entre redes distintas e interconectadas
+\cite{comer2000}.
 
-O TCP/IP, também conhecido como a suíte de protocolos da Internet, foi definido com
-base em um modelo de camadas para satisfazer as necessidades de interoperabilidade
-do sistema de comunicação que estava sendo construído, as quais não eram satisfeitas
-por nenhum dos padrões que existiam até então. O TCP/IP propõe um conjunto de
-protocolos  que são organizado em uma hierarquia de camadas e trabalham
-cooperativamente para tornar possível a comunicação entre redes distintas
-interconectadas \cite{comer2000}.
-
-Em um modelo de camadas, as mensagens são enviadas de camada superior a camada
-superior, o que faz com que sejam transferidas entre as camadas em ordem contrária
-na transmissão e recepção. No modelo TCP/IP, no momento do envio uma mensagem é
-transmitida da camada de aplicação à camada inferior, o que acontece sucessivamente
-até que o pacote alcance o destino por meio de algum meio de transmissão. No
-destinatário, a mensagem é transmitida sucessivamente à camada superior, até
-alcançar a camada de aplicação novamente.
+Em uma hierarquia de camadas, as mensagens são enviadas sucessivamente da camada
+mais superior até a camada mais inferior durante a transmissão, o inverso do que
+acontece no recebimento. As camadas mais inferiores do transmissor e destinatário
+são conectadas entre si através de um meio de transmissão arbitrário, o que leva
+garante abstração do meio físico às camadas superiores.
 
 \begin{figure}[h]
 	\centering
@@ -88,57 +82,57 @@ alcançar a camada de aplicação novamente.
 Cada camada trabalha sobre pacotes, adicionando informações necessárias (cabeçalhos)
 para o seu trabalho no envio, e removendo-os no recebimento. Os pacotes consistem em
 um conjunto de dados transportados (\textit{payload}) e um cabeçalho, utilizado
-apenas no nível da mesma camada. Ao adicionar um cabeçalho ao \textit{payload}
-recebido pela camada superior, ou remover o cabeçalho e transmitir apenas o conteúdo
-para a camada superior, as camadas são capazes de trabalhar cooperativamente, e
-manter um diálogo com o protocolo do nível respectivo das outras entidades
-envolvidas na comunicação. A figura \ref{fig:encapsulamento} mostra este processo no
-contexto do TCP/IP.
+apenas no nível da mesma camada. Os cabeçalhos permitem que as camadas trabalhem
+em cooperação, mantendo um diálogo consistente com o protocolo do nível respectivo
+das entidades envolvidas na comunicação. A figura \ref{fig:encapsulamento} mostra
+este processo no contexto do TCP/IP.
 
 % Encontrar um exemplo ou usar o OStatus + referência
 Apesar deste processo descrever a interação entre os protocolos organizados em um
-modelo de camadas, uma estratégia semelhante é utilizada em outros conjuntos de
-protocolos. Uma família de protocolos da camada de aplicação, por exemplo, não
-segue nenhum dos modelos de camadas de redes de comunicação, mas ainda assim utiliza
-os conceitos de hierarquia e encapsulamento de mensagens para garantir
-interoperabilidade e cumprir uma tarefa específica em conjunto.
+modelo de camadas, uma estratégia semelhante é utilizada em outras suítes. Uma
+família de protocolos da camada de aplicação, por exemplo, não segue nenhum dos
+modelos de camadas de redes de comunicação, mas ainda assim utiliza os conceitos de
+hierarquia e encapsulamento para garantir interoperabilidade e cumprir uma tarefa
+específica em conjunto.
+
+
 
 \section{PADRONIZAÇÃO DE PROTOCOLOS}
 
-A definição de protocolos é apenas o primeiro passo para alcançar a intercomunicação
-entre sistemas. Se não existir um acordo a respeito das especificações utilizadas
-será mais difícil estabelecer a comunicação entre serviços \cite{kurose2012}. A
-padronização de protocolos garante que um acordo exista, e que as implementações
-sejam realizadas de maneira uniforme.
+A definição de protocolos é apenas o primeiro passo para a intercomunicação de
+sistemas. Se não existir um acordo a respeito da especificação utilizada será mais
+difícil estabelecer a comunicação entre serviços \cite{kurose2012}. A padronização
+garante o estabelecimento deste acordo.
 
 A partir do momento em que uma série de entidades entra em consenso a respeito da
-especificação de um protocolo, estabelece-se um padrão \textit{de facto}. Quando a
-iniciativa de padronização surge por parte de entidades regulamentadoras, como a
-Organização Internacional para a Padronização (ISO), ou a \textit{Internet
-Engineering Task Force} (IETF), estabelecem-se padrões \textit{de jure}
-\cite{tanenbaum2010}.
+especificação de um protocolo, estabelece-se um padrão \textit{de facto}. A
+iniciativa de padronização também pode surgir através de entidades regulamentadoras,
+como a Organização Internacional para a Padronização (ISO), ou a \textit{Internet
+Engineering Task Force} (IETF), o que leva ao estabelecimento padrões \textit{de
+jure} \cite{tanenbaum2010}.
 
 O conceito de efeito de rede indica que a adoção de um protocolo se torna mais
 valiosa à medida que um maior número de entidades também o utilize
 \cite{liebowitz1998}. Justifica-se portanto o interesse em incentivar a padronização
-de protocolos através de entidades regulamentadoras.
+de protocolos.
 
 O processo de definição de novos padrões \textit{de jure} depende da entidade
 regulamentadora relacionada, e ocasionalmente parte de padrões \textit{de facto} já
-utilizados na comunidade. Geralmente um protocolo é proposto, projetado, e revisado
-pela entidade antes de se tornar um padrão, o que pode levar de seis meses a alguns
-anos no caso da ISO \cite{tanenbaum2010}. Entidades também recomendam formalmente
-padrões definidos por outras organizações.
+utilizados na comunidade. Geralmente uma especificação é proposta, discutida, e
+revisada pela entidade antes de se tornar um padrão, o que no caso da ISO pode levar
+de seis meses a alguns anos \cite{tanenbaum2010}.
 
-Padrões, propostas e rascunhos devem ser documentados em algum tipo de publicação. A
-IETF adota o formato de \textit{Request for Comments} (RFC), memorandos que
-descrevem os formatos e padrões de um protocolo, e estão sujeitos à consulta da
-comunidade e revisão por pares. Ainda no caso da IETF, novos padrões de internet
-são aceitos apenas mediante prova técnica de conceito, como demonstração de
-interoperabilidade entre duas ou mais implementações distintas \cite{rfc1280}.
+Propostas e padrões estabelecidos devem ser documentados de alguma forma. A IETF
+adota o formato de \textit{Request for Comments} (RFC), publicações que descrevem
+completamente uma especificação, e estão disponíveis a consulta pela comunidade.
 
+% TODO
 % O que é necessário para que um protocolo se torne um padrão?
 % como identificar se um protocolo é interoperável?
+Ainda no caso da IETF, novos padrões de internet são aceitos apenas mediante prova
+técnica de conceito, como demonstração de interoperabilidade entre duas ou mais
+implementações distintas \cite{rfc1280}.
+
 
 \subsection{Simple Mail Transfer Protocol}
 
@@ -196,68 +190,45 @@ O SMTP foi definido em publicações da IETF, tendo sido proposto com base em
 especificações anteriores. Trata-se de um padrão \textit{de jure} aberto, endossado
 por uma organização e então adotado pelo mercado.
 
+
+
 \section{PROTOCOLOS DE FEDERAÇÃO}
 
-% efeito de rede
+% TODO
+% seção de fatores que dificultam a padronização da federação?
 
-% ----- revisar seção, sintetizar a descrição dos protocolos 
-% ----- Aproximar as descrições a uma investigação de protocolos, não plataformas
+A inexistência de um protocolo padrão para a federação de mídias sociais dificulta
+o desenvolvimento de aplicações interoperáveis. São enfrentados os mesmos problemas
+identificados na intercomunicação de redes heterogêneas, já que os desenvolvedores
+solucionam os problemas com tecnologias diferentes, de acordo com as próprias
+restrições e necessidades.
 
-% mover para a introdução
-Uma das motivações de sistemas federados trata da descentralização de informações,
-ao mesmo tempo em que são oferecidos mecanismos necessários para a integração de
-diversas fontes de conteúdo. Em consequência disto, a federação de sistemas provoca
-impacto sobre a liberdade no controle de informações e privacidade dos usuários.
+Ainda que exista uma tendência da comunidade em adotar propostas de protocolos, o
+que pôde ser observado no caso do projetos OStatus e Diaspora, abordagens
+alternativas naturalmente serão desenvolvidas. Já que cada projeto conta com suas
+próprias restrições, a ausência de um padrão leva à segmentação da adoção por parte
+dos desenvolvedores, o que prejudica o efeito de rede e impede o surgimento de um
+padrão \textit{de facto}.
 
-% mover para a introdução
-Enquanto estes argumentos não fazem sentido em uma rede social popular, em que os
-serviços sejam controlados por uma única entidade, são significativos para redes que
-podem ser mantidas por entidades independentes, o que engloba aplicações de
-\textit{software} livre. Considerando que qualquer rede social livre pode contar com
-diversos números de instâncias mantidas por entidades distintas, os benefícios da
-federação são de grande interesse da comunidade.
+Ao discutir a padronização da federação é interessante não só analisar o esforço da
+comunidade em discutir e adotar propostas ainda não completamente estabelecidas,
+como também identificar as questões que impediram um acordo.
 
-% Comentar a respeito da inexistência dos padrões para federação
-Apesar do interesse em adicionar suporte à federação em sistemas abertos, não existe
-um padrão reconhecido pela comunidade de desenvolvimento [[[referencia?]]]. Como
-consequência, as aplicações atualmente federadas abordam os desafios intermediários
-do fluxo de integração através de tecnologias já difundidas, como \textit{feeds},
-\textit{APIs}, e mecanismos de troca de mensagens.
-
-A ausência de uma especificação padronizada leva os desenvolvedores a adotarem
-estratégias diferentes na implementação da federação, ainda que utilizando os mesmos
-mecanismos. Por outro lado, algumas implementações adquirem certa popularidade,
-tornando-se especificações de referência para outros sistemas, e garantindo um certo
-nível de interoperabilidade.
-
-O OStatus é um exemplo de especificação que, apesar de ter surgido como referência
-para o sistema que foi a se tornar o GNU Social, ganhou popularidade e também foi
-implementado por alguns outras aplicações, como o Friendica. Outro exemplo é o
-protocolo Diaspora, inicialmente implementado por uma rede social de mesmo nome, mas
-que acabou ganhando apelo assim que o sistema se tornou um exemplo popular de rede
-completamente federada, passando a ser implementado por outros sistemas como o
-Hubzilla.
-
-Ao discutir federação no contexto de sistemas livres é interessante analisar as
-especificações populares e cada um dos mecanismos utilizados nas implementações de
-referência. Compreendendo os protocolos existentes é possível indicar o estado das
-iniciativas de sistemas federados, o que leva ao estado e às necessidades de
-interoperabilidade.
 
 \subsection{OSTATUS}
 
-O OStatus é uma especificação baseada em um conjunto de protocolos construída com a
-intenção de oferecer uma estrutura completa para a padronização e interação entre
-redes sociais distintas. Foi inicialmente proposto por Evan Prodromou e implementado
-no StatusNet, que posteriormente deu origem ao projeto Gnu social.
+O OStatus é um conjunto de protocolos que permite a interação em tempo real entre
+redes redes sociais distintas. Foi inicialmente proposto por Evan Prodromou para a
+implementação no StatusNet, que posteriormente deu origem ao projeto Gnu
+\textit{social}.
 
-Apesar de Atom e RSS constituírem padrões corriqueiros para a implementação de feeds
-na internet, tratam-se de especificações que não são capazes de permitir interações
-em tempo real. A ideia do OStatus é combinar \textit{feeds} Atom com uma série de
-mecanismos capazes de permitir identidade, confiabilidade na comunicação entre os
-servidores.
+Até certo ponto, tecnologias como o Atom e RSS permitem a interação entre sistemas,
+mais especificamente no compartilhamento de conteúdo. No entanto, são restritas no
+que diz respeito a interação em tempo real, problema que o OStatus propõe resolver
+combinando \textit{feeds} Atom com uma série de outros mecanismos.
 
-% listar protocolos que são parte da suíte e responsabilidades
+A especificação do OStatus propõe a utilização das tecnologias listadas a seguir.
+
 \begin{itemize}
   \item{PubSubHubbub: mecanismo de inscrição e submissão}
   \item{WebFinger: descoberta de identidade}
@@ -265,45 +236,36 @@ servidores.
   \item{Salmon: descentralização de trocas de mensagens}
 \end{itemize}
 
-O projeto conta com uma das maiores iniciativas de padronização de protocolos de
-federação, tornando-se alvo de um grupo de trabalho da W3C, uma das maiores
-organizações de padronização para a \textit{web}, desde 2012. Apesar disto, o grupo
-não apresentou avanços nos últimos anos, e não existe uma discussão ativa a respeito
-do projeto.
-
+O projeto obteve visibilidade na comunidade, contando com uma das maiores
+iniciativas de padronização. O OStatus chegou a se tornar alvo de um grupo de
+trabalho da W3C em 2012, uma das maiores organizações de padronização para a
+\textit{web}. Apesar disto, o grupo não apresentou avanços desde então, e o
+desenvolvimento do projeto está estagnado.
 
 \subsubsection{PubSubHubbub}
 
-De forma a possibilitar as interações em tempo real previstas pelo  OStatus, é
-necessário utilizar algum tipo de mecanismo que, em combinação com o Atom, possa
-entregar notificações 
+O PubHubSub especifica sistemas distribuídos para publicação e assinatura de
+conteúdos. A ideia é que serviços possam se inscrever em diretórios centrais (ou
+\textit{hubs}), expressando o interesse em receber as atualizações em tempo real.
 
-O PubHubSub é um sistema de publicações de publicação e assinatura distribuído.
-Possibilita que servidores se inscrevam em \textit{feeds}, e sejam notificados assim
-que alguma alteração aconteça. A ideia é que uma série de serviços se inscrevem em
-diretórios centrais (ou \textit{hubs}), expressando interesse em receber notificações
-de atualização. Serviços inscritos devem identificar o tópico desejado através de
-URLs, e oferecer um servidor disponível pela internet para que a notificação possa
-ser realizada. Entidades interessadas em publicar algum tipo de conteúdo incluem uma
-referência ao \textit{hub}. É de responsabilidade dos produtores de conteúdo
-notificar o \textit{hub} em novas publicações, que por sua vez são responsáveis por
-divulgar para cada um dos indivíduos inscritos.
+Serviços inscritos devem identificar o tópico desejado através de URLs, e oferecer
+um servidor disponível pela internet para que a notificação possa ser realizada.
+É de responsabilidade dos produtores de conteúdo notificar o \textit{hub} em cada
+nova publicação, que por sua vez são responsáveis por divulgar para cada um dos
+indivíduos inscritos.
 
-Sem entrar em maiores detalhes a respeito da especificação, a comunicação dos
-\textit{hubs} com as entidades que publicam e consomem os conteúdos acontecem sobre
-HTTP, e identificadas por endereços URL. As notificações são baseadas na execução de
-trechos arbitrários de código ativados a partir de \textit{endpoints} URL, seguindo a
-ideia de \textit{webhooks}.
+A comunicação dos \textit{hubs} com as entidades que publicam e consomem os
+conteúdos acontecem sobre HTTP, cada uma destas identificadas por endereços URL. As
+notificações são baseadas na execução de trechos arbitrários de código ativados a
+partir de \textit{endpoints} URL, seguindo a ideia de \textit{webhooks}.
 
 \subsubsection{WebFinger}
 
-% referenciar a RFC 7033
-
 O WebFinger é um protocolo de descoberta de identidade que soluciona o problema do
-compartilhamento das informações de usuários entre servidores remotos. A proposta é
-que a partir de um atributo identificador de usuário e do endereço do seu servidor de
-origem, seja possível garantir a existência do usuário e obter suas informações
-públicas.
+compartilhamento de informações de usuários entre servidores remotos \cite{rfc7033}.
+A proposta é que a partir de um atributo identificador de um usuário e o endereço do
+seu servidor de origem, seja possível garantir sua existência e recuperar suas
+informações públicas.
 
 A especificação do WebFinger propõe que todos os recursos possam ser identificados
 por uma URL, e que todas as solicitações e respostas sejam realizadas através de
@@ -311,63 +273,45 @@ requisições HTTP. Servidores que forneçam informações através do WebFinger
 responder aos \textit{endpoints} definidos no protocolo com objetos JSON. Servidores
 que pretendam consumir tais informações precisam conhecer apenas a URL do recurso de
 interesse, o que pode ser encontrado a partir do identificador do usuário e do
-domínio do servidor de origem (em um processo que pode ser classificado como LRDD). 
-
-% referenciar LRDD: https://tools.ietf.org/html/draft-hammer-discovery-06 
-
-No caso específico do OStatus, o WebFinger é utilizado no início de cada interação
-entre usuários. Por exemplo, considerando um cenário em que um usuário pretende se
-inscrever no \textit{feed} de um usuário remoto, conhecendo seu identificador e o
-servidor de origem. Antes de solicitar a inscrição através de um servidor PubHubSub e
-notificar o usuário remoto, o usuário local deve primeiro obter as informações
-necessárias (como por exemplo a URL do \textit{feed} público) através de uma
-requisição  WebFinger.
+domínio do servidor de origem (em um processo que pode ser classificado como LRDD
+\cite{lrdd2010}). 
 
 \subsubsection{Activity Streams}
 
-% reescrever o objetivo/funcionamento do protocolo 
+O Activity Streams é uma especificação que propõe um formato para a representação
+das atividades dos usuários em uma rede social. O objetivo é facilitar o consumo
+destas ações para o resto da rede, e por consequência a integração de aplicações.
 
-O Activity Streams é uma especificação que propõe a padronização da representação de
-atividades em redes sociais que tenham interesse em oferecer mecanismos de
-integração. O emprego deste protocolo é justificado pela necessidade em registrar as
-atividades do usuário no interior da rede, bem como pela representação através de um
-formato que possa ser consumido por qualquer serviço interessado e autorizado.
+A especificação mais atual do Activity Streams propõe a representação em formato
+JSON, incluindo uma série de propriedades que identificam a ação, o usuário
+responsável, e a entidade alvo. Especificações mais antigas utilizam o padrão Atom,
+com restrições semelhantes em relação ao conteúdo e formato das mensagens. O OStatus
+adota o protocolo especificado em Atom para o envio de entradas de Activity Streams.
 
-A especificação mais atual do Activity Streams exige uma mensagem em formato JSON,
-incluindo uma série de propriedades que identificam a ação, o usuário responsável, e
-a entidade alvo. Considera-se ainda o envio de atividades complexas que contenham
-referências a outras atividades ou entidades do sistema. 
-
-Além da especificação que adota o padrão JSON, outras especificações utilizam o
-padrão Atom, com restrições semelhantes em relação ao conteúdo e formato das
-mensagens. O OStatus adota o protocolo especificado em Atom para o envio de entradas
-de Activity Streams.
+O padrão trata apenas da representação das mensagens, dependendo de outros
+mecanismos para a distribuição das atividades. Geralmente são utilizadas APIs ou
+\textit{feeds} em conjunto com mecanismos de inscrição.
 
 \subsubsection{Salmon}
 
-% reescrever o objetivo/funcionamento do protocolo 
-
-Combinar soluções como Atom e PubHubSub permitem que conteúdos sejam publicados e
+Combinar soluções como Atom e PubHubSub permite que conteúdos sejam publicados e
 atualizados em tempo real. No entanto, a partir do ponto em que um conteúdo pode ser
-consumido a partir de um número arbitrário de serviços, deve-se investir esforço para
-garantir que o estado da discussão (como comentários e avaliações relacionados a uma
-publicação) seja o mesmo em toda a rede. Mais especificamente, qualquer entidade
-consumidora que atualize o estado da discussão deve notificar o servidor fonte, que
-de alguma forma deve garantir um estado uniforme para o restante da rede.
+consumido a partir de um número arbitrário de serviços, deve-se investir esforço
+para garantir que o seu estado (que inclui todas as atividades relacionadas) seja o
+mesmo em toda a rede.
 
-O Salmon é capaz de garantir a unificação da discussão entre a rede em que um
-conteúdo foi publicado, e todos os serviços consumidores. Trata-se de uma
-especificação de troca de mensagens que define como as entidades consumidoras devem
-notificar os servidores fonte a respeito da atualização do estado de discussões, e
-como deve estes devem reagir a tais eventos.
+O objetivo do Salmon é descentralizar a capacidade de contribuir com o estado de um
+conteúdo, ainda que mantendo a sua consistência em todas as entidades consumidoras.
+Mais precisamente, especificação a troca de mensagens entre entidades consumidoras
+e o servidor de origem de uma publicação, definindo um formato para as mensagens, e
+um fluxo para a agregação das atividades.
 
-Servidores interessados em implementar o protocolo devem incluir um \textit{endpoint}
-Salmon em seus \textit{feeds}, que será lido pelas entidades consumidoras, e para o
-qual as mensagens devem ser enviadas sobre HTTP. Uma mensagem Salmon se trata de uma
-entrada adicional no \textit{feed}, codificada em \textit{base64}, envolta por outra
-estrutura XML assinada digitalmente. Ao Receber a mensagem, o servidor possui a
-liberdade de proceder conforme suas próprias políticas, desde que retorne uma
-resposta HTTP válida.
+Um servidor que implemente o protocolo deve incluir a URL de um \textit{endpoint}
+capaz de processar mensagens Salmon, enviadas para este endereço por qualquer
+serviço interessado em contribuir com o estado de uma publicação. Uma mensagem
+Salmon se trata de uma nova entrada no \textit{feed}, codificada em \textit{base64},
+envolta por outra estrutura XML assinada digitalmente. Cabe ao servidor de origem
+publicar ou não estas novas entradas, de acordo com suas próprias políticas.
 
 \subsubsection{Fluxo do OStatus}
 
@@ -396,8 +340,14 @@ apontando o papel de cada um dos mecanismos intermediários.
         atualizando seu \textit{feed} e notificando novamente os seus inscritos}
 \end{enumerate}
 
+\subsubsection{Estado do padrão OStatus}
 
-\subsection{DIASPORA}
+% TODO
+% situação de padronização
+% parou por que?
+
+
+\subsection{Diaspora}
 
 O projeto Diaspora surgiu com a intenção de implementar o conceito de redes sociais
 descentralizadas em resposta aos problemas de liberdade e privacidade encontrados em
@@ -405,24 +355,17 @@ plataformas sociais privadas. Sua primeira versão foi lançada em Setembro de 2
 como fruto de uma campanha de financiamento coletivo, passando a ser completamente
 governado pela comunidade a partir de Agosto de 2012.
 
-% Descrever melhor o que é o Diaspora
-
-A proposta dos desenvolvedores é evitar a centralização de conteúdo, portanto a falta
-de controle sobre as informações, construindo uma rede de instâncias pessoais da
-plataforma, ou \textit{pods}. Cada servidor Diaspora reúne as informações dos seus
-usuários, mas em cooperação com outros servidores, possibilita a interação e
-compartilhamento de informações entre usuários de diferentes \textit{pods}.
-
-Além da própria plataforma, desenvolvida em Ruby on Rails, uma biblioteca que
-implementa o protocolo de federação do Diaspora também está disponível no formato de
-uma \textit{gem} Ruby. Todas as soluções são distribuídas sob a licença AGPL versão
-3. 
+A proposta dos desenvolvedores é evitar a centralização de conteúdo, portanto a
+falta de controle sobre as informações, construindo uma rede de instâncias pessoais
+da plataforma, ou \textit{pods}. Cada servidor Diaspora reúne apenas as informações
+dos seus próprios usuários, mas em cooperação com outros \textit{pods} possibilita a
+interação em uma rede federada.
 
 O protocolo de federação do Diaspora foi definido para convergir com o OStatus assim
-que o último passe a suportar o conceito de privacidade limitada. A implementação
-leva em consideração a troca de mensagens em formato XML, respeitando alguns
-conceitos básicos como a existência de usuários remotos e atualização remota e
-retransmissão.
+que o último passe a suportar o conceito de privacidade limitada, o que nunca
+aconteceu. A implementação leva em consideração a troca de mensagens em formato XML,
+respeitando alguns conceitos básicos como a existência de usuários remotos e
+atualização remota e retransmissão.
 
 \subsubsection{Usuários Remotos}
 
@@ -507,6 +450,13 @@ O diagrama da [[[figura]]] representa o fluxo de uma interação entre dois usu�
   \item{O usuário B recebe o comentário de A, e notifica todos os outros
         \textit{hubs} inscritos na mesma publicação}
 \end{enumerate}
+
+\subsubsection{Estado do protocolo Diaspora}
+
+% status do projeto
+% parado?
+% por que não deu certo?
+
 
 \subsection{Demais iniciativas}
 
