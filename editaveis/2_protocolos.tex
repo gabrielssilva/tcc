@@ -126,12 +126,13 @@ Propostas e padrões estabelecidos devem ser documentados de alguma forma. A IET
 adota o formato de \textit{Request for Comments} (RFC), publicações que descrevem
 completamente uma especificação, e estão disponíveis a consulta pela comunidade.
 
-% TODO
-% O que é necessário para que um protocolo se torne um padrão?
-% como identificar se um protocolo é interoperável?
-Ainda no caso da IETF, novos padrões de internet são aceitos apenas mediante prova
-técnica de conceito, como demonstração de interoperabilidade entre duas ou mais
-implementações distintas \cite{rfc1280}.
+Uma proposta deve cumprir uma série de requisitos antes de ser endossado por uma
+organização. No caso da IETF, propostas passam por diferentes níveis de maturidade
+até alcançar a categoria de padrão. Cada um destes níveis pode ser alcançado ao
+satisfazer as recomendações de um grupo da comunidade, o que acontece durante o
+processo de padronização. Um exemplo de requisito deste processo é a existência de
+uma prova técnica de conceito, como demonstração de interoperabilidade entre duas ou
+mais implementações distintas \cite{rfc1280}.
 
 
 \subsection{Simple Mail Transfer Protocol}
@@ -340,11 +341,23 @@ apontando o papel de cada um dos mecanismos intermediários.
         atualizando seu \textit{feed} e notificando novamente os seus inscritos}
 \end{enumerate}
 
-\subsubsection{Estado do padrão OStatus}
+\subsubsection{Estado do padrão}
 
-% TODO
-% situação de padronização
-% parou por que?
+O projeto OStatus deu um passo importante em direção à padronização com a criação do
+grupo de trabalho na W3C. No entanto, a comunidade não conseguiu entrar em consenso
+em relação às decisões do protocolo, principalmente no que diz respeito à
+privacidade.
+
+Não exitem avanços no projeto nos últimos anos, e o grupo de trabalho da W3C não
+produziu nenhum relatório desde que foi criado. Em 2012 o fundador do projeto, Evan
+Prodromou, anunciou o desenvolvimento do \textit{pump.io}, outro protocolo de
+federação, abandonando o desenvolvimento do OStatus.
+
+Ao mesmo tempo em que não existia comunidade ativa para a evolução do projeto, parte
+das tecnologias relacionadas continuou a ser mantida, o que contribui para o seu
+estado de obsolescência. O Activity Streams, por exemplo, já conta com uma segunda
+especificação que suporte tecnologia JSON, enquanto o OStatus ainda considera a
+especificação baseada em Atom.
 
 
 \subsection{Diaspora}
@@ -453,12 +466,20 @@ O diagrama da [[[figura]]] representa o fluxo de uma interação entre dois usu�
 
 \subsubsection{Estado do protocolo Diaspora}
 
-% status do projeto
-% parado?
-% por que não deu certo?
+A partir de 2012 o projeto passou a ser completamente mantido pela comunidade, logo
+após que os fundadores abandonaram o projeto. Apesar disto, ainda conta com
+desenvolvimento ativo. O protocolo também continua a ser mantido, sendo que a
+especificação mais recente foi lançada em Julho de 2016.
+
+O projeto ganhou certa visibilidade pouco após a sua proposta, mas o protocolo não
+foi capaz de adquirir adoção o suficiente para desencadear uma tentativa formal de
+padronização. Ainda assim, é oficialmente suportado por outras redes sociais como o
+Friendica, o Hubzilla, e o Loomio.
+
+O protocolo ainda não foi capaz de padronizar a comunicação entre quaisquer redes
+sociais genéricas, tendo servido apensar ao propósito de permitir a integração
+de qualquer outra rede com o Diaspora.
 
 
 \subsection{Demais iniciativas}
 
-% Adoção dos protocolos
-% Discussões, problemas...
