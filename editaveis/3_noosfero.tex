@@ -31,19 +31,93 @@ funcionalidade de seguidores).
 
 
 
-\section{INICIATIVA DE FEDERAÇÃO}
+\section{SUPORTE À FEDERAÇÃO}
 
-% como e por que motivo a iniciativa foi tomada
+As definições da federação no Noosfero surgiram no contexto de desenvolvimento do
+projeto do Portal do Software Público, como resultado de uma consultoria executada
+pela Cooperativa de Tecnologias Livres \cite{colivre2016}. O produto foi um
+relatório que define os objetivos e requisitos da implementação de federação na
+plataforma Noosfero.
+
+A proposta é que seja possível realizar a integração não só com outras instâncias do
+Noosfero, como também com outras redes sociais. Desta forma, é necessário adotar
+especificações que tenham o mínimo de aderência na comunidade, ao menos em outros
+projetos que investem na implementação da federação entre redes sociais. Os
+protocolos Diaspora e OStatus foram escolhidos observando projetos como o Hubzilla,
+Friendica, e o próprio Diaspora.
+
+É interessante que mesmo a integração entre redes Noosfero respeite os padrões
+adotados pelos protocolos de referência, evitando a criação de outro padrão que não
+reconhecido pelo restante dos projetos. No entanto, implementar a federação
+respeitando os padrões existentes pode exigir uma refatoração da arquitetura ou das
+funcionalidades da plataforma. Por exemplo, nenhum dos protocolos de referência
+respeita o conceito de relacionamentos simétricos, padrão no Noosfero até então.
 
 
-\subsection{Acordo com especificações existentes}
+\subsection{Federação entre redes Noosfero}
 
-% problema em conciliar os conceitos
-% diferença nos relacionamentos com o Diaspora
+As primeiras contribuições com a federação no Noosfero foram na integração de
+instâncias diferentes da plataforma. As atividades foram definidas de acordo com
+um \textit{roadmap} que dividiu a implementação em quatro fases, que cobrem desde
+a reestruturação da arquitetura da aplicação, até a construção dos mecanismos
+necessários para a autenticação e relação entre as redes.
+
+O protocolo construído entre redes Noosfero é baseado nas especificações do
+WebFinger e OAuth para a descoberta de identidade e autorização de perfis,
+respectivamente. Em relação à comunicação entre as redes, o protocolo Diaspora foi
+definido como referência. 
+
+\subsubsection{Fase 1: preparação}
+
+Até a versão 1.5 do Noosfero, todos os relacionamentos entre as entidades da rede
+eram baseados no conceito de relacionamento simétrico. No entanto, a aderência
+
+Na fase de preparação foram introduzidos os relacionamentos assimétricos através da
+funcionalidade de seguidores. Seguidores podem visualizar as atividades e
+informações públicas
+
+\subsubsection{Fase 2: intercomunicações}
+
+% WebFinger, ExternalX...
+% Autenticação, comentários...
+% Sugestão de artigos?
+
+\subsubsection{Fase 3: integração externa}
+
+% Evolução do oauth
+
+\subsubsection{Fase 4: inter-relações}
+
+% Relações entre usuários de diferentes redes
 
 
-\subsection{Definições}
+\subsection{Federação com outras redes sociais}
+
+A implementação da federação com redes não Noosfero devem usar a infraestrutura
+definida nas fases de desenvolvimento executadas, principalmente os mecanismos
+de usuários externos e troca de mensagens.
+
+Já que não existe um padrão para a federação de redes sociais, é interessante
+seguir as especificações implementadas por outros projetos que também possuam
+iniciativas de integração significativas, como o Hubzilla e o Diaspora, oferecendo
+ao menos um nível limitado de suporte. A implementação do protocolo Diaspora deve
+ser priorizada em relação ao OStatus, visto que não há mobilização na comunidade em
+relação a este último.
 
 % projeto
 % o que a federação com outras redes deve cobrir
+Requisitos:
+
+\begin{itemize}
+  \item{Autenticação...}
+  \item{Whitelist...}
+  \item{Inter relações...}
+  \item{Notificações...}
+  \item{Atualização do conteúdo...}
+  \item{}
+\end{itemize}
+
+\subsubsection{Implementação do Protocolo Diaspora}
+
+
 
