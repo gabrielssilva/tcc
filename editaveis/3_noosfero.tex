@@ -62,6 +62,8 @@ um \textit{roadmap} que dividiu a implementação em quatro fases, que cobrem de
 a reestruturação da arquitetura da aplicação, até a construção dos mecanismos
 necessários para a autenticação e relação entre as redes.
 
+% TODO: que funcionalidades devem ser oferecidas para um usuário federado
+
 O protocolo construído entre redes Noosfero é baseado nas especificações do
 WebFinger e OAuth para a descoberta de identidade e autorização de perfis,
 respectivamente. Em relação à comunicação entre as redes, o protocolo Diaspora foi
@@ -94,28 +96,66 @@ informações públicas
 \subsection{Federação com outras redes sociais}
 
 A implementação da federação com redes não Noosfero devem usar a infraestrutura
-definida nas fases de desenvolvimento executadas, principalmente os mecanismos
+desenvolvida para a integração entre redes Noosfero, principalmente os mecanismos
 de usuários externos e troca de mensagens.
 
-Já que não existe um padrão para a federação de redes sociais, é interessante
-seguir as especificações implementadas por outros projetos que também possuam
-iniciativas de integração significativas, como o Hubzilla e o Diaspora, oferecendo
-ao menos um nível limitado de suporte. A implementação do protocolo Diaspora deve
-ser priorizada em relação ao OStatus, visto que não há mobilização na comunidade em
-relação a este último.
+% TODO: essas aplicações foram escolhidas com base em que?
+Já que não existe um padrão para a federação de redes sociais, inicialmente é
+necessário oferecer suporte a aplicações individuais. Dedicou-se atenção especial
+aos projetos que contam com iniciativas de federação significativas, precisamente
+os projetos Diaspora, Hubzilla, Friendica, e GNU Social.
 
-% projeto
-% o que a federação com outras redes deve cobrir
-Requisitos:
+% TODO: adicionar referência para o suporte que os projetos oferecem (nota de rodapé)
+Com exceção do GNU Social, os projetos que serão inicialmente suportados atendem às
+especificações do protocolo Diaspora. O suporte às redes baseadas no OStatus será
+oferecido implementando uma parte dos protocolos desta suíte, como o Salmon, o
+Activity Streams e o PubHubSub.
 
-\begin{itemize}
-  \item{Autenticação...}
-  \item{Whitelist...}
-  \item{Inter relações...}
-  \item{Notificações...}
-  \item{Atualização do conteúdo...}
-  \item{}
-\end{itemize}
+Para que a federação seja bem sucedida, é essencial garantir que a integração seja
+bidirecional. Além de permitir que usuários acessem e interajam com uma rede
+Noosfero com o perfil de outra rede social, um usuário Noosfero também devem
+conseguir fazer o mesmo em qualquer uma destas redes. Além da autorização, a
+federação depende da descentralização dos conteúdos, o que exige que as interações
+possam acontecer em qualquer uma das redes, mas que o estado seja sempre o mesmo
+em cada uma delas.
+
+De modo geral, as mesmas funcionalidades implementadas na federação de redes
+Noosfero deve ser suportada, desde que toda interação exerça impacto tanto na rede
+de origem quanto na rede federada, sejam estas instâncias Noosfero ou não.
+
+As atividades necessárias para a implementação desta etapa de federação podem ser
+organizadas nas etapas descritas a seguir.
+
+% TODO: o que o Diaspora suporta e não suporta?
+% TODO: o que especificamente deve ser implementado no OStatus?
+
+\begin{enumerate}
+  \item{Possibilitar o gerenciamento das redes federadas através de um  mecanismo de 
+        \textit{whitelist} para a autorização de redes não Noosfero, o que deve
+        incluir a avaliação de um mecanismo de descoberta para as redes existentes;}
+
+  \item{Possibilitar um usuário possa acessar outras redes com as credenciais de sua
+        rede de origem, sem a necessidade de um novo cadastro;}
+        % Evolução do plugin de OAuth ou utilização do WebFinger?
+
+  \item{Permitir relações assimétricas entre usuários de redes distintas através do
+        protocolo Diaspora. Permitir que as atividades (\textit{feed}) sejam
+        visualizadas tanto na redes de origem quanto na federada;}
+
+  \item{Possibilitar interações a partir de qualquer uma das redes através do
+        protocolo Diaspora, o que evita que, por exemplo, um usuário precise acessar
+        outro domínio para comentar uma publicação. Os usuários envolvidos na
+        interação devem ser notificados em suas redes de origem.}
+
+  \item{Permitir relações assimétricas e interações através dos protocolos indicados
+        na especificação do OStatus, com os mesmos fins da implementação através do
+        Diaspora;}
+\end{enumerate}
+
+% TODO: (no caso do Diaspora: o que inclui tais e tais funcionalidades...)
+No desenvolvimento deste trabalho será priorizado a implementação da federação
+através do protocolo Diaspora. Indica-se a expansão da federação por meio do OStatus
+como um trabalho futuro.
 
 \subsubsection{Implementação do Protocolo Diaspora}
 
