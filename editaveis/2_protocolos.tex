@@ -93,17 +93,17 @@ sistemas. Se não existir um acordo a respeito da especificação utilizada ser�
 difícil estabelecer a comunicação entre serviços \cite{kurose2012}. A padronização
 garante o estabelecimento deste acordo.
 
+O conceito de efeito de rede indica que a adoção de um protocolo se torna mais
+valiosa à medida que um maior número de entidades também o utilize
+\cite{liebowitz1998}. Justifica-se portanto o interesse em incentivar a padronização
+de protocolos.
+
 A partir do momento em que uma série de entidades entra em consenso a respeito da
 especificação de um protocolo, estabelece-se um padrão \textit{de facto}. A
 iniciativa de padronização também pode surgir através de entidades regulamentadoras,
 como a Organização Internacional para a Padronização (ISO), ou a \textit{Internet
 Engineering Task Force} (IETF), o que leva ao estabelecimento padrões \textit{de
 jure} \cite{tanenbaum2010}.
-
-O conceito de efeito de rede indica que a adoção de um protocolo se torna mais
-valiosa à medida que um maior número de entidades também o utilize
-\cite{liebowitz1998}. Justifica-se portanto o interesse em incentivar a padronização
-de protocolos.
 
 O processo de definição de novos padrões \textit{de jure} depende da entidade
 regulamentadora relacionada, e ocasionalmente parte de padrões \textit{de facto} já
@@ -116,21 +116,20 @@ adota o formato de \textit{Request for Comments} (RFC), publicações que descre
 completamente uma especificação, e estão disponíveis a consulta pela comunidade.
 
 Uma proposta deve cumprir uma série de requisitos antes de ser endossado por uma
-organização. No caso da IETF, propostas passam por diferentes níveis de maturidade
+organização. No caso da IETF, cada proposta passa por vários níveis de maturidade
 até alcançar a categoria de padrão. Cada um destes níveis pode ser alcançado ao
-satisfazer as recomendações de um grupo da comunidade, o que acontece durante o
-processo de padronização. Um exemplo de requisito deste processo é a existência de
-uma prova técnica de conceito, como demonstração de interoperabilidade entre duas ou
-mais implementações distintas \cite{rfc1280}.
+satisfazer as recomendações de determinados grupo da comunidade. Um exemplo destes
+requisitos é a exigência de uma prova de conceito de interoperabilidade, como uma
+implementação de referência entre duas ou mais entidades distintas \cite{rfc1280}.
 
 
 \subsection{Simple Mail Transfer Protocol}
 
 A troca de mensagens na internet é um problema recorrente, envolve as questões de
-interoperabilidade entre redes, e depende da adoção de padrões para a comunicação
-entre serviços. O esforço de especificação acontece desde a década de 70 com o
-\textit{Mail Box Protocol}, e continua desde a definição do \textit{Simple Mail
-Transfer Protocol}.
+interoperabilidade entre redes, e adoção de padrões para a comunicação entre
+serviços. O esforço de padronização acontece desde a década de 70 com o \textit{Mail
+Box Protocol}, e continua desde a definição do \textit{Simple Mail Transfer
+Protocol}.
 
 O SMTP é um protocolo para o transporte e entrega de mensagens de e-mail entre
 processos. A especificação garante que a troca de mensagens aconteça entre clientes
@@ -146,9 +145,9 @@ destinatários finais \cite{kurose2012}.
 
 A troca de mensagens geralmente acontece em um único salto após o estabelecimento de
 uma conexão orientada entre o remetente e o destinatário. A retransmissão de
-mensagens é uma alternativa que deve ser explicitamente utilizada, por exemplo em
-casos em que um usuário moveu sua caixa de e-mails de um servidor para outro e
-deseja receber as mensagens no seu novo endereço.
+mensagens é uma alternativa, utilizada por exemplo em casos em que um usuário moveu
+sua caixa de e-mails de um servidor para outro e deseja receber as mensagens no seu
+novo endereço.
 
 \begin{figure}[h]
 	\centering
@@ -166,19 +165,17 @@ do SMTP.
 Cada um destes sistemas intermediários não é necessariamente compatível, visto que a
 comunicação entre o servidor e o usuário depende das aplicações envolvidas, e
 eventualmente utiliza outros padrões, como por exemplo POP3 ou IMAP no gerenciamento
-de caixas de e-mail pessoais \cite{tanenbaum2010}. A organização deste esquema é um
-exemplo de como a utilização de um padrão possibilita a comunicação em um sistema
-heterogêneo.
+de caixas de e-mail pessoais \cite{tanenbaum2010}.
 
-Ainda levando em consideração a organização descentralizada apresentada pela figura
-\ref{fig:smtpInternet}, pode-se indicar a semelhança com o formato de sistemas
-federados. Qualquer novo sistema capaz de implementar a especificação do SMTP
-torna-se parte da federação, onde a heterogeneidade entre os sistemas é
-completamente transparente para os usuários do serviço.
+Levando em cnsideração esta arquitetura descentralizada, pode-se indicar a
+semelhança com o formato de sistemas federados. Qualquer novo sistema capaz de
+implementar a especificação do SMTP torna-se parte da federação, onde a
+heterogeneidade entre os sistemas intermediários é completamente transparente para
+os usuários do serviço.
 
 O SMTP foi definido em publicações da IETF, tendo sido proposto com base em
-especificações anteriores. Trata-se de um padrão \textit{de jure} aberto, endossado
-por uma organização e então adotado pelo mercado.
+especificações anteriores. Trata-se de um padrão \textit{de jure} aberto, definido
+por uma organização antes de ser adotado pelo mercado.
 
 
 
@@ -195,22 +192,22 @@ restrições e necessidades.
 
 Ainda que exista uma tendência da comunidade em adotar propostas de protocolos, o
 que pôde ser observado no caso do projetos OStatus e Diaspora, abordagens
-alternativas naturalmente serão desenvolvidas. Já que cada projeto conta com suas
-próprias restrições, a ausência de um padrão leva à segmentação da adoção por parte
-dos desenvolvedores, o que prejudica o efeito de rede e impede o surgimento de um
-padrão \textit{de facto}.
+alternativas naturalmente serão desenvolvidas. A ausência de um protocolo bem
+difundido segmenta a adoção por parte dos desenvolvedores, o que prejudica o efeito
+de rede e impede o surgimento de um padrão \textit{de facto}.
 
 Ao discutir a padronização da federação é interessante não só analisar o esforço da
 comunidade em discutir e adotar propostas ainda não completamente estabelecidas,
-como também identificar as questões que impediram um acordo.
+como também identificar as questões que impediram o acordo. Antes disto, é
+interessante apresentar os projetos que federação que ganharam maior visibilidade,
+o OStatus e o Diaspora.
 
 
-\subsection{OSTATUS}
+\subsection{OStatus}
 
-O OStatus é um conjunto de protocolos que permite a interação em tempo real entre
-redes redes sociais distintas. Foi inicialmente proposto por Evan Prodromou para a
-implementação no StatusNet, que posteriormente deu origem ao projeto Gnu
-\textit{social}.
+O OStatus é um conjunto de protocolos que permite interação em tempo real entre
+redes redes sociais. Foi inicialmente proposto por Evan Prodromou para a
+implementação do StatusNet, que posteriormente deu origem ao projeto GNU Social.
 
 Até certo ponto, tecnologias como o Atom e RSS permitem a interação entre sistemas,
 mais especificamente no compartilhamento de conteúdo. No entanto, são restritas no
@@ -234,28 +231,25 @@ desenvolvimento do projeto está estagnado.
 
 \subsubsection{PubSubHubbub}
 
-O PubHubSub especifica sistemas distribuídos para publicação e assinatura de
+O PubHubSub especifica um sistema distribuído para publicação e assinatura de
 conteúdos. A ideia é que serviços possam se inscrever em diretórios centrais (ou
 \textit{hubs}), expressando o interesse em receber as atualizações em tempo real.
+Este padrão complementa tecnologias como o RSS, que baseia a atualização apenas na
+solicitação dos interessados.
 
-Serviços inscritos devem identificar o tópico desejado através de URLs, e oferecer
-um servidor disponível pela internet para que a notificação possa ser realizada.
-É de responsabilidade dos produtores de conteúdo notificar o \textit{hub} em cada
-nova publicação, que por sua vez são responsáveis por divulgar para cada um dos
-indivíduos inscritos.
-
-A comunicação dos \textit{hubs} com as entidades que publicam e consomem os
-conteúdos acontecem sobre HTTP, cada uma destas identificadas por endereços URL. As
-notificações são baseadas na execução de trechos arbitrários de código ativados a
-partir de \textit{endpoints} URL, seguindo a ideia de \textit{webhooks}.
+Serviços inscritos devem identificar o tópico desejado através de URIs, e oferecer
+um servidor disponível pela internet para que a notificação seja realizada. É de
+responsabilidade de cada serviço notificar os \textit{hub} conhecidos a cada nova
+publicação. Cada \textit{hub} é responsável por replicar a mensagem a todos os
+serviços inscritos.
 
 \subsubsection{WebFinger}
 
 O WebFinger é um protocolo de descoberta de identidade que soluciona o problema do
 compartilhamento de informações de usuários entre servidores remotos \cite{rfc7033}.
-A proposta é que a partir de um atributo identificador de um usuário e o endereço do
-seu servidor de origem, seja possível garantir sua existência e recuperar suas
-informações públicas.
+A proposta é que a partir de um atributo identificador e do endereço do servidor de
+origem, seja possível garantir existência de um usuário e recuperar suas informações
+públicas.
 
 A especificação do WebFinger propõe que todos os recursos possam ser identificados
 por uma URL, e que todas as solicitações e respostas sejam realizadas através de
@@ -270,13 +264,13 @@ domínio do servidor de origem (em um processo que pode ser classificado como LR
 
 O Activity Streams é uma especificação que propõe um formato para a representação
 das atividades dos usuários em uma rede social. O objetivo é facilitar o consumo
-destas ações para o resto da rede, e por consequência a integração de aplicações.
+destas ações para o resto da rede e serviços externos.
 
 A especificação mais atual do Activity Streams propõe a representação em formato
-JSON, incluindo uma série de propriedades que identificam a ação, o usuário
-responsável, e a entidade alvo. Especificações mais antigas utilizam o padrão Atom,
-com restrições semelhantes em relação ao conteúdo e formato das mensagens. O OStatus
-adota o protocolo especificado em Atom para o envio de entradas de Activity Streams.
+JSON, definindo propriedades que identificam a ação, o usuário responsável, e a
+entidade alvo. Especificações mais antigas utilizam o padrão Atom, com restrições
+semelhantes em relação ao conteúdo das mensagens. O OStatus adota a especificação
+baseada em Atom, utilizando mensagens em formato XML.
 
 O padrão trata apenas da representação das mensagens, dependendo de outros
 mecanismos para a distribuição das atividades. Geralmente são utilizadas APIs ou
@@ -286,24 +280,24 @@ mecanismos para a distribuição das atividades. Geralmente são utilizadas APIs
 
 Combinar soluções como Atom e PubHubSub permite que conteúdos sejam publicados e
 atualizados em tempo real. No entanto, a partir do ponto em que um conteúdo pode ser
-consumido a partir de um número arbitrário de serviços, deve-se investir esforço
-para garantir que o seu estado (que inclui todas as atividades relacionadas) seja o
-mesmo em toda a rede.
+consumido e atualizado a partir de um número arbitrário de serviços, também deve-se
+investir esforço para garantir que o seu estado seja o mesmo em toda a rede.
 
 O objetivo do Salmon é descentralizar a capacidade de contribuir com o estado de um
-conteúdo, ainda que mantendo a sua consistência em todas as entidades consumidoras.
-Mais precisamente, especificação a troca de mensagens entre entidades consumidoras
-e o servidor de origem de uma publicação, definindo um formato para as mensagens, e
-um fluxo para a agregação das atividades.
+conteúdo, mas mantendo sua consistência por toda a federação. Para isto,
+especifica a troca de mensagens entre o servidor de origem e todos os outros que
+podem contribuir com o estado de um conteúdo, definindo o formato das mensagens, e
+as diretrizes necessárias para agregar as atividades.
 
 Um servidor que implemente o protocolo deve incluir a URL de um \textit{endpoint}
 capaz de processar mensagens Salmon, enviadas para este endereço por qualquer
-serviço interessado em contribuir com o estado de uma publicação. Uma mensagem
-Salmon se trata de uma nova entrada no \textit{feed}, codificada em \textit{base64},
-envolta por outra estrutura XML assinada digitalmente. Cabe ao servidor de origem
-publicar ou não estas novas entradas, de acordo com suas próprias políticas.
+serviço interessado em modificar o estado de uma publicação. Uma mensagem Salmon se
+trata de uma nova entrada no \textit{feed}, codificada em \textit{base64} e envolta
+por outra estrutura envelope (geralmente XML) assinada digitalmente. Cabe ao
+servidor processar as solicitações de acordo com suas próprias políticas.
 
 \subsubsection{Fluxo do OStatus}
+% TODO: rever fluxo
 
 Cada protocolo utilizado na especificação do OStatus possui uma responsabilidade
 específica no fluxo de comunicação. A [[[referenciar o diagrama]]] apresenta um
@@ -343,10 +337,13 @@ Prodromou, anunciou o desenvolvimento do \textit{pump.io}, outro protocolo de
 federação, abandonando o desenvolvimento do OStatus.
 
 Ao mesmo tempo em que não existia comunidade ativa para a evolução do projeto, parte
-das tecnologias relacionadas continuou a ser mantida, o que contribui para o seu
+das tecnologias utilizadas continuou a ser mantida, o que contribui para o seu
 estado de obsolescência. O Activity Streams, por exemplo, já conta com uma segunda
 especificação que suporte tecnologia JSON, enquanto o OStatus ainda considera a
 especificação baseada em Atom.
+
+% TODO: comentar sobre projetos novos que utilizam OStatus
+% https://github.com/Gargron/mastodon
 
 
 \subsection{Diaspora}
@@ -382,7 +379,7 @@ O Diaspora conceitualiza seus usuários em locais e externos. Enquanto usuários
 respeitam a definição tradicional, os usuários externos interagem com a aplicação
 através dos mecanismos de federação. É importante prever a existência de usuários
 externos na modelagem de sistemas. Por este motivo, implementar federação em
-aplicações já consolidadas pode exigir um certo esforço de refatoração. % ref?
+aplicações já consolidadas pode exigir um certo esforço de refatoração.
 
 \subsubsection{Capacidade de Retransmissão}
 
@@ -421,6 +418,7 @@ subconjunto do protocolo Salmon. De modo geral, restringe como a mensagem deve s
 construída e enviada para o \textit{endpoint} Salmon do \textit{pod} de destino. 
 
 \subsubsection{Fluxo do Protocolo Diaspora}
+% TODO: revisar fluxo
 
 O protocolo Diaspora cobre tanto a descoberta de identidades entre os servidores,
 quanto o envio e recebimento de informações. De forma análoga ao OStatus, parte da
@@ -432,8 +430,6 @@ O diagrama da [[[figura]]] representa o fluxo de uma interação entre dois usu�
 \textit{hubs} distintos.
 
 % diagrama do workflow do Diaspora
-
-% revisar o fluxo do protocolo
 
 \begin{enumerate}
   \item{O usuário A deseja seguir o \textit{feed} do usuário B localizado em outro
@@ -470,5 +466,7 @@ sociais genéricas, tendo servido apensar ao propósito de permitir a integraç�
 de qualquer outra rede com o Diaspora.
 
 
-\subsection{Demais iniciativas}
+\subsection{Padronização de protocolos de federação}
+
+...
 
