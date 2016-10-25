@@ -52,10 +52,8 @@ componentes utilitários.
 
 A intercomunicação no nível de rede (ou simplesmente internet \cite{comer2000})
 também pode empregar um modelo de camadas. Neste caso, os protocolos são organizados
-em uma hierarquia vertical, de acordo com seus objetivos. Cada camada utiliza o
-nível inferior para oferece novas funcionalidades em um nível maior de abstração. A
-interface de cada nível de camadas é bem definida, concedendo um certo nível de
-modularidade \cite{kurose2012}.
+em uma hierarquia vertical, de acordo com seus objetivos. A interface entre cada
+camada é bem definida, o que concede modularidade ao sistema \cite{kurose2012}.
 
 Neste tipo de hierarquia as mensagens são enviadas sucessivamente da camada mais
 superior até a camada mais inferior durante a transmissão, o inverso do que acontece
@@ -76,7 +74,7 @@ camada adicionam um cabeçalho às mensagens recebidas do nível anterior, o que
 permite a adição de informações adicionais destinadas ao mesmo protocolo
 implementado no comunicante.
 
-% Encontrar um exemplo ou usar o OStatus + referência
+% TODO: exemplificar com o OStatus + referência
 Apesar deste processo descrever a interação entre os protocolos organizados em um
 modelo de camadas, uma estratégia semelhante é utilizada em outras suítes. Uma
 família de protocolos da camada de aplicação, por exemplo, não segue nenhum dos
@@ -296,34 +294,6 @@ trata de uma nova entrada no \textit{feed}, codificada em \textit{base64} e envo
 por outra estrutura envelope (geralmente XML) assinada digitalmente. Cabe ao
 servidor processar as solicitações de acordo com suas próprias políticas.
 
-\subsubsection{Fluxo do OStatus}
-% TODO: rever fluxo
-
-Cada protocolo utilizado na especificação do OStatus possui uma responsabilidade
-específica no fluxo de comunicação. A [[[referenciar o diagrama]]] apresenta um
-cenário em que dois usuários de servidores distintos interagem através deste fluxo,
-apontando o papel de cada um dos mecanismos intermediários.
-
-% diagrama do workflow do OStatus
-
-\begin{enumerate}
-  \item{O usuário A descobre o endereço do servidor de origem do usuário B através
-        do WebFinger}
-  \item{O usuário A se inscreve no \textit{feed} público através do PubHubSub
-        através do endereço obtido}
-  \item{O usuário A envia uma nova entrada no formato Activity Streams através de
-        uma mensagem Salmon para o usuário B, notificando-o da ação}
-  \item{O servidor do usuário B atualiza sua lista de seguidores. Eventualmente, o
-        usuário B publica um novo conteúdo, notificando os inscritos através do
-        PubHubSub}
-  \item{O usuário A recebe o \textit{feed} atualizado através do PubHubSub, e decide
-        publicar um novo comentário. Uma nova entrada no \textit{feed} é criada em
-        formato Activity Streams, e novamente enviada ao servidor original através
-        de uma mensagem Salmon}
-  \item{O servidor do usuário B recebe a mensagem, e registra um novo comentário,
-        atualizando seu \textit{feed} e notificando novamente os seus inscritos}
-\end{enumerate}
-
 \subsubsection{Estado do padrão}
 
 O projeto OStatus deu um passo importante em direção à padronização com a criação do
@@ -416,38 +386,6 @@ entre \textit{pods}.
 A troca de mensagens segue a definição do protocolo Diaspora, que utiliza um
 subconjunto do protocolo Salmon. De modo geral, restringe como a mensagem deve ser
 construída e enviada para o \textit{endpoint} Salmon do \textit{pod} de destino. 
-
-\subsubsection{Fluxo do Protocolo Diaspora}
-% TODO: revisar fluxo
-
-O protocolo Diaspora cobre tanto a descoberta de identidades entre os servidores,
-quanto o envio e recebimento de informações. De forma análoga ao OStatus, parte da
-implementação também utiliza outros protocolos, como o WebFinger, o Activity Streams
-e o Salmon. Uma outra especificação implementada é o hCard, que trata da
-representação das informações de um usuário em formato HTML ou XML. % ref hCard
-
-O diagrama da [[[figura]]] representa o fluxo de uma interação entre dois usuários de
-\textit{hubs} distintos.
-
-% diagrama do workflow do Diaspora
-
-\begin{enumerate}
-  \item{O usuário A deseja seguir o \textit{feed} do usuário B localizado em outro
-        \textit{hub} do Diaspora. O primeiro passo é descobrir o WebFinger de B
-        através das informações de seu \textit{hub}, e solicitar o seu perfil}
-  \item{O \textit{hub} do usuário B responde com o perfil WebFinger de B, que além
-        de suas informações inclui uma URL do seu \textit{feed} em Activity Streams,
-        e uma chave pública RSA para a troca de mensagens}
-  \item{O usuário A cria uma nova mensagem solicitando o compartilhamento e a envia
-        por meio de Salmon para o usuário B}
-  \item{O usuário B começa a compartilhar suas publicações com A, enviando uma nova
-        mensagem Salmon a cada nova publicação}
-  \item{O usuário A recebe a nova publicação, e decide enviar um novo comentário.
-        Uma nova mensagem Activity Streams é construída e enviada por meio de Salmon
-        para o \textit{hub} original}
-  \item{O usuário B recebe o comentário de A, e notifica todos os outros
-        \textit{hubs} inscritos na mesma publicação}
-\end{enumerate}
 
 \subsubsection{Estado do protocolo Diaspora}
 
