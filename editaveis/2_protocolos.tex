@@ -406,5 +406,50 @@ de qualquer outra rede com o Diaspora.
 
 \subsection{Padronização de protocolos de federação}
 
-...
+Apesar de não existirem produções acadêmicas que explorem a inexistência de um
+protocolo padrão para a federação de redes sociais, todo o debate da comunidade está
+documentado em lista de discussões e grupos de desenvolvimento. Esta seção é fruto
+de uma análise subjetiva baseada no conteúdo destes repositórios, e pretende
+discutir os fatores que levaram à segmentação dos projetos de federação e no
+insucesso de alcançar um padrão.
+
+% diferenças entre as redes
+% - privacidade
+% - funcionalidades diferentes
+% questões filosóficas
+
+% desenvolvedores que mudam de padrões (OStatus -> pump.io no caso do Identi.ca)
+
+% TODO: referência: nota?
+A comunidade destaca duas estratégias diferentes para alcançar federação. Primeiro,
+a manutenção de um protocolo ou sistema que deva ser suportado por todas as
+aplicações interessadas em ingressar na federação, um método caracterizado por uma
+entidade que é o denominador comum entre todas as redes.
+
+A segunda estratégia é que aplicações implementem explicitamente o protocolo de cada
+rede com a qual se deseja integrar, o que descarta a necessidade de um protocolo
+padrão, configurando uma técnica poliglota.
+
+% a preferencia pela estratégia poliglota
+% - não há a necessidade em desenhar um único protocolo complexo: muito difícil!
+
+A estratégia poliglota apresenta restrições à federação de sistemas, já que depende
+que cada aplicação responda aos protocolos de todas as outras aplicações da rede.
+Esta estratégia parece incentivar a segmentação de especificações, ao contrário do
+que aconteceria com a utilização de um único protocolo como denominador comum. Ainda
+assim os sistemas que conseguiram implementar a federação com outras redes foram por
+este caminho, exatamente por que as especificidades da rede não estão limitadas por
+uma especificação complexa.
+
+Para que um protocolo seja adotado por uma aplicação, é importante que ele cubra
+consistentemente suas restrições. O problema é cada rede social apresenta diferentes
+funcionalidades, e seus próprios conceitos a respeito de relacionamento de usuários,
+publicação de conteúdos, e privacidade. O conflito nos interesses de cada grupo de
+desenvolvedores exigira uma especificação muito complexa para cumprir o papel de
+denominador comum, o que contribuiu para a desistência da comunidade em investir
+em projetos individuais.
+
+
+
+
 
