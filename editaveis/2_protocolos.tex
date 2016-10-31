@@ -179,9 +179,6 @@ por uma organização antes de ser adotado pelo mercado.
 
 \section{PROTOCOLOS DE FEDERAÇÃO}
 
-% TODO
-% seção de fatores que dificultam a padronização da federação?
-
 A inexistência de um protocolo padrão para a federação de mídias sociais dificulta
 o desenvolvimento de aplicações interoperáveis. São enfrentados os mesmos problemas
 identificados na intercomunicação de redes heterogêneas, já que os desenvolvedores
@@ -312,8 +309,11 @@ estado de obsolescência. O Activity Streams, por exemplo, já conta com uma seg
 especificação que suporte tecnologia JSON, enquanto o OStatus ainda considera a
 especificação baseada em Atom.
 
-% TODO: comentar sobre projetos novos que utilizam OStatus
-% https://github.com/Gargron/mastodon
+% TODO: nota de rodapé para % https://github.com/Gargron/mastodon
+Apesar de defasado, o OStatus ainda é usando em novas iniciativas de redes sociais
+livres e federadas. O Mastodon é um exemplo de projeto moderno, atualmente em
+desenvolvimento, e que optou pela compatibilidade com o GNU Social através da suíte
+do OStatus.
 
 
 \subsection{Diaspora}
@@ -413,14 +413,8 @@ de uma análise subjetiva baseada no conteúdo destes repositórios, e pretende
 discutir os fatores que levaram à segmentação dos projetos de federação e no
 insucesso de alcançar um padrão.
 
-% diferenças entre as redes
-% - privacidade
-% - funcionalidades diferentes
-% questões filosóficas
-
-% desenvolvedores que mudam de padrões (OStatus -> pump.io no caso do Identi.ca)
-
-% TODO: referência: nota?
+% TODO: nota para as discussões, como por exemplo a thread:
+% https://lists.w3.org/Archives/Public/public-fedsocweb/2013May/0058.html
 A comunidade destaca duas estratégias diferentes para alcançar federação. Primeiro,
 a manutenção de um protocolo ou sistema que deva ser suportado por todas as
 aplicações interessadas em ingressar na federação, um método caracterizado por uma
@@ -430,26 +424,47 @@ A segunda estratégia é que aplicações implementem explicitamente o protocolo
 rede com a qual se deseja integrar, o que descarta a necessidade de um protocolo
 padrão, configurando uma técnica poliglota.
 
-% a preferencia pela estratégia poliglota
-% - não há a necessidade em desenhar um único protocolo complexo: muito difícil!
-
 A estratégia poliglota apresenta restrições à federação de sistemas, já que depende
 que cada aplicação responda aos protocolos de todas as outras aplicações da rede.
 Esta estratégia parece incentivar a segmentação de especificações, ao contrário do
-que aconteceria com a utilização de um único protocolo como denominador comum. Ainda
-assim os sistemas que conseguiram implementar a federação com outras redes foram por
-este caminho, exatamente por que as especificidades da rede não estão limitadas por
-uma especificação complexa.
+que aconteceria com a utilização de um único protocolo como denominador comum. Por
+outro lado, a utilização de um denominador comum depende de um único protocolo capaz
+de cobrir as restrições de todas as possíveis redes, visto que cada aplicação propõe
+seus próprios conceitos a respeito de relacionamento de usuários, publicação e
+compartilhamento de conteúdos, e privacidade.
 
-Para que um protocolo seja adotado por uma aplicação, é importante que ele cubra
-consistentemente suas restrições. O problema é cada rede social apresenta diferentes
-funcionalidades, e seus próprios conceitos a respeito de relacionamento de usuários,
-publicação de conteúdos, e privacidade. O conflito nos interesses de cada grupo de
-desenvolvedores exigira uma especificação muito complexa para cumprir o papel de
-denominador comum, o que contribuiu para a desistência da comunidade em investir
-em projetos individuais.
+% https://lists.w3.org/Archives/Public/public-fedsocweb/2013May/0061.html
+As críticas direcionadas ao OStatus em relação a privacidade dos conteúdos é um
+exemplo das barreiras que podem ser causadas por estas diferenças conceituais. Visto
+que o projeto suporta apenas conteúdos públicos, redes que possuam uma definição de
+privacidade mais complexa não são atendidas. Ao mesmo tempo em que o OStatus falhou
+em satisfazer estas necessidades, projetos que deram maior atenção à privacidade
+emergiram e ganharam visibilidade, como o Diaspora e o Friendica.
 
+% Outros projetos que surgiram/desapareceram durante este dilema
+% - OStatus -> pump.io no caso do Identi.ca
+% - pump.io e criticas por reiventar o OStatus
+% - Friendica e surgimento/desaparecimento do Zot e Red
 
+Uma especificação que atenda universalmente todas as redes sociais exigira um grande
+esforço de projeto, desenvolvimento e manutenção. Uma alternativa seria um protocolo
+que definisse apenas um subconjunto de políticas que serviria como base para todas
+as implementações. Todavia, estes conceitos precisariam ser elementares o suficiente
+para cobrir políticas específicas que eventualmente são opostos, fazendo com que as
+comunidades não fossem capazes de chegar a um acordo por causa de seus próprios
+objetivos ou filosofias.
 
+Apesar do limite que ser introduzido por um protocolo que especifique apenas um
+conjunto de diretrizes para interações entre usuários, cada aplicação poderia
+resolver suas necessidades específicas com base nas restrições do denominador comum,
+formando uma suíte de protocolos organizada em um modelo de camadas. A distribuição
+de responsabilidade nesta hierarquia de protocolos possibilitaria a utilização de um
+denominador comum diminuindo o impacto das restrições sobre os objetivos e decisões
+arquiteturais de aplicações que o adotassem. No entanto, a adoção não só dependeria
+de um acordo por parte das comunidades como envolveria a reformulação de todos as
+redes sociais existentes, o que não contribui para a viabilidade desta estratégia.
 
+Ainda que o método poliglota apresente barreiras para a construção de redes
+federadas, por enquanto foi a única estratégia prática adotada pelas redes que já
+oferecem algum tipo de interoperabilidade.
 
