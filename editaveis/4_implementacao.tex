@@ -1,17 +1,76 @@
 \chapter{Implementação}
 
+Ao fim da implementação da federação com o Diaspora, deve ser possível que um
+usuário do Noosfero consiga seguir usuários do Diaspora, organizando-os em grupos, e
+visualizando as publicações deste usuário na sua rede de origem. Todas as interações
+com estes conteúdos devem refletir impacto sobre todas as redes. Por exemplo, um
+usuário do Noosfero deve ser capaz de comentar em uma das publicações provenientes
+do Diaspora que apareçam no seu \textit{feed}, e esse comentário deve aparecer como
+uma resposta ao autor no Diaspora.
+
+% - Diagrama?
+
+A implementação pode ser dividida em dois problemas. Em primeiro lugar, usuários
+devem conseguir se autenticar no Noosfero com o perfil da rede remota. Em segundo
+lugar, deve existir um mecanismo de troca de mensagens entre as instâncias do
+Noosfero e os \textit{pods} do Diaspora para que a integração de conteúdos possa ser
+realizada.
+
+
 \section{Autenticação com o Diaspora}
 
-% Login (Diaspora -> Noosfero)
-% - utilização do OpenID via api do Diaspora (novo plugin)
+O Diaspora não disponibiliza nenhum \textit{endpoint} de \texitt{login} em sua API,
+mas implementa o papel de fornecedor de identidades OpenID. Portanto, a fim de
+utilizar as credenciais do Diaspora, é necessário que o Noosfero possa desempenhar o
+papel de cliente OpenID.
 
-% Login (Noosfero -> Diaspora): por enquanto não
+O Diaspora implementa apenas uma estratégia de autenticação através de perfis
+locais. Mesmo que o Noosfero também fornecesse identidades OpenID, não seria
+possível acessar uma instância do Diaspora com usuários do Noosfero, o que reforçou
+a decisão de implementar apenas a função de cliente OpenID por enquanto.
 
 % Visão geral do OpenID
+% ref: http://openid.net/specs/openid-connect-core-1_0.html
+O OpenID é um padrão de fornecimento e verificação de identidades construído sobre a
+segunda versão do protocolo OAuth. De modo geral, permite que clientes verifiquem a
+identidade de usuários através de um serviço disponibilizado por servidores de
+autorização.
+
+% OpenID Connect vs OAuth
+
+No caso da federação com o Diaspora, é importante implementar o registro dinâmico em
+novos provedores. Visto que podem existir diversos \textit{pods} Diaspora, e um
+usuário pode usar qualquer um destes como fornecedor de identidade. O Noosfero deve
+ser capaz de solicitar o registro dinamicamente em qualquer servidor OpenID a partir
+do seu endereço.
 
 \subsection{Desenvolvimento do plugin OpenID Client}
 
+Apesar do Noosfero já oferecer suporte à autorização com OAuth 1.0 através de um
+\textit{plugin}, foi necessário implementar o suporte ao OpenID. A decisão foi criar
+um novo \textit{plugin} que transforme o Noosfero em um cliente OpenID.
 
+A \textit{gem} openid\char\`_connect foi utilizada na implementação do consumidor. A
+biblioteca já oferece as diretrizes de descoberta, registro de clientes e
+autenticação, todas interações que envolvem requisições HTTP ao servidor fornecedor.
+Um perfil externo também é criado no Noosfero para armazenar algumas informações do
+perfil remoto, como \textit{link} para o seu perfil, ou sua imagem do avatar.
+
+Os passos realizados pelo \textit{plugin} na autenticação de um usuários são:
+
+\begin{enumerate}
+  \item{O usuário digita o endereço do fornecedor OpenID de sua escolha;}
+  \item{O Noosfero tenta descobrir informações a respeito do provedor, solicitando
+        informações do emissor de identidades;}
+  \item{Caso a resposta do provedor seja válida, o Noosfero solicita o registro como
+        um novo cliente, solicitando acesso a informações necessárias para a criação
+        de um perfil externo;}
+  \item{A requisição é redirecionada ao fornecedor OpenID, onde o usuário deve se
+        autenticar, e revisar a solicitação enviada pelo Noosfero;}
+  \item{Se o usuário se autenticar no seu provedor e aprovar as informações
+        solicitadas, a resposta do servidor será usada na criação de um perfil
+        externo, e o usuário será autenticado no Noosfero}
+\end{enumerate}
 
 \section{Troca de Mensagens}
 
