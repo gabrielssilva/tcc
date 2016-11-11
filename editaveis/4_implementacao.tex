@@ -19,7 +19,7 @@ realizada.
 
 \section{Autenticação com o Diaspora}
 
-O Diaspora não disponibiliza nenhum \textit{endpoint} de \texitt{login} em sua API,
+O Diaspora não disponibiliza nenhum \textit{endpoint} de \textit{login} em sua API,
 mas implementa o papel de fornecedor de identidades OpenID. Portanto, a fim de
 utilizar as credenciais do Diaspora, é necessário que o Noosfero possa desempenhar o
 papel de cliente OpenID.
@@ -50,7 +50,7 @@ Apesar do Noosfero já oferecer suporte à autorização com OAuth 1.0 através 
 \textit{plugin}, foi necessário implementar o suporte ao OpenID. A decisão foi criar
 um novo \textit{plugin} que transforme o Noosfero em um cliente OpenID.
 
-A \textit{gem} openid\char\`_connect foi utilizada na implementação do consumidor. A
+A \textit{gem} openid\char`_connect foi utilizada na implementação do consumidor. A
 biblioteca já oferece as diretrizes de descoberta, registro de clientes e
 autenticação, todas interações que envolvem requisições HTTP ao servidor fornecedor.
 Um perfil externo também é criado no Noosfero para armazenar algumas informações do
