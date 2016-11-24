@@ -1,23 +1,38 @@
 \chapter{Implementação}
 
-Ao fim da implementação da federação com o Diaspora, deve ser possível que um
-usuário do Noosfero consiga seguir usuários do Diaspora, organizando-os em grupos, e
-visualizando as publicações deste usuário na sua rede de origem. Todas as interações
-com estes conteúdos devem refletir impacto sobre todas as redes. Por exemplo, um
-usuário do Noosfero deve ser capaz de comentar em uma das publicações provenientes
-do Diaspora que apareçam no seu \textit{feed}, e esse comentário deve aparecer como
-uma resposta ao autor no Diaspora.
+Com a contribuição deste trabalho, deve ser possível que um usuário do Noosfero
+consiga encontrar e seguir a atividade de usuários de alguma instância do Diaspora.
+Os usuários remotos descobertos devem possuir um perfil limitado no Diaspora, para
+que as publicações na rede de origem sejam replicadas no Noosfero.
 
-% - Diagrama?
+A implementação destas funcionalidades deve cobrir os pontos a seguir.
 
-A implementação pode ser dividida em dois problemas. Em primeiro lugar, usuários
-devem conseguir se autenticar no Noosfero com o perfil da rede remota. Em segundo
-lugar, deve existir um mecanismo de troca de mensagens entre as instâncias do
-Noosfero e os \textit{pods} do Diaspora para que a integração de conteúdos possa ser
-realizada.
+\begin{itemize}
+  \item{Descoberta de usuários em um \textit{pod} do Diaspora.}
+  \item{Resposta às consultas das informações do servidor Noosfero e da identidade
+        ou informações do perfil de usuários locais.}
+  \item{Envio de mensagens Salmon públicas e privadas para transportar as entidades
+        que representam a interação social ou publicações.}
+  \item{Recebimento de mensagens públicas que transportam entidades que representam
+        novas publicações, criando publicações locais respectivas.}
+\end{itemize}
 
+A documentação da biblioteca utilizada para a implementação do protocolo não cobre
+todos os aspectos da especificação, portanto foi necessário instanciar dois
+\textit{pods} locais do Diaspora para analisar a comunicação. A comunicação do
+Diaspora depende que cada um dos \textit{pods} responda a HTTPS e seja capaz de
+resolver os nomes dos demais servidores.
 
-\section{Autenticação com o Diaspora}
+Para os testes desse trabalho foram utilizadas duas máquinas virtuais com Debian 8
+em rede privada, com os nomes registrados no arquivo de \textit{hosts} para a
+resolução local. Em cada uma das máquinas, o Diaspora foi servido por um servidor
+NGINX com SSL configurado com um certificado auto-assinado. Para que a comunicação
+não fosse prejudicada pela verificação dos certificados, eles foram manualmente
+adicionados aos certificados reconhecidos em cada uma das máquinas.
+
+\section{AUTENTICAÇÃO COM O DIASPORA}
+
+% TODO: inicialmente acreditava-se que seria necessário...
 
 O Diaspora não disponibiliza nenhum \textit{endpoint} de \textit{login} em sua API,
 mas implementa o papel de fornecedor de identidades OpenID. Portanto, a fim de
@@ -72,10 +87,73 @@ Os passos realizados pelo \textit{plugin} na autenticação de um usuários são
         externo, e o usuário será autenticado no Noosfero}
 \end{enumerate}
 
+\section{DESCOBERTA DE USUÁRIOS}
+
+A especificação do Diaspora propõe a descoberta de usuários através do WebFinger
+para a consulta de identidades, e do hCard para o compartilhamento das informações
+do perfil. O protocolo ainda segue a implementação do WebFinger que responde em
+formato XML, considerada legada.
+
+A partir de um identificador no formato \textit{nome do usuário@servidor diaspora}, o
+servidor remoto será consultado, e deve retornar uma resposta em formato XML a
+respeito da identidade do usuário consultado. Após uma requisição WebFinger bem
+sucedida, o servidor remoto é novamente consultado pelo hCard do usuário, por sua
+vez em formato HTML, contendo as informações do perfil público.
+
+No Noosfero, a descoberta de usuários remotos foi implementada a partir da busca de
+pessoas. Se a \textit{string} de busca conter o símbolo "@", a string é quebrada
+no formato \textit{nome@host}, e o processo descrito anteriormente é executado
+para os atributos extraídos. Visto que trata-se de uma busca e os resultados são
+imediatamente renderizados pelo servidor, por enquanto toda a operação é realizada
+em \textit{foreground}.
+
+Já que a implementação de descoberta é baseada no padrão WebFinger, apesar de seguir
+o protocolo do Diaspora, é possível encontrar usuários em qualquer aplicação que o
+implemente neste formato, não só em instâncias do Diaspora. A partir do momento em
+que o Noosfero também responda a WebFinger e hCard nestes formatos, a implementação
+do WebFinger que já existe pode ser substituída inclusive na descoberta de usuários
+entre instâncias do Noosfero.
+
 \section{Troca de Mensagens}
 
 % troca de mensagens entre redes
 % gem diaspora federation
+
+% Requisições: (request -> response)
+
+
+% Adicionar contato:
+% - Quem adiciona:
+% -- descobre receive url
+% -- gera mensagem salmon
+% -- send private (contact)
+% - quem é adicionado:
+% -- descobre o usuário de forma semelhante à busca
+
+
+% Em uma nova publicação:
+% - Quem escreve:
+% -- post locally
+% -- publish to hub AND sendpublic
+% -- receive locally?
+% - Quem recebe:
+% -- receive locally
+
+% e sobre retry?
+
+% A implementar no Noosfero:
+% -- mostrar perfil para usuários externos
+
+% Salmon:
+% - par de chaves para cada usuario do Noosfero
+% - Gerar na criação OU quando tentar acessar
+
+% Endpoints do Diaspora precisam estar no /, já que a gem pega do id@host
+% deprecated pelo protocolo, mas implementação no diaspora ainda usa
+
+% Todas as entidades do protocolo Diaspora precisam de um GUID/UUID
+
+% Usuários externos possuem perfis e publicam scraps
 
 
 \subsection{Recebimento de mensagens}
