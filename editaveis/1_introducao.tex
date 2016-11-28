@@ -1,43 +1,79 @@
 \chapter{INTRODUÇÃO}
 
 % introduzir mídias sociais
+Pode-se definir mídias sociais como aplicações da Internet que permitem que
+indivíduos mantenham um conjunto de conexões com outros usuários, e compartilhem
+informações pessoais e conteúdos gerados através de redes digitais \cite{boyd2007}.
+Tais redes sociais são baseadas no fluxo de informações que nem sempre são públicas,
+e geralmente acontece através de infraestruturas privadas de entidades interessadas
+em prover o serviço, como por exemplo o Facebook e o Google. 
 
-% definir privacidade
-% propriedade das informações
+Em segurança computacional, pode-se definir privacidade como a capacidade de um
+indivíduo controlar quais e como as informações relacionadas a ele podem ser
+consumidas ou armazenadas, e para quais indivíduos estes dados podem ser divulgados.
+\cite{stallings2010}. Além de garantir o direito à privacidade de seus usuários,
+as redes sociais devem garantir a confidencialidade das informações que hospeda,
+assegurando que dados privados são sejam expostos a indivíduos não autorizados.
 
-% apresentar as críticas às redes sociais "grandes"
+Argumenta-se que o poder de um único grande provedor sobre um fluxo de dados
+privados coloca em risco a privacidade de seus usuários, já que não garante a
+confidencialidade das informações privadas. As críticas a estes provedores
+geralmente é acentuada pela falta de transparência da utilização dessas informações,
+que geralmente assume um papel comercial, como na identificação de padrões de
+comportamento em suporte à publicidade. 
+% adicionar nota de rodapé com um exemplo desta utilização
 
+Uma alternativa à centralização do fluxo de dados privados é baseada no conceito
+de redes descentralizadas, um dos padrões de organização de redes de comunicação.
+Indica-se que em relação à organização de seus nós, redes de comunicação podem
+assumir uma organização centralizada ou distribuída \cite{baran1964}. Como pode ser
+visto na Figura \ref{fig:org_redes}, em contraste a redes centralizadas, uma rede
+distribuída não depende de um único servidor central.
 
+\begin{figure}[h]
+	\centering
+		\includegraphics[keepaspectratio=true,scale=0.6]{figuras/org_redes.eps}
+	\caption{Tipos de redes de comunicação \cite{baran1964}}
+	\label{fig:org_redes}
+\end{figure}
 
-\section{REDES DE COMUNICAÇÃO DESCENTRALIZADAS}
+Redes sociais privadas se assemelham à configuração de redes centralizadas, onde o
+nó central representa o servidor, e cada um dos conectados um dos milhões de
+clientes. Uma alternativa comum a esta configuração é a organização descentralizada,
+que substitui um único nó central com servidores intermediários, conectados entre si
+para o estabelecimento intercomunicação.
 
-% Tipos de redes de comunicação...
-% definir redes descentralizadas, distribuídas, federadas...
+Alguns autores também definem esta organização como uma rede federada, que é similar
+à definição de redes descentralizadas de \cite{baran1964}, mas também é definida na
+literatura como um conjunto de implementações interoperáveis que respeitam o modelo
+cliente-servidor \cite{barocas2012}. Esta definição é importante por que generaliza
+o conceito de federação para outros tipos de sistemas de comunicação que não redes
+literais de computadores, e indica a propriedade de extensibilidade --- qualquer
+entidade capaz que garanta a interoperabilidade pode ser parte da federação.
 
-% Redes descentralizadas e a internet
-% A "centralização" da internet com os grandes provedores
-% por que descentralizar novamente? (fazer um paralelo com serviços)
+A distribuição dos serviços contrapõe a existência de um único provedor, comum em
+redes sociais fechadas como o Facebook e Twitter. A descentralização garante que o
+armazenamento das informações não está restrito a apenas um proprietário. Mais
+importante, a independência de extensão permite que qualquer indivíduo inclua um
+novo servidor na federação, desde que respeite os critérios de interoperabilidade,
+hospedando seus próprios dados. A descentralização do fluxo de dados privados
+distribui a responsabilidade pela manutenção de confidencialidade, o que passa a não
+depender de uma única entidade com intenções inexplícitas.
 
+Por outro lado, a federação é fundada na capacidade de interoperabilidade entre
+sistemas. Visto que o cenário provável envolve a comunicação entre sistemas
+distintos em vários aspectos, é essencial considerar protocolos e padrões.
 
+O objetivo deste trabalho é estudar a federação no contexto de redes sociais,
+investigando quais os aspectos envolvidos na interoperabilidade destas mídias, e o
+estado do esforço de padronização da interoperabilidade. Um segundo objetivo é
+aprofundar esta análise no caso específico do Noosfero, uma rede social livre,
+projetando e implementando uma prova de conceito de federação.
 
-\section{REDES SOCIAIS FEDERADAS}
-
-% {aproveitar o gancho do capítulo passado: busca por descentralizar)
-% Definição de federação de sistemas , contextualização do problema a que se propõe
-
-% exemplificar sistemas federados com o e-mail
-
-% importância de padrões
-% interoperabilidade
-
-% (portais de quarta geração...)...
-% the five touchpoints: Gen-4 Portal Functionality: From Unification to Federation
-
-% redes sociais federadas: como resolvem os problemas apresentados antes?
-
-% - compartilhamento de recursos (consistência)
-% - gerenciamento de identidades
-
-
-
-\section{OBJETIVOS}
+O próximo capítulo aborda a utilização e padronização de protocolos de comunicação
+na interoperabilidade de sistemas, descreve as iniciativas de federação existentes,
+e discute a padronização de interoperabilidade neste contexto. Em seguida,
+apresenta-se o Noosfero e o estado da federação existente, propondo a implementação
+da interoperabilidade com outras redes. Por fim, são apresentados os resultados da
+implementação da federação no contexto do Noosfero, e as considerações para a
+continuidade deste trabalho.
