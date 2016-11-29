@@ -11,14 +11,6 @@ compartilhamento de arquivos. A plataforma também pode ser estendida por
 que permitem a criação de diversas redes isoladas funcionando sobre uma mesma
 instância da aplicação.
 
-\begin{figure}[h]
-	\centering
-		\includegraphics[keepaspectratio=true,scale=0.4]{figuras/noosfero_estrutura.eps}
-	\caption{Arquitetura do Noosfero}
-	\label{fig:noosferoEstrutura}
-\end{figure}
-% adicionar fonte
-
 As informações e publicações de pessoas e organizações podem ser públicas ou
 privadas. Já os relacionamentos entre estas entidades podem ser tanto simétricos
 como assimétricos.
@@ -33,34 +25,29 @@ funcionalidade de seguidores).
 
 \section{SUPORTE À FEDERAÇÃO}
 
-As definições da federação no Noosfero surgiram no contexto de desenvolvimento do
-projeto do Portal do Software Público, como resultado de uma consultoria executada
-pela Cooperativa de Tecnologias Livres \cite{colivre2016}. O produto foi um
-relatório que define os objetivos e requisitos da implementação de federação na
-plataforma Noosfero.
+Já existe uma iniciativa de federação no Noosfero em desenvolvimento por parte da
+comunidade. O objetivo é possibilitar a integração tanto com outras instâncias do
+Noosfero como com outras redes sociais, o que exige a adoção de especificações que
+tenham o mínimo de aderência na comunidade. A utilização de padrões difundidos
+amplia as possibilidades de integração dentre outras redes sociais federadas.
 
-A proposta é que seja possível realizar a integração não só com outras instâncias do
-Noosfero, como também com outras redes sociais. Desta forma, é necessário adotar
-especificações que tenham o mínimo de aderência na comunidade, ao menos em outros
-projetos que investem na implementação da federação entre redes sociais. Os
-protocolos Diaspora e OStatus foram escolhidos observando projetos como o Hubzilla,
-Friendica, e o próprio Diaspora.
+Antes da execução deste trabalho, os protocolos Diaspora e OStatus já haviam sido
+escolhidos como referência para a implementação da federação no Noosfero, resultado
+de uma observação das discussões e execução de projetos como o Hubzilla, Friendica e
+o próprio Diaspora.
 
-É interessante que mesmo a integração entre redes Noosfero respeite os padrões
-adotados pelos protocolos de referência, evitando a criação de outro padrão que não
-reconhecido pelo restante dos projetos. No entanto, implementar a federação
-respeitando os padrões existentes pode exigir uma refatoração da arquitetura ou das
-funcionalidades da plataforma. Por exemplo, nenhum dos protocolos de referência
-respeita o conceito de relacionamentos simétricos, padrão no Noosfero até então.
+As primeiras contribuições com a federação no Noosfero tiveram início antes deste
+trabalho, e estão descritas na subseção \ref{subsec:federacao_noosfero}. Os
+resultados relativos à integração com outras redes, apresentados na subseção
+\ref{subsec:federacao_externa}, são produtos deste projeto.
 
 
 \subsection{Federação entre redes Noosfero}
+\label{subsec:federacao_noosfero}
 
-As primeiras contribuições com a federação no Noosfero foram na integração de
-instâncias diferentes da plataforma. As atividades foram definidas de acordo com
-um \textit{roadmap} que dividiu a implementação em quatro fases, que cobrem desde
-a reestruturação da arquitetura da aplicação, até a construção dos mecanismos
-necessários para a autenticação e relação entre as redes.
+As atividades de implementação de federação já desenvolvidas podem ser separadas em
+quatro fases, que cumpriram objetivos distintos de integração, que cobrem desde as
+funcionalidades até a reestruturação da arquitetura da aplicação..
 
 Foi definido que um usuário de uma rede Noosfero pode acessar qualquer outra
 instância com as credenciais de sua rede de origem. Um usuário federado deve ser
@@ -109,11 +96,10 @@ implementação alcançada faz uso de métodos \textit{stub} e relações polim�
 Nesta fase também foi implementada a especificação do WebFinger, que já está sendo
 utilizada para a descoberta de usuários na autenticação entre redes Noosfero.
 
-% TODO: adicionar nota de rodapé com directory.noosfero.org
-Inicialmente, apenas as redes listadas no diretório central do Noosfero podem ser
-habilitadas no painel de administração da federação. A descentralização desta lista
-ou a automatização do processo de descoberta não fizeram parte do planejamento
-inicial.
+Inicialmente, apenas as redes listadas no diretório central do Noosfero
+\footnote{\url{directory.noosfero.org}} podem ser habilitadas no painel de
+administração da federação. A descentralização desta lista ou a automatização do
+processo de descoberta não fizeram parte do planejamento inicial.
 
 \subsubsection{Fase 3: integração externa}
 
@@ -142,45 +128,33 @@ usuários federados podem tanto seguir usuários locais, quanto serem seguidos p
 eles. A necessidade de simetria se dá pela contabilização e exibição dos perfis
 seguidores e seguidos.
 
-% TODO: explicar o mecanismo de troca de mensagens
-Também foi necessário implementar uma infraestrutura de troca de mensagens entre
-instâncias do Noosfero, possibilitando o envio das notificações necessárias para o
-estabelecimento das interações.
+Essa fase também envolve a implementação da infraestrutura de troca de mensagens,
+que seria utilizada nas notificações e interações entre os usuários. Até a
+execução deste trabalho esse mecanismo não foi completamente definido.
 
 
 \subsection{Federação com outras redes sociais}
+\label{subsec:federacao_externa}
 
-A implementação da federação com redes não Noosfero devem usar a infraestrutura
-desenvolvida para a integração entre redes Noosfero, principalmente os mecanismos
-de usuários externos e troca de mensagens.
+A federação com redes não Noosfero deve usar a infraestrutura desenvolvida para a
+integração entre redes Noosfero, principalmente os mecanismos de usuários externos.
+Todas as atividades de implementação propostas neste trabalho foram desenvolvidas
+com base no protocolo Diaspora, respeitando a conclusão alcançada pela comunidade.
 
-Já que não existe um padrão para a federação de redes sociais, inicialmente é
-necessário oferecer suporte a aplicações individuais. Dedicou-se atenção especial
-aos projetos que contam com iniciativas de federação significativas, precisamente
-os projetos Diaspora, Hubzilla, Friendica, e GNU Social. Estes projetos foram
-escolhidos pela atividade e maturidade da discussão das comunidades e pela aderência
-de outras aplicações, o que seria um indicador da susceptibilidade ao surgimento de
-possíveis padrões.
+A longo prazo, o ideal é que as mesmas funcionalidades implementadas na federação de
+redes Noosfero sejam suportadas. É essencial que o Noosfero responda ao protocolo de
+uma forma que permita a integração bidirecional, permitindo que outras redes
+também sejam capazes de descobrir usuários e consumir publicações do Noosfero.
 
-Com exceção do GNU Social, os projetos que serão inicialmente suportados atendem às
-especificações do protocolo Diaspora. O suporte às redes baseadas no OStatus poderia
-ser oferecido implementando uma parte dos protocolos desta suíte, como o Salmon, o
-Activity Streams, e o PubHubSub.
+Ainda que o protocolo deva ser suportado com completude, neste primeiro momento é
+interessante implementar apenas uma parte da especificação. O desenvolvimento de um
+conjunto básico de funcionalidades, além de garantir um nível limitado de federação,
+deve cobrir parte da reestruturação arquitetural necessária, ajudando na
+identificação das modificações que devem ser introduzidas no Noosfero, o que vai ser
+útil para discussões futuras.
 
-Para que a federação seja bem sucedida, é essencial garantir que a integração seja
-bidirecional. Além de permitir que usuários acessem e interajam com uma rede
-Noosfero com o perfil de outra rede social, um usuário Noosfero também devem
-conseguir fazer o mesmo em qualquer uma destas redes. Além da autorização, a
-federação depende da descentralização dos conteúdos, o que exige que as interações
-possam acontecer em qualquer uma das redes e que o estado seja sempre o mesmo em
-cada uma delas.
-
-De modo geral, as mesmas funcionalidades implementadas na federação de redes
-Noosfero deve ser suportada, desde que toda interação exerça impacto tanto na rede
-de origem quanto na rede federada, sejam estas instâncias Noosfero ou não.
-
-As atividades necessárias para a implementação desta etapa de federação podem ser
-organizadas com base nos marcos a seguir.
+As funcionalidades a seguir foram definidas para a primeira interação de
+desenvolvimento.
 
 \begin{enumerate}
   \item{Possibilitar um usuário possa acessar outras redes com as credenciais de sua
@@ -197,22 +171,8 @@ organizadas com base nos marcos a seguir.
         duas redes estejam cientes da relação;}
 
   \item{Permitir que o Noosfero receba as publicações enviadas por redes que
-        implementem o protocolo Diaspora. O Noosfero também deve ser capaz de enviar
-        novos conteúdos a estas redes;}
-
-  % Retração de relacionamentos?
-  % Exclusão de conteúdos?
-  % Menções? Compartilhamentos? Mensagens diretas?
-
-  \item{Implementar o envio de mensagens através dos padrões Salmon e PubHubSub,
-        garantindo a federação dos conteúdos com redes que respondam ao padrão
-        OStatus;}
+        implementem o protocolo Diaspora.}
 \end{enumerate}
-
-% TODO: (no caso do Diaspora: o que inclui tais e tais funcionalidades...)
-No desenvolvimento deste trabalho será priorizada a implementação da federação
-através do protocolo Diaspora. Indica-se a expansão da federação por meio do OStatus
-como um trabalho futuro.
 
 \subsubsection{Implementação do Protocolo Diaspora}
 
@@ -226,14 +186,15 @@ capazes de introduzir incompatibilidades podem ser introduzidas na \textit{gem}.
 implementação inicial no Noosfero deve ser executada sobre a última versão estável
 disponível no momento de sua adição ao projeto.
 
-% TODO: adicionar nota para o hcard
 O primeiro elemento necessário para a implementação da interoperabilidade é um
 mecanismo de descoberta de informações entre servidores, no caso do Diaspora o
 WebFinger. A implementação base já está disponível no Noosfero, sendo necessário
 testar a integração com outro sistema que implemente o protocolo. Neste ponto a
 especificação do Diaspora também exige que a resposta WebFinger inclua um
-\textit{hcard}, que por sua vez contém informações pessoais de cada usuário, e
-também deve ser implementado no Noosfero.
+hCard\footnote{O hCard é um formato para a representação de informações de uma
+entidade, como por exemplo uma pessoa. \url{http://microformats.org/wiki/hcard}},
+que por sua vez contém informações pessoais de cada usuário, e também deve ser
+implementado no Noosfero.
 
 O segundo elemento é a comunicação entre os servidores, realizada através da troca
 de mensagens contendo entidades, que representam as interações entre os usuários e
@@ -244,7 +205,6 @@ conteúdos. É importante que o Noosfero reconheça as entidades listadas a segu
   \item{Publicações e respostas}
   \item{Participação (inscrição em publicações)}
   \item{Contato entre usuários (seguir ou deixar de seguir)}
-  \item{Retração das entidades listadas}
 \end{itemize}
 
 As mensagens são transferidas entre os servidores por meio do protocolo Salmon. A
