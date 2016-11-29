@@ -2,9 +2,9 @@
 
 A comunicação envolve a troca de uma série de mensagens entre duas entidades. Parte
 fundamental para a comunicação bem sucedida é a premissa a respeito das informações
-transmitidas e recebidas, como por exemplo a linguagem e o meio de transmissão. Caso
-as entidades envolvidas na comunicação não concordem em relação a estas premissas,
-não será possível estabelecer um diálogo adequada.
+transmitidas e recebidas, como por exemplo a linguagem e o meio de transmissão
+\cite{comer2000}. Caso as entidades envolvidas na comunicação não concordem em
+relação a estas premissas, não será possível estabelecer um diálogo adequada.
 
 Restrições a respeito do formato, meios de transmissão, e ações a serem tomadas no
 envio e recebimento de mensagens são definidas por meio de protocolos. A partir do
@@ -13,9 +13,11 @@ comunicação será estabelecida. Assim como qualquer outra entidade, componente
 \textit{hardware} e \textit{software} também estão sujeitos a protocolos de
 comunicação \cite{kurose2012}.
 
-Também é importante indicar que protocolos definem apenas as regras envolvidas em
-uma troca de mensagens. Desde que as entidades cumpram as restrições, portanto
-adotando a interface proposta, a estratégia de implementação se torna arbitrária.
+Antes de abordar os protocolos de federação, é necessário entender a necessidade de
+protocolos de comunicação a partir da utilização em redes de computadores. Também se
+faz necessário discutir o processo de padronização desses protocolos, o que deve
+ajudar na discussão a respeito da definição e utilização de padrões na construção de
+sistemas federados. 
 
 
 
@@ -40,7 +42,7 @@ redes de comunicação:
 \end{enumerate}
 
 A primeira observação sugere que a necessidade de interoperabilidade eventualmente
-surge pode surgir entre sistemas incompatíveis. Ainda assim, a discrepância deve ser
+pode surgir entre sistemas incompatíveis. Ainda assim, a discrepância deve ser
 invisível ao usuário, que de qualquer forma espera a interoperabilidade, ponto
 reafirmado pela segunda observação.
 
@@ -68,19 +70,17 @@ meio para as camadas superiores.
 	\label{fig:encapsulamento}
 \end{figure}
 
-A figura \ref{fig:encapsulamento} mostra este processo no contexto do TCP/IP, também
+A Figura \ref{fig:encapsulamento} mostra este processo no contexto do TCP/IP, também
 conhecido como a suíte de protocolos da Internet. Neste caso, os protocolos de cada
 camada adicionam um cabeçalho às mensagens recebidas do nível anterior, o que
 permite a adição de informações adicionais destinadas ao mesmo protocolo
 implementado no comunicante.
 
-% TODO: exemplificar com o OStatus + referência
-Apesar deste processo descrever a interação entre os protocolos organizados em um
-modelo de camadas, uma estratégia semelhante é utilizada em outras suítes. Uma
-família de protocolos da camada de aplicação, por exemplo, não segue nenhum dos
-modelos de camadas de redes de comunicação, mas ainda assim utiliza os conceitos de
-hierarquia e encapsulamento para garantir interoperabilidade e cumprir uma tarefa
-específica em conjunto.
+O OStatus é outro exemplo de uma suíte de protocolos, por sua vez proposto para a
+federação de aplicações, que envolve alguns padrões intermediários na construção de
+implementações independentes e interoperáveis. Apesar de não adotar explicitamente
+um modelo de camadas, também exemplifica a importância dos conceitos de hierarquia e
+encapsulamento na garantia de interoperabilidade.
 
 
 
@@ -120,21 +120,24 @@ satisfazer as recomendações de determinados grupo da comunidade. Um exemplo de
 requisitos é a exigência de uma prova de conceito de interoperabilidade, como uma
 implementação de referência entre duas ou mais entidades distintas \cite{rfc1280}.
 
+Protocolos de federação também estão sujeitos ao efeito de rede, e apresentam as
+mesmas necessidades de padronização. O \textit{Simple Mail Transfer Protocol} é um
+exemplo de especificação utilizado na interoperabilidade de sistemas federados que
+passou por um esforço oficial de padronização, tornando-se um caso interessante na
+análise deste processo.
+
 
 \subsection{Simple Mail Transfer Protocol}
 
-A troca de mensagens na internet é um problema recorrente, envolve as questões de
-interoperabilidade entre redes, e adoção de padrões para a comunicação entre
-serviços. O esforço de padronização acontece desde a década de 70 com o \textit{Mail
-Box Protocol}, e continua desde a definição do \textit{Simple Mail Transfer
-Protocol}.
+Um sistema de \textit{e-mails} pode ser considerado federado, já que respeita a
+definição de implementações interoperáveis no modelo cliente servidor apresentada
+por \cite{barocas2012}. O SMTP é um dos protocolos utilizados na implementação de
+interoperabilidade entre serviços distintos.
 
-O SMTP é um protocolo para o transporte e entrega de mensagens de e-mail entre
+Trata-se de um protocolo para o transporte e entrega de mensagens de e-mail entre
 processos. A especificação garante que a troca de mensagens aconteça entre clientes
 que se localizam em redes diferentes, o que permite a construção de um serviço que
-funcione de maneira confiável sobre a internet \cite{rfc2821}. Trata-se de um
-protocolo amplamente adotado e formalmente padronizado desde 1982, portanto
-interessante para ser analisado no contexto do estabelecimento de padrões.
+funcione de maneira confiável sobre a internet \cite{rfc2821}.
 
 Caracterizado como um protocolo orientado a conexões entre clientes e servidores, ou
 transmissores e receptores, o SMTP é guiado por uma série de comandos predefinidos.
@@ -154,7 +157,7 @@ novo endereço.
 	\label{fig:smtpInternet}
 \end{figure}
 
-Como pode ser visto na figura \ref{fig:smtpInternet}, o SMTP é um protocolo
+Como pode ser visto na Figura \ref{fig:smtpInternet}, o SMTP é um protocolo
 intermediário entre servidores de e-mail que alternam entre os papéis de transmissor
 e receptor. Cada um destes servidores fornece a seus próprios clientes, constituindo
 sistemas menores onde a interação não é necessariamente coberta pela especificação
@@ -165,15 +168,17 @@ comunicação entre o servidor e o usuário depende das aplicações envolvidas,
 eventualmente utiliza outros padrões, como por exemplo POP3 ou IMAP no gerenciamento
 de caixas de e-mail pessoais \cite{tanenbaum2010}.
 
-Levando em cnsideração esta arquitetura descentralizada, pode-se indicar a
-semelhança com o formato de sistemas federados. Qualquer novo sistema capaz de
-implementar a especificação do SMTP torna-se parte da federação, onde a
-heterogeneidade entre os sistemas intermediários é completamente transparente para
-os usuários do serviço.
+Por se tratar de uma especificação amplamente utilizada na Internet, o SMTP se
+tornou foco de grupos de trabalho da IETF, passando pelo processo de padronização
+formal desta entidade, incluindo a publicação em formato de RFC. Trata-se de um
+padrão \textit{de jure} aberto, definido por uma organização antes de ser adotado
+pelo mercado.
 
-O SMTP foi definido em publicações da IETF, tendo sido proposto com base em
-especificações anteriores. Trata-se de um padrão \textit{de jure} aberto, definido
-por uma organização antes de ser adotado pelo mercado.
+Considerando a descentralização da arquitetura e a padronização do protocolo,
+qualquer novo sistema é capaz de implementar e se tornar parte da federação com
+relativa facilidade. Nestes casos a heterogeneidade entre os sistemas intermediários
+é completamente transparente para os usuários do serviço, o que o indica como um
+protocolo de federação bem sucedido.
 
 
 
@@ -191,18 +196,27 @@ alternativas naturalmente serão desenvolvidas. A ausência de um protocolo bem
 difundido segmenta a adoção por parte dos desenvolvedores, o que prejudica o efeito
 de rede e impede o surgimento de um padrão \textit{de facto}.
 
+Fazendo um paralelo com o SMTP, o mais próximo a uma entidade como IETF no caso dos
+protocolos de federação para redes sociais é o \textit{World Web Consortium} (W3C),
+que também endorsa padrões oficialmente por meio de relatórios técnicos. O processo
+de padronização tem início com a criação de um grupo de trabalho que deve produzir
+rascunhos da especificação, sujeitos à revisão da comunidade pública e dos membros
+do W3C. Se um rascunho é revisado o suficiente e cumpre os critérios da comunidade,
+pode eventualmente se tornar uma recomendação do consórcio \cite{nevile2015}.
+
 Ao discutir a padronização da federação é interessante não só analisar o esforço da
 comunidade em discutir e adotar propostas ainda não completamente estabelecidas,
 como também identificar as questões que impediram o acordo. Antes disto, é
-interessante apresentar os projetos que federação que ganharam maior visibilidade,
-o OStatus e o Diaspora.
+interessante apresentar os projetos de federação que ganharam maior visibilidade, o
+OStatus e o Diaspora.
 
 
 \subsection{OStatus}
 
-O OStatus é um conjunto de protocolos que permite interação em tempo real entre
-redes redes sociais. Foi inicialmente proposto por Evan Prodromou para a
-implementação do StatusNet, que posteriormente deu origem ao projeto GNU Social.
+O OStatus\footnote{\url{https://www.w3.org/community/ostatus}} é um conjunto de protocolos
+que permite interação em tempo real entre redes redes sociais. Foi inicialmente
+proposto por Evan Prodromou para a implementação do StatusNet, que posteriormente
+deu origem ao projeto GNU Social \footnote{\url{https://gnu.io/social}}.
 
 Até certo ponto, tecnologias como o Atom e RSS permitem a interação entre sistemas,
 mais especificamente no compartilhamento de conteúdo. No entanto, são restritas no
@@ -220,17 +234,18 @@ A especificação do OStatus propõe a utilização das tecnologias listadas a s
 
 O projeto obteve visibilidade na comunidade, contando com uma das maiores
 iniciativas de padronização. O OStatus chegou a se tornar alvo de um grupo de
-trabalho da W3C em 2012, uma das maiores organizações de padronização para a
+trabalho do W3C em 2012, uma das maiores organizações de padronização para a
 \textit{web}. Apesar disto, o grupo não apresentou avanços desde então, e o
 desenvolvimento do projeto está estagnado.
 
 \subsubsection{PubSubHubbub}
 
-O PubHubSub especifica um sistema distribuído para publicação e assinatura de
-conteúdos. A ideia é que serviços possam se inscrever em diretórios centrais (ou
-\textit{hubs}), expressando o interesse em receber as atualizações em tempo real.
-Este padrão complementa tecnologias como o RSS, que baseia a atualização apenas na
-solicitação dos interessados.
+O PubHubSub\footnote{\url{https://github.com/pubsubhubbub/PubSubHubbub}} especifica
+um sistema distribuído para publicação e assinatura de conteúdos. A ideia é que
+serviços possam se inscrever em diretórios centrais (ou \textit{hubs}), expressando
+o interesse em receber as atualizações em tempo real. Este padrão complementa
+tecnologias como o RSS, que baseia a atualização apenas na solicitação dos
+interessados.
 
 Serviços inscritos devem identificar o tópico desejado através de URIs, e oferecer
 um servidor disponível pela internet para que a notificação seja realizada. É de
@@ -257,9 +272,10 @@ domínio do servidor de origem (em um processo que pode ser classificado como LR
 
 \subsubsection{Activity Streams}
 
-O Activity Streams é uma especificação que propõe um formato para a representação
-das atividades dos usuários em uma rede social. O objetivo é facilitar o consumo
-destas ações para o resto da rede e serviços externos.
+O Activity Streams\footnote{\url{http://activitystrea.ms/}} é uma especificação que
+propõe um formato para a representação das atividades dos usuários em uma rede
+social. O objetivo é facilitar o consumo destas ações para o resto da rede e
+serviços externos.
 
 A especificação mais atual do Activity Streams propõe a representação em formato
 JSON, definindo propriedades que identificam a ação, o usuário responsável, e a
@@ -278,11 +294,12 @@ atualizados em tempo real. No entanto, a partir do ponto em que um conteúdo pod
 consumido e atualizado a partir de um número arbitrário de serviços, também deve-se
 investir esforço para garantir que o seu estado seja o mesmo em toda a rede.
 
-O objetivo do Salmon é descentralizar a capacidade de contribuir com o estado de um
-conteúdo, mas mantendo sua consistência por toda a federação. Para isto,
-especifica a troca de mensagens entre o servidor de origem e todos os outros que
-podem contribuir com o estado de um conteúdo, definindo o formato das mensagens, e
-as diretrizes necessárias para agregar as atividades.
+O objetivo do Salmon\footnote{\url{http://www.salmon-protocol.org}} é descentralizar
+a capacidade de contribuir com o estado de um conteúdo, mas mantendo sua
+consistência por toda a federação. Para isto, especifica a troca de mensagens entre
+o servidor de origem e todos os outros que podem contribuir com o estado de um
+conteúdo, definindo o formato das mensagens, e as diretrizes necessárias para
+agregar as atividades.
 
 Um servidor que implemente o protocolo deve incluir a URL de um \textit{endpoint}
 capaz de processar mensagens Salmon, enviadas para este endereço por qualquer
@@ -294,11 +311,11 @@ servidor processar as solicitações de acordo com suas próprias políticas.
 \subsubsection{Estado do padrão}
 
 O projeto OStatus deu um passo importante em direção à padronização com a criação do
-grupo de trabalho na W3C. No entanto, a comunidade não conseguiu entrar em consenso
+grupo de trabalho no W3C. No entanto, a comunidade não conseguiu entrar em consenso
 em relação às decisões do protocolo, principalmente no que diz respeito à
 privacidade.
 
-Não exitem avanços no projeto nos últimos anos, e o grupo de trabalho da W3C não
+Não exitem avanços no projeto nos últimos anos, e o grupo de trabalho do W3C não
 produziu nenhum relatório desde que foi criado. Em 2012 o fundador do projeto, Evan
 Prodromou, anunciou o desenvolvimento do \textit{pump.io}, outro protocolo de
 federação, abandonando o desenvolvimento do OStatus.
@@ -309,20 +326,20 @@ estado de obsolescência. O Activity Streams, por exemplo, já conta com uma seg
 especificação que suporte tecnologia JSON, enquanto o OStatus ainda considera a
 especificação baseada em Atom.
 
-% TODO: nota de rodapé para % https://github.com/Gargron/mastodon
 Apesar de defasado, o OStatus ainda é usando em novas iniciativas de redes sociais
-livres e federadas. O Mastodon é um exemplo de projeto moderno, atualmente em
-desenvolvimento, e que optou pela compatibilidade com o GNU Social através da suíte
-do OStatus.
+livres e federadas. O Mastodon\footnote{\url{https://github.com/Gargron/mastodon}} é
+um exemplo de projeto moderno, atualmente em desenvolvimento, e que optou pela
+compatibilidade com o GNU Social através da suíte do OStatus.
 
 
 \subsection{Diaspora}
 
-O projeto Diaspora surgiu com a intenção de implementar o conceito de redes sociais
-descentralizadas em resposta aos problemas de liberdade e privacidade encontrados em
-plataformas sociais privadas. Sua primeira versão foi lançada em Setembro de 2010
-como fruto de uma campanha de financiamento coletivo, passando a ser completamente
-governado pela comunidade a partir de Agosto de 2012.
+O projeto Diaspora\footnote{\url{https://diasporafoundation.org/}} surgiu com a
+intenção de implementar o conceito de redes sociais descentralizadas em resposta aos
+problemas de liberdade e privacidade encontrados em plataformas sociais privadas.
+Sua primeira versão foi lançada em Setembro de 2010 como fruto de uma campanha de
+financiamento coletivo, passando a ser completamente governado pela comunidade a
+partir de Agosto de 2012.
 
 A proposta dos desenvolvedores é evitar a centralização de conteúdo, portanto a
 falta de controle sobre as informações, construindo uma rede de instâncias pessoais
@@ -397,10 +414,10 @@ especificação mais recente foi lançada em Julho de 2016.
 O projeto ganhou certa visibilidade pouco após a sua proposta, mas o protocolo não
 foi capaz de adquirir adoção o suficiente para desencadear uma tentativa formal de
 padronização. Ainda assim, é oficialmente suportado por outras redes sociais como o
-Friendica, o Hubzilla, e o Loomio.
+Friendica, o Hubzilla e o Loomio.
 
 O protocolo ainda não foi capaz de padronizar a comunicação entre quaisquer redes
-sociais genéricas, tendo servido apensar ao propósito de permitir a integração
+sociais genéricas, tendo servido apenas ao propósito de permitir a integração
 de qualquer outra rede com o Diaspora.
 
 
@@ -413,9 +430,11 @@ de uma análise subjetiva baseada no conteúdo destes repositórios, e pretende
 discutir os fatores que levaram à segmentação dos projetos de federação e no
 insucesso de alcançar um padrão.
 
-% TODO: nota para as discussões, como por exemplo a thread:
-% https://lists.w3.org/Archives/Public/public-fedsocweb/2013May/0058.html
-A comunidade destaca duas estratégias diferentes para alcançar federação. Primeiro,
+A comunidade destaca duas estratégias diferentes para alcançar
+federação\footnote{Parte da discussão está registrada em listas de \textit{e-mail},
+como por exemplo em uma das \textit{threads} da lista de redes sociais federadas do
+W3C, que pode ser visualizada em
+\url{https://lists.w3.org/Archives/Public/public-fedsocweb/2013May/0058.html}}. Primeiro,
 a manutenção de um protocolo ou sistema que deva ser suportado por todas as
 aplicações interessadas em ingressar na federação, um método caracterizado por uma
 entidade que é o denominador comum entre todas as redes.
@@ -433,13 +452,14 @@ de cobrir as restrições de todas as possíveis redes, visto que cada aplicaç�
 seus próprios conceitos a respeito de relacionamento de usuários, publicação e
 compartilhamento de conteúdos, e privacidade.
 
-% https://lists.w3.org/Archives/Public/public-fedsocweb/2013May/0061.html
-As críticas direcionadas ao OStatus em relação a privacidade dos conteúdos é um
-exemplo das barreiras que podem ser causadas por estas diferenças conceituais. Visto
-que o projeto suporta apenas conteúdos públicos, redes que possuam uma definição de
-privacidade mais complexa não são atendidas. Ao mesmo tempo em que o OStatus falhou
-em satisfazer estas necessidades, projetos que deram maior atenção à privacidade
-emergiram e ganharam visibilidade, como o Diaspora e o Friendica.
+As críticas direcionadas ao OStatus em relação a privacidade dos
+conteúdos\footnote{As críticas também pode ser vista na lista de \textit{e-mails} do
+W3C \url{https://lists.w3.org/Archives/Public/public-fedsocweb/2013May/0061.html}} é
+um exemplo das barreiras que podem ser causadas por estas diferenças conceituais.
+Visto que o projeto suporta apenas conteúdos públicos, redes que possuam uma
+definição de privacidade mais complexa não são atendidas. Ao mesmo tempo em que o
+OStatus falhou em satisfazer estas necessidades, projetos que deram maior atenção à
+privacidade emergiram e ganharam visibilidade, como o Diaspora e o Friendica.
 
 % Outros projetos que surgiram/desapareceram durante este dilema
 % - OStatus -> pump.io no caso do Identi.ca
