@@ -206,17 +206,21 @@ pode eventualmente se tornar uma recomendação do consórcio \cite{nevile2015}.
 
 Ao discutir a padronização da federação é interessante não só analisar o esforço da
 comunidade em discutir e adotar propostas ainda não completamente estabelecidas,
-como também identificar as questões que impediram o acordo. Antes disto, é
-interessante apresentar os projetos de federação que ganharam maior visibilidade, o
-OStatus e o Diaspora.
+como também identificar as questões que impediram o acordo. Não existem referências
+na literatura que tratam das dificuldades no estabelecimento de padrões para a
+federação, e a discussão da comunidade está espalhada por listas de discussão e
+repositórios de projetos individuais. Antes de abordar este debate, é importante
+apresentar os projetos de federação que ganharam maior visibilidade, o OStatus e o
+Diaspora.
 
 
 \subsection{OStatus}
 
-O OStatus\footnote{\url{https://www.w3.org/community/ostatus}} é um conjunto de protocolos
-que permite interação em tempo real entre redes redes sociais. Foi inicialmente
-proposto por Evan Prodromou para a implementação do StatusNet, que posteriormente
-deu origem ao projeto GNU Social \footnote{\url{https://gnu.io/social}}.
+O OStatus\footnote{\url{https://www.w3.org/community/ostatus}} é um conjunto de
+protocolos que permite interação em tempo real entre redes redes sociais. Foi
+inicialmente proposto por Evan Prodromou para a implementação do StatusNet, que
+posteriormente deu origem ao projeto GNU
+Social\footnote{\url{https://gnu.io/social}}.
 
 Até certo ponto, tecnologias como o Atom e RSS permitem a interação entre sistemas,
 mais especificamente no compartilhamento de conteúdo. No entanto, são restritas no
@@ -362,11 +366,11 @@ informações na base de dados local. No entanto, ao possibilitar a interação 
 usuários de outras redes, usuários externos ao sistema precisam ser explicitamente
 considerados na implementação das funcionalidades.
 
-O Diaspora conceitualiza seus usuários em locais e externos. Enquanto usuários locais
-respeitam a definição tradicional, os usuários externos interagem com a aplicação
-através dos mecanismos de federação. É importante prever a existência de usuários
-externos na modelagem de sistemas. Por este motivo, implementar federação em
-aplicações já consolidadas pode exigir um certo esforço de refatoração.
+O Diaspora conceitualiza seus usuários em locais e externos. Enquanto usuários
+locais respeitam a definição tradicional, os usuários externos interagem com a
+aplicação através dos mecanismos de federação. É importante prever a existência de
+usuários externos na modelagem de sistemas. Por este motivo, implementar federação
+em aplicações já consolidadas pode exigir um certo esforço de refatoração.
 
 \subsubsection{Capacidade de Retransmissão}
 
@@ -434,14 +438,14 @@ A comunidade destaca duas estratégias diferentes para alcançar
 federação\footnote{Parte da discussão está registrada em listas de \textit{e-mail},
 como por exemplo em uma das \textit{threads} da lista de redes sociais federadas do
 W3C, que pode ser visualizada em
-\url{https://lists.w3.org/Archives/Public/public-fedsocweb/2013May/0058.html}}. Primeiro,
-a manutenção de um protocolo ou sistema que deva ser suportado por todas as
-aplicações interessadas em ingressar na federação, um método caracterizado por uma
-entidade que é o denominador comum entre todas as redes.
+\url{https://lists.w3.org/Archives/Public/public-fedsocweb/2013May/0058.html}}.
+Primeiro, a manutenção de um protocolo ou sistema que deva ser suportado por todas
+as aplicações interessadas em ingressar na federação, um método caracterizado por
+uma entidade que é o denominador comum entre todas as redes.
 
 A segunda estratégia é que aplicações implementem explicitamente o protocolo de cada
-rede com a qual se deseja integrar, o que descarta a necessidade de um protocolo
-padrão, configurando uma técnica poliglota.
+rede com a qual se deseja integrar, o que descarta a necessidade imediata de um
+protocolo padrão, configurando uma técnica poliglota.
 
 A estratégia poliglota apresenta restrições à federação de sistemas, já que depende
 que cada aplicação responda aos protocolos de todas as outras aplicações da rede.
@@ -470,7 +474,7 @@ Uma especificação que atenda universalmente todas as redes sociais exigira um 
 esforço de projeto, desenvolvimento e manutenção. Uma alternativa seria um protocolo
 que definisse apenas um subconjunto de políticas que serviria como base para todas
 as implementações. Todavia, estes conceitos precisariam ser elementares o suficiente
-para cobrir políticas específicas que eventualmente são opostos, fazendo com que as
+para cobrir políticas específicas que eventualmente são opostas, fazendo com que as
 comunidades não fossem capazes de chegar a um acordo por causa de seus próprios
 objetivos ou filosofias.
 
@@ -484,7 +488,21 @@ arquiteturais de aplicações que o adotassem. No entanto, a adoção não só d
 de um acordo por parte das comunidades como envolveria a reformulação de todos as
 redes sociais existentes, o que não contribui para a viabilidade desta estratégia.
 
-Ainda que o método poliglota apresente barreiras para a construção de redes
-federadas, por enquanto foi a única estratégia prática adotada pelas redes que já
-oferecem algum tipo de interoperabilidade.
+A adoção de uma estratégia de certa forma contradiz a necessidade de padronização
+observada em redes de comunicação. Neste caso, parece claro que a dificuldade em
+encontrar um acordo na integração das redes sociais ultrapassa os benefícios da
+interoperabilidade que seriam resultado da adoção de um padrão. Por outro lado, se
+mais aplicações implementam a integração individualmente projetos específicos podem
+se destacar, o que desencadearia um efeito de rede, e conduziria a um padrão válido
+para um subconjunto de aplicações.
 
+Por enquanto o caminho para a federação é adotar a especificação de um dos projetos
+existentes, que geralmente é definida a partir de uma suíte de padrões já
+estabelecidos. A escolha deve ser feita levando em consideração a atividade da
+comunidade e a aderência da especificação às necessidades particulares. A comunidade
+do Noosfero identificou que esta especificação é a proposta pelo Diaspora.
+
+Partindo dessa definição, deve-se prosseguir com o projeto da federação no Noosfero
+através do protocolo Diaspora, o que cobre a implementação dos conceitos necessários
+em sua arquitetura e a utilização de um conjunto de padrões já estabelecidos na
+promoção da interoperabilidade.
