@@ -67,7 +67,8 @@ meio para as camadas superiores.
 \begin{figure}[h]
 	\centering
 		\includegraphics[keepaspectratio=true,scale=0.6]{figuras/encapsulamento.eps}
-	\caption{Encapsulamento de mensagens em um modelo de camadas \cite{kurose2012}}
+	\caption[Encapsulamento de mensagens entre camadas \cite{kurose2012}]
+          {Encapsulamento de mensagens em um modelo de camadas \cite{kurose2012}}
 	\label{fig:encapsulamento}
 \end{figure}
 
@@ -92,10 +93,12 @@ sistemas. Se não existir um acordo a respeito da especificação utilizada ser�
 difícil estabelecer a comunicação entre serviços \cite{kurose2012}. A padronização
 garante o estabelecimento deste acordo.
 
+\begin{sloppypar}
 O conceito de efeito de rede indica que a adoção de um protocolo se torna mais
 valiosa à medida que um maior número de entidades também o utilize
 \cite{liebowitz1998}. Justifica-se portanto o interesse em incentivar a padronização
 de protocolos.
+\end{sloppypar}
 
 A partir do momento em que uma série de entidades entra em consenso a respeito da
 especificação de um protocolo, estabelece-se um padrão \textit{de facto}. A
@@ -130,10 +133,12 @@ análise deste processo.
 
 \subsection{Simple Mail Transfer Protocol}
 
+\begin{sloppypar}
 Um sistema de \textit{e-mails} pode ser considerado federado, já que respeita a
 definição de implementações interoperáveis no modelo cliente servidor apresentada
 por \cite{barocas2012}. O SMTP é um dos protocolos utilizados na implementação de
 interoperabilidade entre serviços distintos.
+\end{sloppypar}
 
 Trata-se de um protocolo para o transporte e entrega de mensagens de e-mail entre
 processos. A especificação garante que a troca de mensagens aconteça entre clientes
@@ -260,11 +265,13 @@ serviços inscritos.
 
 \subsubsection{WebFinger}
 
+\begin{sloppypar}
 O WebFinger é um protocolo de descoberta de identidade que soluciona o problema do
 compartilhamento de informações de usuários entre servidores remotos \cite{rfc7033}.
 A proposta é que a partir de um atributo identificador e do endereço do servidor de
 origem, seja possível garantir existência de um usuário e recuperar suas informações
 públicas.
+\end{sloppypar}
 
 A especificação do WebFinger propõe que todos os recursos possam ser identificados
 por uma URL, e que todas as solicitações e respostas sejam realizadas através de
