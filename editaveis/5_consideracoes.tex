@@ -1,0 +1,87 @@
+\chapter{CONSIDERAÇÕES PRELIMINARES}
+\label{chapter:5}
+
+Através da implementação descrita no Capítulo \ref{chapter:4} é possível obter um
+conjunto de funções que demonstra as capacidades de federação através do protocolo
+Diaspora. Todas as funções listadas abaixo foram resultado da contribuição realizada
+durante a execução deste trabalho.
+
+\begin{itemize}
+  \item{Conhecendo o identificador do usuário e o endereço de sua rede de origem, é
+        possível encontrá-lo a partir da busca de pessoas;}
+  \item{A partir da rede local, é possível seguir o perfil de um usuário em sua rede
+        de origem, expressando a intenção de receber suas publicações;}
+  \item{As publicações de usuários remotos podem ser visualizadas em seu perfil
+        local do Noosfero assim que seu servidor de origem expeça as notificações.}
+\end{itemize}
+
+Essas funcionalidades tornam o Noosfero federado com qualquer aplicação que
+implemente o protocolo Diaspora. Mais precisamente, por enquanto o Noosfero só
+depende de uma aplicação que respeite a especificação no suporte à descoberta de
+usuários, recebimento de contatos, e envio notificações de publicação.
+
+Algumas destas funções também dependem do suporte no Noosfero aos padrões WebFinger
+e hCard, o que já possibilita que usuários do Noosfero possam ser descobertos por
+qualquer outra rede que implemente o mesmo protocolo, inclusive outras instâncias do
+Noosfero. Isso permite que a implementação através do Diaspora substitua a federação
+entre redes Noosfero implementada anteriormente através da API, o que não seria
+custoso, já que o código ainda não foi integrado na \textit{branch} primária.
+
+Para implementar este subconjunto do protocolo Diaspora, foi necessário introduzir
+algumas modificações que afetaram a arquitetura do Noosfero. A lista abaixo descreve
+as mudanças que exerceram maior impacto sobre o código.
+
+\begin{itemize}
+  \item{A busca passou a retornar perfis de usuários externos;}
+  \item{Usuários remotos possuem uma página de perfil que pode ser visualizada na
+        instância local, e devem ser capazes de publicar \textit{scraps};}
+  \item{Todas as classes de domínio envolvidas na federação devem possuir um
+        identificador universal (GUID). Por enquanto, o novo campo foi adicionado
+        nas classes que representam usuários remotos e \textit{scraps};}
+  \item{Cada um dos usuários do Noosfero possui um par de chaves RSA próprio para o
+        envio de mensagens privadas através do Salmon;}
+  \item{Usuários remotos podem ser seguidos e adicionados em círculos por usuários
+        locais;\footnote{Essa alteração em específico já havia sido desenvolvida
+        como parte da federação entre redes Noosfero. No entanto, até este ponto a
+        contribuição ainda está sob revisão, e por esse motivo foi integrado
+        manualmente à \textit{branch} em que a federação com o Diaspora foi
+        desenvolvida.}}
+\end{itemize}
+
+Tendo sumarizado as contribuições deste trabalho, é possível propor um cronograma de
+referência para a continuidade do projeto. A Tabela \ref{tab:cronograma} exibe um
+cronograma mensal contendo os marcos para a finalização da federação com o Diaspora.
+Também propõe uma última atividade para a integração entre duas instâncias do
+Noosfero --- o Rede Comunidade UnB e o Stoa Social da USP, oferecendo um caso de
+federação entre dois sistemas em produção.
+
+\begin{table}[h]
+  \begin{center}
+    \begin{tabular}{| l | p{12cm} |}
+    \hline
+    \textbf{Mês} & \textbf{Atividades} \\
+    \hline
+    Janeiro & implementar retrações das entidades já implementadas, permitindo que
+    o Noosfero remova publicações apagadas na rede original. Também é necessário
+    tratar atualizações de perfis. \\
+    \hline
+    Fevereiro & Implementar o suporte às entidades de Contato no Noosfero, fazendo
+    com que seus usuários também possam ser seguidos a partir de outras redes. Nesse
+    ponto, é necessário estabelecer o mecanismo que envia novas publicações a todos
+    os inscritos. \\
+    \hline
+    Março & Federar conteúdos privados, como publicações para círculos específicos,
+    ou mensagens diretas. \\
+    \hline
+    Abril e Maio & Analisar a integração do código do protocolo Diaspora na
+    \textit{branch} de federação do \textit{core} do Noosfero, considerando a
+    substituição da implementação atual. \\
+    \hline
+    Junho & Atualizar o Noosfero do Comunidade UnB e do Stoa para uma versão
+    federada, e realizar a integração entre as plataformas. \\
+    \hline
+    \end{tabular}
+  \end{center}
+  \caption{Cronograma de referência para a continuidade do projeto}
+  \label{tab:cronograma}
+\end{table}
