@@ -1,8 +1,8 @@
 \chapter{NOOSFERO}
 \label{chapter:3}
 
-O Noosfero é uma plataforma \textit{open source} para a construção de redes sociais
-e colaborativas. Desenvolvido em Ruby on Rails e licenciado sob AGPL versão 3, o
+O Noosfero é um \textit{software} livre para a construção de redes sociais e
+colaborativas. Desenvolvido em Ruby on Rails e licenciado sob AGPL versão 3, o
 projeto conta com desenvolvimento ativo.
 
 Além dos mecanismos de interação social, o Noosfero também conta com um sistema de
@@ -27,10 +27,11 @@ funcionalidade de seguidores).
 \section{SUPORTE À FEDERAÇÃO}
 
 Já existe uma iniciativa de federação no Noosfero em desenvolvimento por parte da
-comunidade. O objetivo é possibilitar a integração tanto com outras instâncias do
-Noosfero como com outras redes sociais, o que exige a adoção de especificações que
-tenham o mínimo de aderência na comunidade. A utilização de padrões difundidos
-amplia as possibilidades de integração dentre outras redes sociais federadas.
+comunidade, tendo o autor deste trabalho colaborado desde então. O objetivo é
+possibilitar a integração tanto com outras instâncias do Noosfero como com outras
+redes sociais, o que exige a adoção de especificações que tenham o mínimo de
+aderência na comunidade. A utilização de padrões difundidos amplia as possibilidades
+de integração dentre outras redes sociais federadas.
 
 Antes da execução deste trabalho, os protocolos Diaspora e OStatus já haviam sido
 escolhidos como referência para a implementação da federação no Noosfero, resultado
@@ -82,7 +83,6 @@ integração entre redes Noosfero. Ambientes e usuários externos foram introduz
 arquitetura do Noosfero, que passa a considerar a ação de usuários que não possuem
 perfis locais sobre a aplicação.
 
-% Explicar o modelo do Noosfero antes desta seção?
 O conceito de usuário externo, introduzido nesta fase, é importante para toda a
 implementação da federação do Noosfero. Um usuário local do Noosfero é definido por
 basicamente dois objetos de negócio --- um usuário, que armazena as credenciais de
@@ -155,7 +155,7 @@ identificação das modificações que devem ser introduzidas no Noosfero, o que
 útil para discussões futuras.
 
 As funcionalidades a seguir foram definidas para a primeira interação de
-desenvolvimento.
+desenvolvimento definindo as contribuições deste trabalho.
 
 \begin{enumerate}
   \item{Possibilitar um usuário possa acessar outras redes com as credenciais de sua
@@ -213,3 +213,5 @@ As mensagens são transferidas entre os servidores por meio do protocolo Salmon.
 serialização necessárias para a comunicação sobre este padrão, e será adicionada
 como dependência do Noosfero para auxiliar a implementação do protocolo Diaspora.
 
+A implementação destes recursos também foi uma das contribuições deste trabalho, e
+sua realização está descrita no Capítulo \ref{chapter:4}.
