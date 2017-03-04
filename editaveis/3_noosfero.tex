@@ -39,8 +39,8 @@ de uma observação das discussões e execução de projetos como o Hubzilla, Fr
 o próprio Diaspora.
 
 As primeiras contribuições com a federação no Noosfero tiveram início antes deste
-trabalho, e estão descritas na subseção \ref{subsec:federacao_noosfero}. Os
-resultados relativos à integração com outras redes, apresentados na subseção
+trabalho, e estão descritas na Subseção \ref{subsec:federacao_noosfero}. Os
+resultados relativos à integração com outras redes, apresentados na Subseção
 \ref{subsec:federacao_externa}, são produtos deste projeto.
 
 
@@ -73,26 +73,26 @@ funcionalidade de seguidores no Noosfero.
 Na fase de preparação foram introduzidos os relacionamentos assimétricos através
 desta funcionalidade. Os seguidores são notificados a respeito de atividades
 públicas de perfis seguidos. No Noosfero, cada perfil pode permitir ou não que
-usuários o sigam. Usuários por sua vez organizam seus seguidores em círculos,
+usuários o sigam. Usuários por sua vez organizam os perfis seguidos em círculos,
 categorizando suas relações.
 
 \subsubsection{Fase 2: intercomunicações}
 
 Durante a fase de intercomunicações foi construída a infraestrutura básica para a
 integração entre redes Noosfero. Ambientes e usuários externos foram introduzidos à
-arquitetura do Noosfero, que passa a considerar a ação de usuários que não possuem
-perfis locais sobre a aplicação.
+arquitetura do Noosfero, que passa a suportar ações de usuários que não possuem
+perfis locais.
 
-O conceito de usuário externo, introduzido nesta fase, é importante para toda a
+O conceito de usuário externo introduzido nesta fase é importante para toda a
 implementação da federação do Noosfero. Um usuário local do Noosfero é definido por
 basicamente dois objetos de negócio --- um usuário, que armazena as credenciais de
-acesso, e um perfil, que armazena suas demais informações na aplicação, sendo o que
-de fato se relaciona com o restante do domínio.
+acesso, e um perfil, que armazena suas demais informações na aplicação.
 
-Já o usuário externo não possui credenciais de acesso na instância visitada, apenas
-um objeto que representa o seu perfil externo, e que do ponto de vista da
-implementação deve ser capaz de reproduzir o comportamento de um perfil comum. A
-implementação alcançada faz uso de métodos \textit{stub} e relações polimórficas.
+Um usuário externo não possui credenciais de acesso na instância visitada, apenas um
+objeto que representa o seu perfil externo, e que do ponto de vista da implementação
+deve ser capaz de reproduzir o comportamento de um perfil comum. A implementação
+alcançada faz uso de métodos \textit{stub} e relações polimórficas para a reprodução
+do comportamento.
 
 Nesta fase também foi implementada a especificação do WebFinger, que já está sendo
 utilizada para a descoberta de usuários na autenticação entre redes Noosfero.

@@ -78,12 +78,6 @@ camada adicionam um cabeçalho às mensagens recebidas do nível anterior, o que
 permite a adição de informações adicionais destinadas ao mesmo protocolo
 implementado no comunicante.
 
-O OStatus é outro exemplo de uma suíte de protocolos, por sua vez proposto para a
-federação de aplicações, que envolve alguns padrões intermediários na construção de
-implementações independentes e interoperáveis. Apesar de não adotar explicitamente
-um modelo de camadas, também exemplifica a importância dos conceitos de hierarquia e
-encapsulamento na garantia de interoperabilidade.
-
 
 
 \section{PADRONIZAÇÃO DE PROTOCOLOS}
@@ -165,14 +159,11 @@ novo endereço.
 
 Como pode ser visto na Figura \ref{fig:smtpInternet}, o SMTP é um protocolo
 intermediário entre servidores de e-mail que alternam entre os papéis de transmissor
-e receptor. Cada um destes servidores fornece a seus próprios clientes, constituindo
+e receptor. Cada um destes servidores possui seus próprios clientes, constituindo
 sistemas menores onde a interação não é necessariamente coberta pela especificação
-do SMTP.
-
-Cada um destes sistemas intermediários não é necessariamente compatível, visto que a
-comunicação entre o servidor e o usuário depende das aplicações envolvidas, e
-eventualmente utiliza outros padrões, como por exemplo POP3 ou IMAP no gerenciamento
-de caixas de e-mail pessoais \cite{tanenbaum2010}.
+do SMTP. Os mecanismos de comunicação entre o servidor e o usuário destes sistemas
+não é necessariamente compatível e eventualmente utilizam outros padrões, como por
+exemplo POP3 ou IMAP \cite{tanenbaum2010}.
 
 Por se tratar de uma especificação amplamente utilizada na Internet, o SMTP se
 tornou foco de grupos de trabalho da IETF, passando pelo processo de padronização
@@ -233,7 +224,8 @@ mais especificamente no compartilhamento de conteúdo. No entanto, são restrita
 que diz respeito a interação em tempo real, problema que o OStatus propõe resolver
 combinando \textit{feeds} Atom com uma série de outros mecanismos.
 
-A especificação do OStatus propõe a utilização das tecnologias listadas a seguir.
+Como uma suíte de protocolos o OStatus é constituído por uma série de outros
+protocolos, listados a seguir.
 
 \begin{itemize}
   \item{PubSubHubbub: mecanismo de inscrição e submissão}
@@ -250,7 +242,7 @@ desenvolvimento do projeto está estagnado.
 
 \subsubsection{PubSubHubbub}
 
-O PubHubSub\footnote{\url{https://github.com/pubsubhubbub/PubSubHubbub}} especifica
+O PubSubHub\footnote{\url{https://github.com/pubsubhubbub/PubSubHubbub}} especifica
 um sistema distribuído para publicação e assinatura de conteúdos. A ideia é que
 serviços possam se inscrever em diretórios centrais (ou \textit{hubs}), expressando
 o interesse em receber as atualizações em tempo real. Este padrão complementa
@@ -301,7 +293,7 @@ mecanismos para a distribuição das atividades. Geralmente são utilizadas APIs
 
 \subsubsection{Salmon}
 
-Combinar soluções como Atom e PubHubSub permite que conteúdos sejam publicados e
+Combinar soluções como Atom e PubSubHub permite que conteúdos sejam publicados e
 atualizados em tempo real. No entanto, a partir do ponto em que um conteúdo pode ser
 consumido e atualizado a partir de um número arbitrário de serviços, também deve-se
 investir esforço para garantir que o seu estado seja o mesmo em toda a rede.
@@ -320,7 +312,7 @@ trata de uma nova entrada no \textit{feed}, codificada em \textit{base64} e envo
 por outra estrutura envelope (geralmente XML) assinada digitalmente. Cabe ao
 servidor processar as solicitações de acordo com suas próprias políticas.
 
-\subsubsection{Estado do padrão}
+\subsubsection{Estado do protocolo}
 
 O projeto OStatus deu um passo importante em direção à padronização com a criação do
 grupo de trabalho no W3C. No entanto, a comunidade não conseguiu entrar em consenso
@@ -419,7 +411,7 @@ construída e enviada para o \textit{endpoint} Salmon do \textit{pod} de destino
 \subsubsection{Estado do protocolo Diaspora}
 
 A partir de 2012 o projeto passou a ser completamente mantido pela comunidade, logo
-após que os fundadores abandonaram o projeto. Apesar disto, ainda conta com
+após os fundadores abandonarem o projeto. Apesar disto, ainda conta com
 desenvolvimento ativo. O protocolo também continua a ser mantido, sendo que a
 especificação mais recente foi lançada em Julho de 2016.
 
@@ -481,14 +473,14 @@ para cobrir políticas específicas que eventualmente são opostas, fazendo com 
 comunidades não fossem capazes de chegar a um acordo por causa de seus próprios
 objetivos ou filosofias.
 
-Apesar do limite que ser introduzido por um protocolo que especifique apenas um
-conjunto de diretrizes para interações entre usuários, cada aplicação poderia
-resolver suas necessidades específicas com base nas restrições do denominador comum,
-formando uma suíte de protocolos organizada em um modelo de camadas. A distribuição
-de responsabilidade nesta hierarquia de protocolos possibilitaria a utilização de um
+Apesar da limitação introduzida por um protocolo que propõe apenas um conjunto de
+diretrizes para interações entre usuários, cada aplicação poderia resolver suas
+necessidades específicas com base nas restrições do denominador comum, formando uma
+suíte de protocolos organizada em um modelo de camadas. A distribuição de
+responsabilidade nesta hierarquia de protocolos possibilitaria a utilização de um
 denominador comum diminuindo o impacto das restrições sobre os objetivos e decisões
 arquiteturais de aplicações que o adotassem. No entanto, a adoção não só dependeria
-de um acordo por parte das comunidades como envolveria a reformulação de todos as
+de um acordo por parte das comunidades como envolveria a reformulação de todas as
 redes sociais existentes, o que não contribui para a viabilidade desta estratégia.
 
 A adoção de uma estratégia de certa forma contradiz a necessidade de padronização
