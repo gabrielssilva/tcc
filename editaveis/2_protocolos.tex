@@ -18,7 +18,7 @@ Antes de abordar os protocolos de federação, é necessário entender a necessi
 protocolos de comunicação a partir da utilização em redes de computadores. Também se
 faz necessário discutir o processo de padronização desses protocolos, o que deve
 ajudar na discussão a respeito da definição e utilização de padrões na construção de
-sistemas federados. 
+sistemas federados.
 
 
 
@@ -165,11 +165,9 @@ do SMTP. Os mecanismos de comunicação entre o servidor e o usuário destes sis
 não é necessariamente compatível e eventualmente utilizam outros padrões, como por
 exemplo POP3 ou IMAP \cite{tanenbaum2010}.
 
-Por se tratar de uma especificação amplamente utilizada na Internet, o SMTP se
-tornou foco de grupos de trabalho da IETF, passando pelo processo de padronização
-formal desta entidade, incluindo a publicação em formato de RFC. Trata-se de um
-padrão \textit{de jure} aberto, definido por uma organização antes de ser adotado
-pelo mercado.
+O SMTP eventualmente passou pelo processo de padronização da IETF que levou à
+publicação de uma RFC. Trata-se de um padrão \textit{de jure} aberto, definido por
+uma organização ainda que adotado pelo mercado.
 
 Considerando a descentralização da arquitetura e a padronização do protocolo,
 qualquer novo sistema é capaz de implementar e se tornar parte da federação com
@@ -495,7 +493,10 @@ Por enquanto o caminho para a federação é adotar a especificação de um dos 
 existentes, que geralmente é definida a partir de uma suíte de padrões já
 estabelecidos. A escolha deve ser feita levando em consideração a atividade da
 comunidade e a aderência da especificação às necessidades particulares. A comunidade
-do Noosfero identificou que esta especificação é a proposta pelo Diaspora.
+do Noosfero identificou que esta especificação é a proposta pelo Diaspora \footnote{
+as primeiras deliberações a respeito da federação no Noosfero estão registradas no
+endereço a seguir
+\url{https://softwarepublico.gov.br/gitlab/noosferogov/noosfero/wikis/federacao}}.
 
 Partindo dessa definição, deve-se prosseguir com o projeto da federação no Noosfero
 através do protocolo Diaspora, o que cobre a implementação dos conceitos necessários

@@ -27,11 +27,14 @@ funcionalidade de seguidores).
 \section{SUPORTE À FEDERAÇÃO}
 
 Já existe uma iniciativa de federação no Noosfero em desenvolvimento por parte da
-comunidade, tendo o autor deste trabalho colaborado desde então. O objetivo é
-possibilitar a integração tanto com outras instâncias do Noosfero como com outras
-redes sociais, o que exige a adoção de especificações que tenham o mínimo de
-aderência na comunidade. A utilização de padrões difundidos amplia as possibilidades
-de integração dentre outras redes sociais federadas.
+comunidade \footnote{A discussão a respeito da federação no Noosfero está registrada
+no endereço a seguir
+\url{https://softwarepublico.gov.br/gitlab/noosferogov/noosfero/wikis/federacao}.},
+tendo o autor deste trabalho colaborado desde então. O objetivo é possibilitar a
+integração tanto com outras instâncias do Noosfero como com outras redes sociais, o
+que exige a adoção de especificações que tenham o mínimo de aderência na comunidade.
+A utilização de padrões difundidos amplia as possibilidades de integração dentre
+outras redes sociais federadas.
 
 Antes da execução deste trabalho, os protocolos Diaspora e OStatus já haviam sido
 escolhidos como referência para a implementação da federação no Noosfero, resultado
@@ -60,7 +63,7 @@ tanto aos usuários na rede local, quanto ao usuário na rede de origem.
 O protocolo construído entre redes Noosfero é baseado nas especificações do
 WebFinger e OAuth para a descoberta de identidade e autorização de perfis,
 respectivamente. Em relação à comunicação entre as redes, o protocolo Diaspora foi
-definido como referência. 
+definido como referência.
 
 \subsubsection{Fase 1: preparação}
 
@@ -126,8 +129,7 @@ conteúdos, e publicar em murais de outros usuários.
 De forma a permitir relações entre usuários federados foi necessário refatorar a
 funcionalidade de seguidores, adicionando o suporte a perfis externos. Neste ponto,
 usuários federados podem tanto seguir usuários locais, quanto serem seguidos por
-eles. A necessidade de simetria se dá pela contabilização e exibição dos perfis
-seguidores e seguidos.
+eles.
 
 Essa fase também envolve a implementação da infraestrutura de troca de mensagens,
 que seria utilizada nas notificações e interações entre os usuários. Até a
