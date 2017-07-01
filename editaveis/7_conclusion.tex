@@ -1,0 +1,137 @@
+\chapter{Conclusions}
+\label{chapter:7}
+
+Our report on the existing federation initiatives helped to identify
+\textit{what are the protocols in use for federation of social networks and
+what is the status of their development and adoption}. We described several
+standards that are used to build decentralized social networks, where we can
+highlight the Diaspora protocol, and OStatus and derived projects, such as
+Mastodon. While evaluating the adoption of these technologies, we could verify
+the lack of standardization, identifying a scenario where different projects
+choose to follow distinct strategies to better suit individual needs.
+
+The Diaspora protocol provides a reliable process for finding users and
+exchanging messages among servers. By implementing it in Noosfero, we
+were able to federate an instance with both Noosfero and Diaspora
+servers, showing that it is feasible to implement federation in an
+existing application.
+
+It is important to note that the Diaspora protocol suits only a subset
+of the existing projects, from what follows that it is most probably not
+a ``silver bullet'' for building a larger federation.
+
+Even though we can point projects that successfully implemented a
+decentralized network, such as Hubzilla
+\footnote{\url{https://github.com/redmatrix/hubzilla}},
+which also supports the Diaspora protocol, these are usually designed
+for a decentralized context and aim to provide federation out of the box.
+An additional challenge lies with projects that were not designed as
+such since the beginning but still want to support federation.
+
+Our proof of concept helps to answer \textit{what engineering problems need to
+be solved in order to add support for federation in a platform that was not
+conceived with federation as a requirement?} To start with, our implementation
+would require more effort if Noosfero features were not already somewhat
+compatible with the specification. For example, Noosfero already supported
+asymmetric relationships (``follows'') besides symmetric ones (``friends'').
+If that was not the case, the implementation would turn harder than it was.
+
+There are a couple points that we want to list regarding the implementation of
+the Diaspora protocol in existing social networks. These are either challenges
+that can also be faced or aspects that need attention when adding federation
+support in projects that were not designed to be federated. These findings also
+offer some insight on how the Diaspora protocol can be used, and we take the
+opportunity to point some limitations.
+
+
+\section{Lessons learned on supporting a federation protocol}
+
+Beforehand, it is important to take into account that your data model will have
+to be modified to contemplate Diaspora entities. For instance, all exchanged
+entities must have a global identifier (GUID), and each user requires a pair of
+RSA keys to properly send and read private Salmon messages.
+
+The protocol may also affect the way the project handles users and contents,
+mostly because all remote data must be stored in the local database, what
+includes remote profiles and contents. It most likely means that the
+application must foresee the existence of remote users and provide some level
+of interaction, like publishing contents and sharing with the rest of the
+network.
+
+There are also some points that can help to exchange entities among servers.
+When sending or receiving these entities, besides the message format, it is
+important to identify the endpoints to be used for the HTTP requests. Remote
+servers will use analogue endpoints to send its own entities when establishing
+the communication, so it will be easier to start by choosing a small set of
+entities and sending them from a remote server, implementing the local receiver
+endpoints as needed. Contacts and status messages are a good choice of entities
+to begin with.
+
+Sending and Handling entities should be done in background, since it
+involves network usage and opening and creating Salmon envelopes, which
+can be computationally expensive. Whereas part of the work is to build
+and exchange Salmon messages, one should also consider using some tool
+that implements it, such as the diaspora federation Ruby library
+\footnote{\url{https://github.com/diaspora/diaspora_federation}}.
+
+The reliability of the message sending must be assured by each server. It may
+be interesting to keep track of the statuses of each pod, for example storing
+timestamps and number of tentatives of failed requests. Pods do not inform the
+network of their status, so everything is still made based on the HTTP
+responses status. Considering that the failure to deliver messages affects the
+coherence of the information in the network, the protocol should be reviewed to
+handle scenario formally.
+
+It is also important to point that a server may implement several federation
+protocols, i.e. servers A and C support two different federation protocols,
+and server B wants to join both networks. This use case will affect the
+implementation, since public interactions from users in B with A or C may be
+potentially replicated.
+
+Consider that a user from B interacts with both A and C servers, the
+state of public contents will need to be the same across all networks.
+In this case, A and C do not acknowledge each other, so the responsibility
+to relay the modifications lies with B. Also because A and C are isolated,
+the \textit{relayability} restriction is not described in any of the
+specifications, and it is up to the local server to decide whether or not
+the messages should be relayed.
+
+The relaying problem is also present when all servers support the
+same protocol, and it is somewhat covered by Diaspora's specification.
+The idea is that relaying messages to pods that are in some way related
+to the interaction, it will be easier to find references to new pods,
+helping the servers to establish new connections. Since every federated
+feature depends on a reference to the remote pod, it is important to
+provide the means to broaden the network.
+
+
+\section{Weaknesses and future work}
+
+The federation tries to provide a seamless platform for interaction across
+networks, and part of this feature is to use the same authentication
+credentials for every server. For a user, it means to authenticate in one
+server, access other server under any domain, and still be authorized
+to share and interact. This feature is also in the scope of the federation
+in Noosfero, and it may use the Diaspora protocol infrastructure and WebFinger
+identities.
+
+Regarding the support of the Diaspora protocol, contents with limited
+visibility were not in the scope of this proof of concept, and it is an
+important step to extend the federation features turning the network privacy
+aware. This will require to match Noosfero circles with Diaspora aspects,
+delivering the content only to some users.
+
+For now, only plain text messages are being shared across servers. Since
+Noosfero is also a CMS, it is our interest to federate rich contents,
+such as articles with embed HTML and images. The protocol currently offers
+the means to share static images, so it will probably be the case to extend
+its custom entities.
+
+It is also important to support direct messages, events and post reactions
+(such as a ``Like''), showing some convergence with the Diaspora interaction
+model, and increasing the use cases of the federated network.
+
+Whereas we were able to implement the protocol and join a network of Diaspora
+pods, it is clear the specification has to evolve in the ways it deals with
+content replication and reliability of the messages delivery.
+

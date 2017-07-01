@@ -1,0 +1,198 @@
+\chapter{Background}
+\label{chapter:2}
+
+The absence of a standard protocol for the federation of social networks
+hinders the development of interoperable applications, as it leads to
+the adoption of divergent technologies. This segmentation affects the
+network effect and does not help on the emergence of a \textit{de facto}
+standard.
+
+To discuss the standardization of federated systems, it is interesting not only
+to analyze the community effort to discuss and adopt specifications, but also
+to identify the reasons that make it difficult to reach a consensus. The
+subject is incipient in the literature, so we had to resort to reviewing
+existing community discussion in the relevant mailing lists. Given the nature
+of the World Wide Web Consortium (W3C) as the standards body of the Internet,
+we used the archives of the W3C's Federated Social Web Community
+Group\footnote{\url{http://w3.org/community/fedsocweb}}.
+
+In the next subsections, we present a documentation of the existing initiatives
+and attempts to establish protocols for the federation of social networks,
+describing the used technologies and the state of pratice in different
+projects.
+
+
+\section{OStatus}
+
+OStatus\footnote{\url{http://w3.org/community/ostatus}} is a protocol suite to
+enable real time interaction between social networks.  It was proposed by Evan
+Prodromou for the implementation of StatusNet, a federated microblogging
+network that later originated the GNU
+Social\footnote{\url{http://gnu.io/social}} project.
+
+The project obtained visibility in the community, and had its W3C community
+group\footnote{\url{http://w3.org/community/ostatus/}} created in 2012, one of
+the few formal attempts to propose a federation protocol. However, the group
+did not produce any results so far. The OStatus specification received a fair
+amount of criticism over its limitations, and did not advance into a standard
+accepted as good enough for all participating projects.
+
+OStatus is defined as a combination of protocols, each covering a part
+of the interactions that make federation possible. It incorporates
+standards that already existed when it was proposed, such as Atom/RSS,
+used for syndicating content from different sources.  OStatus proposes
+to arrange these standards and protocols in a suite for real-time
+interactions between servers, automating the flow of social interactions
+among users.
+
+The specialized protocols that are included in the OStatus specification
+are described below.
+
+
+\subsection{PubSubHubbub}
+
+PubSubHubbub specifies a distributed system for publishing and
+subscribing. It makes use of central hubs used by services to publish
+new contents and updates, and by other services to subscribe, receiving
+real-time notifications on new activity. It is an extension to
+technologies such as Atom/RSS, that depend on users manually fetching
+for updates.
+
+\subsection{WebFinger}
+
+WebFinger is a protocol used for discovering information about entities
+based on standard identifiers~\cite{rfc7033}. It aims to solve the problem
+of sharing identities among servers.
+
+The specification requires every resource to be identified by a URL.
+WebFinger servers should respond to HTTP requests, providing information
+in JSON or XML formats. The only information required for other servers
+to retrieve information about any entity is its resource URL, which can
+be generated with public information using a LRDD process~\cite{lrdd2010}.
+
+\subsection{ActivityStreams}
+
+The ActivityStreams specification defines a format to represent activity
+in social networks, such as ``Bob started following Alice'', ``Alice
+posted a new message'', etc. It aims to standardize entity formats,
+making it easier to share and consume those objects from different
+servers. The latest specification proposes the use of JSON objects
+with a set of predefined attributes, including the action type, involved
+users, and content data.
+
+\subsection{Salmon}
+
+Combining solutions like Atom and PubSubHubbub allows publishing and
+updating contents across servers in real-time. However, to allow a
+content to be updated -- for example, adding a comment to it -- from any
+of those servers, it is also important to make sure the content state
+will always be the same in the entire network.
+
+Salmon is a message exchange protocol that provides a way to change and
+track the state of contents across servers. It proposes a standard
+process to securely exchange information among servers, merging
+all modifications in a stream of messages.
+
+\subsection{OStatus Current State}
+
+The OStatus project was an important step towards the standardization of
+a federation protocol, what is clear given the creation of a W3C work
+group.  However, the specification was not complete enough to fulfill
+the requirements of most projects, mainly due to its limitation to
+public content and the lack of mechanisms to handle privacy.
+
+In 2012, Evan Prodromou announced the development of \textit{pump.io},
+another approach for federating social networks, with more modern
+technologies. It contributed to the weakening of the OStatus community,
+which is not currently active. The StatusNet project is also no longer
+active.
+
+Beyond there being no active community to maintain or develop the
+project, most of the technologies used in OStatus suite evolved. OStatus
+still specifies the use of technologies considered by many as legacy,
+such using Atom (instead of JSON) for ActivityStreams messages.
+
+Despite using technologies said to be outdated, OStatus is still used on the
+development of federated social networks, such as GNU
+Social\footnote{\url{http://gnu.org/s/social/}}, which describes itself
+as a continuation of StatusNet, and the Mastodon
+project\footnote{\url{https://github.com/Gargron/mastodon}}, which promises
+compatibility with GNU Social.
+
+\section{Diaspora}
+
+The Diaspora project\footnote{\url{http://diasporafoundation.org}} proposed the
+implementation of decentralized social networks in response to concerns raised
+on privacy and freedom in centralized social platforms. Its first version was
+released on September, 2010 as a result of a crowdfunding campaign. By August,
+2012, a community of users started to maintain it.
+
+Diaspora's main selling point is avoiding content centralization, with alack of
+central control over user data, by building a network of personal servers,
+called pods. Each Diaspora pod stores only the data of its own users, and
+allows them to interact with users on other servers through a federated
+network.
+
+The Diaspora federation protocol was created to converge with OStatus as
+soon as the latter supported private contents, what did not happen so
+far. Most of the protocol specification relies on the concept of remote
+users, and on an exchange mechanism.
+
+\subsection{Remote Users}
+
+A fundamental concept to implement federated networks using the Diaspora
+protocol is taking into consideration the existence of remote users.
+Most applications only recognize local users, that is, those who have
+their credentials and profiles saved in the local database. However, to
+enable interaction with users from other networks, at some point it is
+necessary to handle users that do not exist locally.
+
+Diaspora classifies its users in two categories: local and remote. While
+local users follow the classic implementation, remote users only
+interact with the application through federation mechanisms. Having two
+category of users may affect the project architecture, and this concern
+should ideally be taken into consideration on early design stages.
+
+\subsection{Message Exchange}
+
+In the Diaspora protocol, messages are exchanged using a subset of the
+Salmon protocol. Essentially, the Diaspora specification describes how
+the message should be built, encrypted, and sent to the Salmon endpoint
+of the destination pod.
+
+The payload of a Salmon message is an object that represents an
+activity in a pod. Those objects are called entities and can represent
+content publications, private messages, comments, retractions, or even
+notifications of follow and unfollow actions.
+
+Every message is sent using HTTP to certain endpoints in the destination
+server.  The endpoint depends on the nature of the entity. For example,
+private messages are sent to user-specific salmon endpoints, while
+public contents are sent to public endpoints.
+
+\subsection{Protocol Flow}
+
+Besides using a subset of the Salmon protocol to exchange messages,
+Diaspora also uses WebFinger and hCard standards to discover identities
+and fetch public profiles from remote servers. It is also possible to
+use ActivityStreams and PubSubHubbub to provide public feeds.
+
+The basic flow is to discover users, fetch their public information,
+then create and send Salmon messages according to the desired
+interaction. Diaspora pods will also send Salmon messages to subscribed
+servers, notifying about publications and updates.
+
+\subsection{Diaspora Current State}
+
+Both the project and the protocol specification remain in active
+development. The latest specification dates from July, 2016. There is
+also a protocol implementation written as a Ruby library, used in the
+main Diaspora project, that includes most of the message exchange
+mechanism. That library can be reused by other projects that want to
+implement federation with the Diaspora network.
+
+The visibility gained by the Diaspora project has provided it with a
+significant following, including adoption of its specifications by other
+projects such as Friendica and Hubzilla, which support some level of
+integration with Diaspora pods. That visibility was not enough, though,
+to trigger a formal standardization process.
