@@ -74,6 +74,15 @@ confidentiality, which requires every user to have a pair of RSA keys.
 The proposed implementation for Noosfero uses the OpenSSL Ruby bindings
 to generate a key pair for every user, as soon as that is necessary.
 
+Security is an important aspect that still have to be considered more
+carefully. We are aware that the server should not hold keys in behalf of
+users, but for now the keys are serialized and stored in the database. To avoid
+storing plain text values, the private keys are encrypted using a symmetric key
+(AES). Ideally, we should be able to find a solution where each user holds its
+own pair of keys. Additionally, it would be more suitable to use different
+pairs to sign and encrypt the messages, since we currently use the same
+keys for these operations.
+
 The last step is to handle incoming entities representing user contents.
 As shown in Figure \ref{fig:seq_publication}, new contents are sent by
 Diaspora to every server that is involved in the interaction --- in this
