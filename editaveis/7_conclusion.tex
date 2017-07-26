@@ -105,33 +105,32 @@ feature depends on a reference to the remote pod, it is important to
 provide the means to broaden the network.
 
 
-\section{Weaknesses and future work}
-
-The federation tries to provide a seamless platform for interaction across
-networks, and part of this feature is to use the same authentication
-credentials for every server. For a user, it means to authenticate in one
-server, access other server under any domain, and still be authorized
-to share and interact. This feature is also in the scope of the federation
-in Noosfero, and it may use the Diaspora protocol infrastructure and WebFinger
-identities.
+\section{Limitations and future work}
 
 Regarding the support of the Diaspora protocol, contents with limited
 visibility were not in the scope of this proof of concept, and it is an
 important step to extend the federation features turning the network privacy
-aware. This will require to match Noosfero circles with Diaspora aspects,
-delivering the content only to some users.
+aware. Although we already handle private messages, we need to match Noosfero
+circles with Diaspora aspects, making sure the messages will only be visible
+for the appropriate users.
 
 For now, only plain text messages are being shared across servers. Since
 Noosfero is also a CMS, it is our interest to federate rich contents,
-such as articles with embed HTML and images. The protocol currently offers
+such as articles with embedded HTML and images. The protocol currently offers
 the means to share static images, so it will probably be the case to extend
 its custom entities.
 
 It is also important to support direct messages, events and post reactions
 (such as a ``Like''), showing some convergence with the Diaspora interaction
-model, and increasing the use cases of the federated network.
+model, and increasing the use cases of the federated network. Besides
+supporting the current state of the protocol, we must attend to the security
+issues stated previously, possibly following good practices such as using
+different pairs of keys to sign and encrypt the exchanged messages.
 
 Whereas we were able to implement the protocol and join a network of Diaspora
 pods, it is clear the specification has to evolve in the ways it deals with
-content replication and reliability of the messages delivery.
+content replication and reliability of the messages delivery. A standard
+approach to exchange messages between servers, such as a mechanism built over
+HTTP, would address those concerns and be a great contribution to the Diaspora
+protocol.
 

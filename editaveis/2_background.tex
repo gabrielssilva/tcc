@@ -53,9 +53,9 @@ are described below.
 \subsection{PubSubHubbub}
 
 PubSubHubbub specifies a distributed system for publishing and
-subscribing. It makes use of central hubs used by services to publish
-new contents and updates, and by other services to subscribe, receiving
-real-time notifications on new activity. It is an extension to
+subscribing \cite{pubsub2014}. It makes use of central hubs used by services
+to publish new contents and updates, and by other services to subscribe,
+receiving real-time notifications on new activities. It is an extension to
 technologies such as Atom/RSS, that depend on users manually fetching
 for updates.
 
@@ -77,9 +77,9 @@ The ActivityStreams specification defines a format to represent activity
 in social networks, such as ``Bob started following Alice'', ``Alice
 posted a new message'', etc. It aims to standardize entity formats,
 making it easier to share and consume those objects from different
-servers. The latest specification proposes the use of JSON objects
-with a set of predefined attributes, including the action type, involved
-users, and content data.
+servers \cite{actstreams2011}. The latest specification proposes the use of
+JSON objects with a set of predefined attributes, including the action type,
+involved users, and content data.
 
 \subsection{Salmon}
 
@@ -90,8 +90,8 @@ of those servers, it is also important to make sure the content state
 will always be the same in the entire network.
 
 Salmon is a message exchange protocol that provides a way to change and
-track the state of contents across servers. It proposes a standard
-process to securely exchange information among servers, merging
+track the state of contents across servers \cite{salmon2009}. It proposes a
+standard process to securely exchange information among servers, merging
 all modifications in a stream of messages.
 
 \subsection{OStatus Current State}
@@ -128,8 +128,8 @@ on privacy and freedom in centralized social platforms. Its first version was
 released on September, 2010 as a result of a crowdfunding campaign. By August,
 2012, a community of users started to maintain it.
 
-Diaspora's main selling point is avoiding content centralization, with a lack of
-central control over user data, by building a network of personal servers,
+Diaspora's main selling point is avoiding content centralization, with a lack
+of central control over user data, by building a network of personal servers,
 called pods. Each Diaspora pod stores only the data of its own users, and
 allows them to interact with users on other servers through a federated
 network.
@@ -194,7 +194,7 @@ implement federation with the Diaspora network.
 
 The visibility gained by the Diaspora project has provided it with a
 significant following, including adoption of its specifications by other
-projects such as Friendica and Hubzilla\footnote{\url{http://friendi.ca/} and
-\url{https://project.hubzilla.org}}, which support some level of
-integration with Diaspora pods. That visibility was not enough, though,
-to trigger a formal standardization process.
+projects such as Friendica\footnote{\url{http://friendi.ca/}} and
+Hubzilla\footnote{\url{https://project.hubzilla.org}}, which support some
+level of integration with Diaspora pods. That visibility was not enough,
+though, to trigger a formal standardization process.
